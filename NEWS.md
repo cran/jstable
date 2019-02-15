@@ -1,3 +1,11 @@
+# jstable 0.7.9
+
+* Add namespace **survival::cluster, survival::frailty** to `cox2.display`
+
+# jstable 0.7.8
+
+* Remove 2 packages to Import: **DT**, **epiDisplay**. 
+
 # jstable 0.7.7
 
 * Fix typo in DESCRIPTION.
