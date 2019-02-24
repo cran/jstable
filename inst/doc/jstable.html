@@ -12,7 +12,7 @@
 
 <meta name="author" content="Jinseob Kim" />
 
-<meta name="date" content="2019-02-15" />
+<meta name="date" content="2019-02-22" />
 
 <title>Introduce jstable</title>
 
@@ -92,7 +92,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Introduce jstable</h1>
 <h4 class="author"><em>Jinseob Kim</em></h4>
-<h4 class="date"><em>2019-02-15</em></h4>
+<h4 class="date"><em>2019-02-22</em></h4>
 
 
 
@@ -183,20 +183,20 @@ gee02 &lt;-<span class="st"> </span><span class="kw">geeglm</span> (ddn <span cl
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $table</span>
 <span class="co">#&gt;            crude OR(95%CI)    crude P value adj. OR(95%CI)    </span>
-<span class="co">#&gt; Time       &quot;0.97 (0.94,1.01)&quot; &quot;0.197&quot;       &quot;0.97 (0.94,1.01)&quot;</span>
+<span class="co">#&gt; Time       &quot;0.98 (0.95,1.02)&quot; &quot;0.398&quot;       &quot;0.98 (0.95,1.02)&quot;</span>
 <span class="co">#&gt; Cu: ref.=1 NA                 NA            NA                </span>
-<span class="co">#&gt;    2       &quot;1.02 (0.76,1.37)&quot; &quot;0.891&quot;       &quot;1.02 (0.76,1.37)&quot;</span>
-<span class="co">#&gt;    3       &quot;0.96 (0.71,1.31)&quot; &quot;0.81&quot;        &quot;0.96 (0.71,1.31)&quot;</span>
+<span class="co">#&gt;    2       &quot;0.97 (0.69,1.37)&quot; &quot;0.865&quot;       &quot;0.97 (0.69,1.37)&quot;</span>
+<span class="co">#&gt;    3       &quot;1.15 (0.85,1.55)&quot; &quot;0.367&quot;       &quot;1.15 (0.85,1.55)&quot;</span>
 <span class="co">#&gt;            adj. P value</span>
-<span class="co">#&gt; Time       &quot;0.197&quot;     </span>
+<span class="co">#&gt; Time       &quot;0.399&quot;     </span>
 <span class="co">#&gt; Cu: ref.=1 NA          </span>
-<span class="co">#&gt;    2       &quot;0.886&quot;     </span>
-<span class="co">#&gt;    3       &quot;0.813&quot;     </span>
+<span class="co">#&gt;    2       &quot;0.868&quot;     </span>
+<span class="co">#&gt;    3       &quot;0.366&quot;     </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $metric</span>
 <span class="co">#&gt;                                  crude OR(95%CI) crude P value</span>
 <span class="co">#&gt;                                  NA              NA           </span>
-<span class="co">#&gt; Estimated correlation parameters &quot;-0.004&quot;        NA           </span>
+<span class="co">#&gt; Estimated correlation parameters &quot;0.005&quot;         NA           </span>
 <span class="co">#&gt; No. of clusters                  &quot;72&quot;            NA           </span>
 <span class="co">#&gt; No. of observations              &quot;861&quot;           NA           </span>
 <span class="co">#&gt;                                  adj. OR(95%CI) adj. P value</span>
@@ -249,18 +249,18 @@ l2 =<span class="st"> </span><span class="kw">glmer</span>(ddn <span class="op">
 <span class="kw">lmer.display</span>(l2)
 <span class="co">#&gt; $table</span>
 <span class="co">#&gt;                      crude OR(95%CI) crude P value   adj. OR(95%CI)</span>
-<span class="co">#&gt; Weight                    1 (0.99,1)     0.1062275 0.99 (0.97,1.01)</span>
-<span class="co">#&gt; Time                0.97 (0.94,1.01)     0.1848830 1.06 (0.92,1.21)</span>
+<span class="co">#&gt; Weight                    1 (0.99,1)     0.5901148 1.01 (0.99,1.03)</span>
+<span class="co">#&gt; Time                0.98 (0.95,1.02)     0.4314275 0.93 (0.81,1.07)</span>
 <span class="co">#&gt; Random effects                  &lt;NA&gt;            NA             &lt;NA&gt;</span>
-<span class="co">#&gt; Pig                                0            NA             &lt;NA&gt;</span>
+<span class="co">#&gt; Pig                             0.02            NA             &lt;NA&gt;</span>
 <span class="co">#&gt; Metrics                         &lt;NA&gt;            NA             &lt;NA&gt;</span>
 <span class="co">#&gt; No. of groups (Pig)               72            NA             &lt;NA&gt;</span>
 <span class="co">#&gt; No. of observations              861            NA             &lt;NA&gt;</span>
-<span class="co">#&gt; Log-likelihood                -594.7            NA             &lt;NA&gt;</span>
-<span class="co">#&gt; AIC value                     1197.4            NA             &lt;NA&gt;</span>
+<span class="co">#&gt; Log-likelihood               -595.41            NA             &lt;NA&gt;</span>
+<span class="co">#&gt; AIC value                    1198.81            NA             &lt;NA&gt;</span>
 <span class="co">#&gt;                     adj. P value</span>
-<span class="co">#&gt; Weight                 0.2280923</span>
-<span class="co">#&gt; Time                   0.4379979</span>
+<span class="co">#&gt; Weight                 0.4351351</span>
+<span class="co">#&gt; Time                   0.3322481</span>
 <span class="co">#&gt; Random effects                NA</span>
 <span class="co">#&gt; Pig                           NA</span>
 <span class="co">#&gt; Metrics                       NA</span>
