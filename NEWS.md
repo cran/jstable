@@ -1,8 +1,12 @@
+# jstable 0.8.2
+
+* Bug fixes: Apply label information to table 1 with strata.
+
 # jstable 0.8.1
 
 ## Update
 
-* `CreateTableOneJS` and `svyCreateTableOneJS` can get simplified table with **showAllLevels == F** option. 
+* `CreateTableOneJS` and `svyCreateTableOneJS` can get simplified table with **showAllLevels = F** option. 
 
 # jstable 0.8.0
 

@@ -12,7 +12,7 @@
 
 <meta name="author" content="Jinseob Kim" />
 
-<meta name="date" content="2019-03-07" />
+<meta name="date" content="2019-06-07" />
 
 <title>Introduce jstable</title>
 
@@ -83,6 +83,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
 
+
+
+
 </head>
 
 <body>
@@ -91,8 +94,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 
 <h1 class="title toc-ignore">Introduce jstable</h1>
-<h4 class="author"><em>Jinseob Kim</em></h4>
-<h4 class="date"><em>2019-03-07</em></h4>
+<h4 class="author">Jinseob Kim</h4>
+<h4 class="date">2019-06-07</h4>
 
 
 
@@ -183,20 +186,20 @@ gee02 &lt;-<span class="st"> </span><span class="kw">geeglm</span> (ddn <span cl
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $table</span>
 <span class="co">#&gt;            crude OR(95%CI)    crude P value adj. OR(95%CI)    </span>
-<span class="co">#&gt; Time       &quot;1.02 (0.98,1.06)&quot; &quot;0.362&quot;       &quot;1.02 (0.98,1.06)&quot;</span>
+<span class="co">#&gt; Time       &quot;0.99 (0.95,1.03)&quot; &quot;0.59&quot;        &quot;0.99 (0.95,1.03)&quot;</span>
 <span class="co">#&gt; Cu: ref.=1 NA                 NA            NA                </span>
-<span class="co">#&gt;    2       &quot;1.13 (0.83,1.54)&quot; &quot;0.425&quot;       &quot;1.13 (0.83,1.54)&quot;</span>
-<span class="co">#&gt;    3       &quot;0.99 (0.68,1.44)&quot; &quot;0.951&quot;       &quot;0.99 (0.68,1.44)&quot;</span>
+<span class="co">#&gt;    2       &quot;0.69 (0.53,0.89)&quot; &quot;0.005&quot;       &quot;0.69 (0.53,0.89)&quot;</span>
+<span class="co">#&gt;    3       &quot;0.8 (0.59,1.07)&quot;  &quot;0.127&quot;       &quot;0.8 (0.59,1.07)&quot; </span>
 <span class="co">#&gt;            adj. P value</span>
-<span class="co">#&gt; Time       &quot;0.364&quot;     </span>
+<span class="co">#&gt; Time       &quot;0.598&quot;     </span>
 <span class="co">#&gt; Cu: ref.=1 NA          </span>
-<span class="co">#&gt;    2       &quot;0.428&quot;     </span>
-<span class="co">#&gt;    3       &quot;0.95&quot;      </span>
+<span class="co">#&gt;    2       &quot;0.005&quot;     </span>
+<span class="co">#&gt;    3       &quot;0.128&quot;     </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $metric</span>
 <span class="co">#&gt;                                  crude OR(95%CI) crude P value</span>
 <span class="co">#&gt;                                  NA              NA           </span>
-<span class="co">#&gt; Estimated correlation parameters &quot;0.007&quot;         NA           </span>
+<span class="co">#&gt; Estimated correlation parameters &quot;-0.024&quot;        NA           </span>
 <span class="co">#&gt; No. of clusters                  &quot;72&quot;            NA           </span>
 <span class="co">#&gt; No. of observations              &quot;861&quot;           NA           </span>
 <span class="co">#&gt;                                  adj. OR(95%CI) adj. P value</span>
@@ -249,18 +252,18 @@ l2 =<span class="st"> </span><span class="kw">glmer</span>(ddn <span class="op">
 <span class="kw">lmer.display</span>(l2)
 <span class="co">#&gt; $table</span>
 <span class="co">#&gt;                      crude OR(95%CI) crude P value   adj. OR(95%CI)</span>
-<span class="co">#&gt; Weight                    1 (1,1.01)     0.3417939    1 (0.98,1.02)</span>
-<span class="co">#&gt; Time                1.02 (0.98,1.06)     0.3729296 0.99 (0.86,1.14)</span>
+<span class="co">#&gt; Weight                    1 (0.99,1)     0.6400477    1 (0.98,1.02)</span>
+<span class="co">#&gt; Time                0.99 (0.95,1.03)     0.5851545 0.98 (0.85,1.12)</span>
 <span class="co">#&gt; Random effects                  &lt;NA&gt;            NA             &lt;NA&gt;</span>
-<span class="co">#&gt; Pig                             0.03            NA             &lt;NA&gt;</span>
+<span class="co">#&gt; Pig                                0            NA             &lt;NA&gt;</span>
 <span class="co">#&gt; Metrics                         &lt;NA&gt;            NA             &lt;NA&gt;</span>
 <span class="co">#&gt; No. of groups (Pig)               72            NA             &lt;NA&gt;</span>
 <span class="co">#&gt; No. of observations              861            NA             &lt;NA&gt;</span>
-<span class="co">#&gt; Log-likelihood               -593.61            NA             &lt;NA&gt;</span>
-<span class="co">#&gt; AIC value                    1195.23            NA             &lt;NA&gt;</span>
+<span class="co">#&gt; Log-likelihood               -596.42            NA             &lt;NA&gt;</span>
+<span class="co">#&gt; AIC value                    1200.84            NA             &lt;NA&gt;</span>
 <span class="co">#&gt;                     adj. P value</span>
-<span class="co">#&gt; Weight                  0.732543</span>
-<span class="co">#&gt; Time                    0.936288</span>
+<span class="co">#&gt; Weight                 0.8469379</span>
+<span class="co">#&gt; Time                   0.7326996</span>
 <span class="co">#&gt; Random effects                NA</span>
 <span class="co">#&gt; Pig                           NA</span>
 <span class="co">#&gt; Metrics                       NA</span>
@@ -508,33 +511,33 @@ ds2 &lt;-<span class="st"> </span><span class="kw">svyglm</span>(tt<span class="
 <span class="co">#&gt; cname: ref.=Alameda NA                                                                   </span>
 <span class="co">#&gt;    Amador           &quot;Inf (Inf,Inf)&quot;                                                      </span>
 <span class="co">#&gt;    Butte            &quot;Inf (Inf,Inf)&quot;                                                      </span>
-<span class="co">#&gt;    Colusa           &quot;6.0036985834333e+173 (2.66764006059928e+164,1.35117166716344e+183)&quot; </span>
+<span class="co">#&gt;    Colusa           &quot;6.00369858230608e+173 (2.66764006028554e+164,1.35117166681497e+183)&quot;</span>
 <span class="co">#&gt;    Contra Costa     &quot;0 (0,0)&quot;                                                            </span>
 <span class="co">#&gt;    El Dorado        &quot;0.05 (0,0.83)&quot;                                                      </span>
 <span class="co">#&gt;    Fresno           &quot;0 (0,0)&quot;                                                            </span>
 <span class="co">#&gt;    Humboldt         &quot;Inf (Inf,Inf)&quot;                                                      </span>
-<span class="co">#&gt;    Inyo             &quot;3.4381042403022e+27 (4.73418041960403e+25,2.49685472869508e+29)&quot;    </span>
-<span class="co">#&gt;    Kern             &quot;1.02353878660395e+47 (7.33690545697783e+44,1.42789307266638e+49)&quot;   </span>
+<span class="co">#&gt;    Inyo             &quot;3.43810424017151e+27 (4.73418041953878e+25,2.49685472853967e+29)&quot;   </span>
+<span class="co">#&gt;    Kern             &quot;1.0235387865582e+47 (7.3369054568865e+44,1.42789307255652e+49)&quot;     </span>
 <span class="co">#&gt;    Kings            &quot;Inf (Inf,Inf)&quot;                                                      </span>
 <span class="co">#&gt;    Los Angeles      &quot;0 (0,0)&quot;                                                            </span>
 <span class="co">#&gt;    Marin            &quot;Inf (Inf,Inf)&quot;                                                      </span>
 <span class="co">#&gt;    Mariposa         &quot;Inf (Inf,Inf)&quot;                                                      </span>
 <span class="co">#&gt;    Mendocino        &quot;0 (0,0)&quot;                                                            </span>
 <span class="co">#&gt;    Merced           &quot;Inf (Inf,Inf)&quot;                                                      </span>
-<span class="co">#&gt;    Monterey         &quot;1.24710898702096e+117 (9.98245683569093e+110,1.55801407520014e+123)&quot;</span>
+<span class="co">#&gt;    Monterey         &quot;1.24710898684862e+117 (9.98245683482956e+110,1.55801407490399e+123)&quot;</span>
 <span class="co">#&gt;    Napa             &quot;Inf (Inf,Inf)&quot;                                                      </span>
 <span class="co">#&gt;    Orange           &quot;0 (0,0)&quot;                                                            </span>
 <span class="co">#&gt;    Placer           &quot;Inf (Inf,Inf)&quot;                                                      </span>
-<span class="co">#&gt;    Riverside        &quot;8.00352162124239e+65 (5.22981865895702e+62,1.22482943518484e+69)&quot;   </span>
-<span class="co">#&gt;    Sacramento       &quot;9.37864738133762e+272 (7.67834271719589e+257,1.14554702678853e+288)&quot;</span>
+<span class="co">#&gt;    Riverside        &quot;8.00352162045419e+65 (5.22981865875843e+62,1.2248294349901e+69)&quot;    </span>
+<span class="co">#&gt;    Sacramento       &quot;9.37864737889276e+272 (7.67834271605149e+257,1.14554702636201e+288)&quot;</span>
 <span class="co">#&gt;    San Bernardino   &quot;0 (0,0)&quot;                                                            </span>
 <span class="co">#&gt;    San Diego        &quot;0 (0,0)&quot;                                                            </span>
-<span class="co">#&gt;    San Francisco    &quot;3.1041426145938e+147 (3.6502350093894e+139,2.63974822085471e+155)&quot;  </span>
-<span class="co">#&gt;    San Joaquin      &quot;3.77939736184809e+268 (4.84287658080411e+253,2.94945456082067e+283)&quot;</span>
+<span class="co">#&gt;    San Francisco    &quot;3.10414261410186e+147 (3.65023500899351e+139,2.63974822030432e+155)&quot;</span>
+<span class="co">#&gt;    San Joaquin      &quot;3.77939736089423e+268 (4.84287658008561e+253,2.94945455976946e+283)&quot;</span>
 <span class="co">#&gt;    San Mateo        &quot;Inf (Inf,Inf)&quot;                                                      </span>
 <span class="co">#&gt;    Santa Barbara    &quot;Inf (Inf,Inf)&quot;                                                      </span>
 <span class="co">#&gt;    Santa Clara      &quot;0 (0,0)&quot;                                                            </span>
-<span class="co">#&gt;    Santa Cruz       &quot;1.16743603082104e+38 (4.00441011948733e+35,3.40351473847958e+40)&quot;   </span>
+<span class="co">#&gt;    Santa Cruz       &quot;1.16743603078086e+38 (4.00441011940044e+35,3.40351473831915e+40)&quot;   </span>
 <span class="co">#&gt;    Shasta           &quot;Inf (Inf,Inf)&quot;                                                      </span>
 <span class="co">#&gt;    Siskiyou         &quot;Inf (Inf,Inf)&quot;                                                      </span>
 <span class="co">#&gt;    Solano           &quot;0 (0,0.03)&quot;                                                         </span>
@@ -543,8 +546,8 @@ ds2 &lt;-<span class="st"> </span><span class="kw">svyglm</span>(tt<span class="
 <span class="co">#&gt;    Tehama           &quot;Inf (Inf,Inf)&quot;                                                      </span>
 <span class="co">#&gt;    Tulare           &quot;0 (0,0)&quot;                                                            </span>
 <span class="co">#&gt;    Tuolumne         &quot;Inf (Inf,Inf)&quot;                                                      </span>
-<span class="co">#&gt;    Ventura          &quot;2.4899376809852e+63 (9.37351475383711e+59,6.61415682164691e+66)&quot;    </span>
-<span class="co">#&gt;    Yolo             &quot;1.8710128062593e+225 (1.70374718773602e+213,2.05469975028285e+237)&quot; </span>
+<span class="co">#&gt;    Ventura          &quot;2.48993768075818e+63 (9.37351475338794e+59,6.61415682075774e+66)&quot;   </span>
+<span class="co">#&gt;    Yolo             &quot;1.87101280579666e+225 (1.70374718749845e+213,2.05469974955311e+237)&quot;</span>
 <span class="co">#&gt; mobility            &quot;159609.3 (78913.87,322821.96)&quot;                                      </span>
 <span class="co">#&gt; tt2: 1 vs 0         &quot;0 (0,0)&quot;                                                            </span>
 <span class="co">#&gt;                     adj. P value</span>
