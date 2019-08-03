@@ -1,7 +1,7 @@
 Package: jstable
 Title: Create Tables from Different Types of Regression
-Version: 0.8.4
-Date: 2019-07-03
+Version: 0.8.5
+Date: 2019-08-03
 Authors@R: c(person("Jinseob", "Kim", email = "jinseob2kim@gmail.com", role = c("aut", "cre"),  comment = c(ORCID = "0000-0002-9403-605X")),
              person("Zarathu", role = c("cph", "fnd"))
              )
@@ -12,15 +12,15 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
 Imports: geepack, lme4, stats, data.table, labelled, tableone, coxme,
-        survival, survey, methods, dplyr, purrr, magrittr, tibble
+        survival, survey, methods, dplyr, purrr, magrittr, tibble, car
 URL: https://github.com/jinseob2kim/jstable
 BugReports: https://github.com/jinseob2kim/jstable/issues
 Suggests: testthat, knitr, rmarkdown
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2019-07-03 14:17:03 UTC; js
+Packaged: 2019-08-02 15:04:29 UTC; js
 Author: Jinseob Kim [aut, cre] (<https://orcid.org/0000-0002-9403-605X>),
   Zarathu [cph, fnd]
 Maintainer: Jinseob Kim <jinseob2kim@gmail.com>
 Repository: CRAN
-Date/Publication: 2019-07-03 15:40:09 UTC
+Date/Publication: 2019-08-03 08:00:05 UTC
