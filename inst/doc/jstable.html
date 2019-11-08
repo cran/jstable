@@ -13,7 +13,7 @@
 
 <meta name="author" content="Jinseob Kim" />
 
-<meta name="date" content="2019-09-03" />
+<meta name="date" content="2019-11-08" />
 
 <title>Introduce jstable</title>
 
@@ -96,7 +96,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Introduce jstable</h1>
 <h4 class="author">Jinseob Kim</h4>
-<h4 class="date">2019-09-03</h4>
+<h4 class="date">2019-11-08</h4>
 
 
 
@@ -187,20 +187,20 @@ gee02 &lt;-<span class="st"> </span><span class="kw">geeglm</span> (ddn <span cl
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $table</span>
 <span class="co">#&gt;            crude OR(95%CI)    crude P value adj. OR(95%CI)    </span>
-<span class="co">#&gt; Time       &quot;0.96 (0.92,1)&quot;    &quot;0.057&quot;       &quot;0.96 (0.92,1)&quot;   </span>
+<span class="co">#&gt; Time       &quot;0.98 (0.95,1.02)&quot; &quot;0.331&quot;       &quot;0.98 (0.95,1.02)&quot;</span>
 <span class="co">#&gt; Cu: ref.=1 NA                 NA            NA                </span>
-<span class="co">#&gt;    2       &quot;0.92 (0.67,1.27)&quot; &quot;0.627&quot;       &quot;0.92 (0.67,1.28)&quot;</span>
-<span class="co">#&gt;    3       &quot;1.06 (0.79,1.44)&quot; &quot;0.682&quot;       &quot;1.07 (0.79,1.44)&quot;</span>
+<span class="co">#&gt;    2       &quot;0.88 (0.63,1.22)&quot; &quot;0.436&quot;       &quot;0.88 (0.63,1.22)&quot;</span>
+<span class="co">#&gt;    3       &quot;0.93 (0.67,1.3)&quot;  &quot;0.682&quot;       &quot;0.93 (0.67,1.3)&quot; </span>
 <span class="co">#&gt;            adj. P value</span>
-<span class="co">#&gt; Time       &quot;0.057&quot;     </span>
+<span class="co">#&gt; Time       &quot;0.333&quot;     </span>
 <span class="co">#&gt; Cu: ref.=1 NA          </span>
-<span class="co">#&gt;    2       &quot;0.634&quot;     </span>
-<span class="co">#&gt;    3       &quot;0.677&quot;     </span>
+<span class="co">#&gt;    2       &quot;0.438&quot;     </span>
+<span class="co">#&gt;    3       &quot;0.684&quot;     </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $metric</span>
 <span class="co">#&gt;                                  crude OR(95%CI) crude P value</span>
 <span class="co">#&gt;                                  NA              NA           </span>
-<span class="co">#&gt; Estimated correlation parameters &quot;-0.003&quot;        NA           </span>
+<span class="co">#&gt; Estimated correlation parameters &quot;0.003&quot;         NA           </span>
 <span class="co">#&gt; No. of clusters                  &quot;72&quot;            NA           </span>
 <span class="co">#&gt; No. of observations              &quot;861&quot;           NA           </span>
 <span class="co">#&gt;                                  adj. OR(95%CI) adj. P value</span>
@@ -212,59 +212,59 @@ gee02 &lt;-<span class="st"> </span><span class="kw">geeglm</span> (ddn <span cl
 <div id="mixed-model-table-lmermod-or-glmermod-object-from-lme4-package" class="section level2">
 <h2>Mixed model Table: <code>lmerMod</code> or <code>glmerMod</code> object from <strong>lme4</strong> package</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(lme4)
-l1 =<span class="st"> </span><span class="kw">lmer</span>(Weight <span class="op">~</span><span class="st"> </span>Time <span class="op">+</span><span class="st"> </span>Cu <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>Pig) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>Evit), <span class="dt">data =</span> dietox) 
+l1 =<span class="st"> </span><span class="kw">lmer</span>(Weight <span class="op">~</span><span class="st"> </span>Time <span class="op">+</span><span class="st"> </span>Cu <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>Pig), <span class="dt">data =</span> dietox) 
 <span class="kw">lmer.display</span>(l1, <span class="dt">ci.ranef =</span> T)
 <span class="co">#&gt; $table</span>
-<span class="co">#&gt;                       crude coeff(95%CI) crude P value adj. coeff(95%CI)</span>
-<span class="co">#&gt; Time                    6.94 (6.88,7.01)     0.0000000  6.94 (6.88,7.01)</span>
-<span class="co">#&gt; Cu: ref.=1                          &lt;NA&gt;            NA              &lt;NA&gt;</span>
-<span class="co">#&gt;    2                  -0.57 (-4.66,3.52)     0.7837028 -0.81 (-4.42,2.8)</span>
-<span class="co">#&gt;    3                    1.9 (-2.23,6.04)     0.3666829 1.78 (-1.87,5.43)</span>
-<span class="co">#&gt; Random effects                      &lt;NA&gt;            NA              &lt;NA&gt;</span>
-<span class="co">#&gt; Pig                  39.71 (27.82,54.93)            NA              &lt;NA&gt;</span>
-<span class="co">#&gt; Evit                       0.9 (0,13.45)            NA              &lt;NA&gt;</span>
-<span class="co">#&gt; Residual              11.37 (10.3,12.55)            NA              &lt;NA&gt;</span>
-<span class="co">#&gt; Metrics                             &lt;NA&gt;            NA              &lt;NA&gt;</span>
-<span class="co">#&gt; No. of groups (Pig)                   72            NA              &lt;NA&gt;</span>
-<span class="co">#&gt; No. of groups (Evit)                   3            NA              &lt;NA&gt;</span>
-<span class="co">#&gt; No. of observations                  861            NA              &lt;NA&gt;</span>
-<span class="co">#&gt; Log-likelihood                  -2400.69            NA              &lt;NA&gt;</span>
-<span class="co">#&gt; AIC value                        4801.38            NA              &lt;NA&gt;</span>
-<span class="co">#&gt;                      adj. P value</span>
-<span class="co">#&gt; Time                    0.0000000</span>
-<span class="co">#&gt; Cu: ref.=1                     NA</span>
-<span class="co">#&gt;    2                    0.6598522</span>
-<span class="co">#&gt;    3                    0.3393579</span>
-<span class="co">#&gt; Random effects                 NA</span>
-<span class="co">#&gt; Pig                            NA</span>
-<span class="co">#&gt; Evit                           NA</span>
-<span class="co">#&gt; Residual                       NA</span>
-<span class="co">#&gt; Metrics                        NA</span>
-<span class="co">#&gt; No. of groups (Pig)            NA</span>
-<span class="co">#&gt; No. of groups (Evit)           NA</span>
-<span class="co">#&gt; No. of observations            NA</span>
-<span class="co">#&gt; Log-likelihood                 NA</span>
-<span class="co">#&gt; AIC value                      NA</span>
+<span class="co">#&gt;                      crude coeff(95%CI) crude P value adj. coeff(95%CI)</span>
+<span class="co">#&gt; Time                   6.94 (6.88,7.01)     0.0000000  6.94 (6.88,7.01)</span>
+<span class="co">#&gt; Cu: ref.=1                         &lt;NA&gt;            NA              &lt;NA&gt;</span>
+<span class="co">#&gt;    2                 -0.58 (-4.67,3.51)     0.7811327 -0.84 (-4.47,2.8)</span>
+<span class="co">#&gt;    3                   1.9 (-2.23,6.04)     0.3670740  1.77 (-1.9,5.45)</span>
+<span class="co">#&gt; Random effects                     &lt;NA&gt;            NA              &lt;NA&gt;</span>
+<span class="co">#&gt; Pig                 40.34 (28.08,54.95)            NA              &lt;NA&gt;</span>
+<span class="co">#&gt; Residual             11.37 (10.3,12.55)            NA              &lt;NA&gt;</span>
+<span class="co">#&gt; Metrics                            &lt;NA&gt;            NA              &lt;NA&gt;</span>
+<span class="co">#&gt; No. of groups (Pig)                  72            NA              &lt;NA&gt;</span>
+<span class="co">#&gt; No. of observations                 861            NA              &lt;NA&gt;</span>
+<span class="co">#&gt; Log-likelihood                  -2400.8            NA              &lt;NA&gt;</span>
+<span class="co">#&gt; AIC value                        4801.6            NA              &lt;NA&gt;</span>
+<span class="co">#&gt;                     adj. P value</span>
+<span class="co">#&gt; Time                   0.0000000</span>
+<span class="co">#&gt; Cu: ref.=1                    NA</span>
+<span class="co">#&gt;    2                   0.6527264</span>
+<span class="co">#&gt;    3                   0.3442310</span>
+<span class="co">#&gt; Random effects                NA</span>
+<span class="co">#&gt; Pig                           NA</span>
+<span class="co">#&gt; Residual                      NA</span>
+<span class="co">#&gt; Metrics                       NA</span>
+<span class="co">#&gt; No. of groups (Pig)           NA</span>
+<span class="co">#&gt; No. of observations           NA</span>
+<span class="co">#&gt; Log-likelihood                NA</span>
+<span class="co">#&gt; AIC value                     NA</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $caption</span>
-<span class="co">#&gt; [1] &quot;Linear mixed model fit by REML : Weight ~ Time + Cu + (1 | Pig) + (1 | Evit)&quot;</span>
+<span class="co">#&gt; [1] &quot;Linear mixed model fit by REML : Weight ~ Time + Cu + (1 | Pig)&quot;</span>
 
-l2 =<span class="st"> </span><span class="kw">glmer</span>(ddn <span class="op">~</span><span class="st"> </span>Weight <span class="op">+</span><span class="st"> </span>Time <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>Pig), <span class="dt">data=</span> dietox, <span class="dt">family=</span> <span class="st">&quot;binomial&quot;</span>)
+l2 =<span class="st"> </span><span class="kw">glmer</span>(ddn <span class="op">~</span><span class="st">  </span>Time <span class="op">+</span><span class="st"> </span>Cu <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>Pig), <span class="dt">data=</span> dietox, <span class="dt">family=</span> <span class="st">&quot;binomial&quot;</span>)
 <span class="kw">lmer.display</span>(l2)
 <span class="co">#&gt; $table</span>
-<span class="co">#&gt;                     crude OR(95%CI) crude P value   adj. OR(95%CI)</span>
-<span class="co">#&gt; Weight                   1 (0.99,1)    0.10749792 1.01 (0.99,1.03)</span>
-<span class="co">#&gt; Time                  0.96 (0.92,1)    0.03741516 0.88 (0.76,1.01)</span>
-<span class="co">#&gt; Random effects                 &lt;NA&gt;            NA             &lt;NA&gt;</span>
-<span class="co">#&gt; Pig                               0            NA             &lt;NA&gt;</span>
-<span class="co">#&gt; Metrics                        &lt;NA&gt;            NA             &lt;NA&gt;</span>
-<span class="co">#&gt; No. of groups (Pig)              72            NA             &lt;NA&gt;</span>
-<span class="co">#&gt; No. of observations             861            NA             &lt;NA&gt;</span>
-<span class="co">#&gt; Log-likelihood              -593.71            NA             &lt;NA&gt;</span>
-<span class="co">#&gt; AIC value                   1195.41            NA             &lt;NA&gt;</span>
+<span class="co">#&gt;                      crude OR(95%CI) crude P value   adj. OR(95%CI)</span>
+<span class="co">#&gt; Time                0.98 (0.94,1.02)     0.3720006 0.98 (0.94,1.02)</span>
+<span class="co">#&gt; Cu: ref.=1                      &lt;NA&gt;            NA             &lt;NA&gt;</span>
+<span class="co">#&gt;    2                0.88 (0.63,1.22)     0.4342310 0.88 (0.63,1.22)</span>
+<span class="co">#&gt;    3                0.93 (0.67,1.31)     0.6853029 0.93 (0.67,1.31)</span>
+<span class="co">#&gt; Random effects                  &lt;NA&gt;            NA             &lt;NA&gt;</span>
+<span class="co">#&gt; Pig                             0.01            NA             &lt;NA&gt;</span>
+<span class="co">#&gt; Metrics                         &lt;NA&gt;            NA             &lt;NA&gt;</span>
+<span class="co">#&gt; No. of groups (Pig)               72            NA             &lt;NA&gt;</span>
+<span class="co">#&gt; No. of observations              861            NA             &lt;NA&gt;</span>
+<span class="co">#&gt; Log-likelihood               -595.44            NA             &lt;NA&gt;</span>
+<span class="co">#&gt; AIC value                    1200.87            NA             &lt;NA&gt;</span>
 <span class="co">#&gt;                     adj. P value</span>
-<span class="co">#&gt; Weight                0.17801390</span>
-<span class="co">#&gt; Time                  0.05972463</span>
+<span class="co">#&gt; Time                   0.3740683</span>
+<span class="co">#&gt; Cu: ref.=1                    NA</span>
+<span class="co">#&gt;    2                   0.4368170</span>
+<span class="co">#&gt;    3                   0.6869323</span>
 <span class="co">#&gt; Random effects                NA</span>
 <span class="co">#&gt; Pig                           NA</span>
 <span class="co">#&gt; Metrics                       NA</span>
@@ -274,18 +274,18 @@ l2 =<span class="st"> </span><span class="kw">glmer</span>(ddn <span class="op">
 <span class="co">#&gt; AIC value                     NA</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $caption</span>
-<span class="co">#&gt; [1] &quot;Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) : ddn ~ Weight + Time + (1 | Pig)&quot;</span></code></pre></div>
+<span class="co">#&gt; [1] &quot;Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) : ddn ~ Time + Cu + (1 | Pig)&quot;</span></code></pre></div>
 </div>
 <div id="cox-model-with-frailty-or-cluster-options" class="section level2">
 <h2>Cox model with <code>frailty</code> or <code>cluster</code> options</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(survival)
-fit1 &lt;-<span class="st"> </span><span class="kw">coxph</span>(<span class="kw">Surv</span>(time, status) <span class="op">~</span><span class="st"> </span>ph.ecog <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span><span class="kw">cluster</span>(inst), lung, <span class="dt">model =</span> T)  ## model = T: to extract original data
+fit1 &lt;-<span class="st"> </span><span class="kw">coxph</span>(<span class="kw">Surv</span>(time, status) <span class="op">~</span><span class="st"> </span>ph.ecog <span class="op">+</span><span class="st"> </span>age, <span class="dt">cluster =</span> inst, lung, <span class="dt">model =</span> T)  ## model = T: to extract original data
 fit2 &lt;-<span class="st"> </span><span class="kw">coxph</span>(<span class="kw">Surv</span>(time, status) <span class="op">~</span><span class="st"> </span>ph.ecog <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span><span class="kw">frailty</span>(inst), lung, <span class="dt">model =</span> T)
 <span class="kw">cox2.display</span>(fit1)
 <span class="co">#&gt; $table</span>
 <span class="co">#&gt;         crude HR(95%CI)    crude P value adj. HR(95%CI)  adj. P value</span>
 <span class="co">#&gt; ph.ecog &quot;1.61 (1.25,2.08)&quot; &quot;&lt; 0.001&quot;     &quot;1.56 (1.22,2)&quot; &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt; age     &quot;1.02 (1.01,1.03)&quot; &quot;0.007&quot;       &quot;1.01 (1,1.02)&quot; &quot;0.085&quot;     </span>
+<span class="co">#&gt; age     &quot;1.02 (1,1.03)&quot;    &quot;0.008&quot;       &quot;1.01 (1,1.02)&quot; &quot;0.085&quot;     </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $ranef</span>
 <span class="co">#&gt;         [,1] [,2] [,3] [,4]</span>
@@ -304,7 +304,7 @@ fit2 &lt;-<span class="st"> </span><span class="kw">coxph</span>(<span class="kw
 <span class="co">#&gt; $table</span>
 <span class="co">#&gt;         crude HR(95%CI)    crude P value adj. HR(95%CI)     adj. P value</span>
 <span class="co">#&gt; ph.ecog &quot;1.64 (1.31,2.05)&quot; &quot;&lt; 0.001&quot;     &quot;1.58 (1.26,1.99)&quot; &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt; age     &quot;1.02 (1,1.04)&quot;    &quot;0.041&quot;       &quot;1.01 (0.99,1.03)&quot; &quot;0.225&quot;     </span>
+<span class="co">#&gt; age     &quot;1.02 (1,1.04)&quot;    &quot;0.043&quot;       &quot;1.01 (0.99,1.03)&quot; &quot;0.225&quot;     </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $ranef</span>
 <span class="co">#&gt;         [,1] [,2] [,3] [,4]</span>
@@ -353,106 +353,24 @@ apistrat<span class="op">$</span>tt =<span class="st"> </span><span class="kw">c
 apistrat<span class="op">$</span>tt2 =<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">40</span>), <span class="kw">rep</span>(<span class="dv">1</span>, <span class="kw">nrow</span>(apistrat) <span class="op">-</span><span class="dv">40</span>)))
 
 dstrat&lt;-<span class="kw">svydesign</span>(<span class="dt">id=</span><span class="op">~</span><span class="dv">1</span>,<span class="dt">strata=</span><span class="op">~</span>stype, <span class="dt">weights=</span><span class="op">~</span>pw, <span class="dt">data=</span>apistrat, <span class="dt">fpc=</span><span class="op">~</span>fpc)
-ds &lt;-<span class="st"> </span><span class="kw">svyglm</span>(api00<span class="op">~</span>ell<span class="op">+</span>meals<span class="op">+</span>cname<span class="op">+</span>mobility <span class="op">+</span><span class="st"> </span>tt2, <span class="dt">design=</span>dstrat)
-ds2 &lt;-<span class="st"> </span><span class="kw">svyglm</span>(tt<span class="op">~</span>ell<span class="op">+</span>meals<span class="op">+</span>cname<span class="op">+</span>mobility <span class="op">+</span><span class="st"> </span>tt2, <span class="dt">design=</span>dstrat, <span class="dt">family =</span> <span class="kw">quasibinomial</span>())
+ds &lt;-<span class="st"> </span><span class="kw">svyglm</span>(api00<span class="op">~</span>ell<span class="op">+</span>meals <span class="op">+</span><span class="st"> </span>tt2, <span class="dt">design=</span>dstrat)
+ds2 &lt;-<span class="st"> </span><span class="kw">svyglm</span>(tt<span class="op">~</span>ell<span class="op">+</span>meals<span class="op">+</span><span class="st"> </span>tt2, <span class="dt">design=</span>dstrat, <span class="dt">family =</span> <span class="kw">quasibinomial</span>())
 <span class="kw">svyregress.display</span>(ds)
 <span class="co">#&gt; $first.line</span>
 <span class="co">#&gt; [1] &quot;Linear regression predicting api00- weighted data\n&quot;</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $table</span>
-<span class="co">#&gt;                     crude coeff.(95%CI)        crude P value</span>
-<span class="co">#&gt; ell                 &quot;-3.73 (-4.35,-3.11)&quot;      &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt; meals               &quot;-3.38 (-3.71,-3.05)&quot;      &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt; cname: ref.=Alameda NA                         NA           </span>
-<span class="co">#&gt;    Amador           &quot;47.84 (-52.72,148.4)&quot;     &quot;0.353&quot;      </span>
-<span class="co">#&gt;    Butte            &quot;-68.16 (-168.72,32.4)&quot;    &quot;0.186&quot;      </span>
-<span class="co">#&gt;    Colusa           &quot;-143.16 (-243.72,-42.6)&quot;  &quot;0.006&quot;      </span>
-<span class="co">#&gt;    Contra Costa     &quot;83.73 (-38.42,205.89)&quot;    &quot;0.181&quot;      </span>
-<span class="co">#&gt;    El Dorado        &quot;28.65 (-82.39,139.68)&quot;    &quot;0.614&quot;      </span>
-<span class="co">#&gt;    Fresno           &quot;-141.53 (-263.93,-19.12)&quot; &quot;0.025&quot;      </span>
-<span class="co">#&gt;    Humboldt         &quot;16.84 (-83.72,117.4)&quot;     &quot;0.743&quot;      </span>
-<span class="co">#&gt;    Inyo             &quot;-15.72 (-119.64,88.19)&quot;   &quot;0.767&quot;      </span>
-<span class="co">#&gt;    Kern             &quot;-16.93 (-162.52,128.67)&quot;  &quot;0.82&quot;       </span>
-<span class="co">#&gt;    Kings            &quot;-166.16 (-266.72,-65.6)&quot;  &quot;0.001&quot;      </span>
-<span class="co">#&gt;    Los Angeles      &quot;-61.65 (-170.91,47.61)&quot;   &quot;0.27&quot;       </span>
-<span class="co">#&gt;    Marin            &quot;136.85 (14.32,259.38)&quot;    &quot;0.03&quot;       </span>
-<span class="co">#&gt;    Mariposa         &quot;10.84 (-89.72,111.4)&quot;     &quot;0.833&quot;      </span>
-<span class="co">#&gt;    Mendocino        &quot;-63.14 (-163.71,37.43)&quot;   &quot;0.22&quot;       </span>
-<span class="co">#&gt;    Merced           &quot;-124.3 (-226.55,-22.05)&quot;  &quot;0.018&quot;      </span>
-<span class="co">#&gt;    Monterey         &quot;-32.33 (-181.51,116.86)&quot;  &quot;0.672&quot;      </span>
-<span class="co">#&gt;    Napa             &quot;-35.16 (-135.72,65.4)&quot;    &quot;0.494&quot;      </span>
-<span class="co">#&gt;    Orange           &quot;15.8 (-107.96,139.56)&quot;    &quot;0.803&quot;      </span>
-<span class="co">#&gt;    Placer           &quot;111.2 (-24.09,246.48)&quot;    &quot;0.109&quot;      </span>
-<span class="co">#&gt;    Riverside        &quot;-104.26 (-208.46,-0.06)&quot;  &quot;0.052&quot;      </span>
-<span class="co">#&gt;    Sacramento       &quot;-3.86 (-146.36,138.64)&quot;   &quot;0.958&quot;      </span>
-<span class="co">#&gt;    San Bernardino   &quot;-127.61 (-246.83,-8.38)&quot;  &quot;0.038&quot;      </span>
-<span class="co">#&gt;    San Diego        &quot;8.96 (-110.28,128.2)&quot;     &quot;0.883&quot;      </span>
-<span class="co">#&gt;    San Francisco    &quot;-163.11 (-272.65,-53.56)&quot; &quot;0.004&quot;      </span>
-<span class="co">#&gt;    San Joaquin      &quot;-2.07 (-106.6,102.45)&quot;    &quot;0.969&quot;      </span>
-<span class="co">#&gt;    San Mateo        &quot;79.45 (-98.09,257)&quot;       &quot;0.382&quot;      </span>
-<span class="co">#&gt;    Santa Barbara    &quot;47.84 (-52.72,148.4)&quot;     &quot;0.353&quot;      </span>
-<span class="co">#&gt;    Santa Clara      &quot;-31.04 (-165.5,103.42)&quot;   &quot;0.652&quot;      </span>
-<span class="co">#&gt;    Santa Cruz       &quot;57.37 (-43.49,158.24)&quot;    &quot;0.267&quot;      </span>
-<span class="co">#&gt;    Shasta           &quot;-32.66 (-151.88,86.56)&quot;   &quot;0.592&quot;      </span>
-<span class="co">#&gt;    Siskiyou         &quot;84.84 (-15.72,185.4)&quot;     &quot;0.1&quot;        </span>
-<span class="co">#&gt;    Solano           &quot;48.84 (-51.72,149.4)&quot;     &quot;0.343&quot;      </span>
-<span class="co">#&gt;    Sonoma           &quot;52.84 (-90.54,196.21)&quot;    &quot;0.471&quot;      </span>
-<span class="co">#&gt;    Stanislaus       &quot;16.84 (-83.72,117.4)&quot;     &quot;0.743&quot;      </span>
-<span class="co">#&gt;    Tehama           &quot;69.84 (-30.72,170.4)&quot;     &quot;0.175&quot;      </span>
-<span class="co">#&gt;    Tulare           &quot;-68.08 (-189.66,53.49)&quot;   &quot;0.274&quot;      </span>
-<span class="co">#&gt;    Tuolumne         &quot;17.84 (-82.72,118.4)&quot;     &quot;0.729&quot;      </span>
-<span class="co">#&gt;    Ventura          &quot;12.01 (-106.02,130.04)&quot;   &quot;0.842&quot;      </span>
-<span class="co">#&gt;    Yolo             &quot;-76.14 (-184.86,32.57)&quot;   &quot;0.172&quot;      </span>
-<span class="co">#&gt; mobility            &quot;-1.43 (-3.3,0.44)&quot;        &quot;0.137&quot;      </span>
-<span class="co">#&gt; tt2: 1 vs 0         &quot;10.98 (-34.16,56.12)&quot;     &quot;0.634&quot;      </span>
-<span class="co">#&gt;                     adj. coeff.(95%CI)         adj. P value</span>
-<span class="co">#&gt; ell                 &quot;-0.7 (-1.53,0.13)&quot;        &quot;0.1&quot;       </span>
-<span class="co">#&gt; meals               &quot;-3.29 (-3.96,-2.63)&quot;      &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt; cname: ref.=Alameda NA                         NA          </span>
-<span class="co">#&gt;    Amador           &quot;-53.93 (-110.17,2.32)&quot;    &quot;0.062&quot;     </span>
-<span class="co">#&gt;    Butte            &quot;-21.1 (-85.36,43.15)&quot;     &quot;0.521&quot;     </span>
-<span class="co">#&gt;    Colusa           &quot;-38.75 (-98.1,20.6)&quot;      &quot;0.203&quot;     </span>
-<span class="co">#&gt;    Contra Costa     &quot;-5.5 (-82.43,71.43)&quot;      &quot;0.889&quot;     </span>
-<span class="co">#&gt;    El Dorado        &quot;-63.5 (-122.31,-4.68)&quot;    &quot;0.036&quot;     </span>
-<span class="co">#&gt;    Fresno           &quot;40.55 (-40.49,121.58)&quot;    &quot;0.328&quot;     </span>
-<span class="co">#&gt;    Humboldt         &quot;-114.4 (-170.09,-58.72)&quot;  &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Inyo             &quot;-32.29 (-112.96,48.37)&quot;   &quot;0.434&quot;     </span>
-<span class="co">#&gt;    Kern             &quot;3.74 (-67.51,74.98)&quot;      &quot;0.918&quot;     </span>
-<span class="co">#&gt;    Kings            &quot;-56.85 (-125.93,12.23)&quot;   &quot;0.109&quot;     </span>
-<span class="co">#&gt;    Los Angeles      &quot;19.49 (-47.64,86.61)&quot;     &quot;0.57&quot;      </span>
-<span class="co">#&gt;    Marin            &quot;6.26 (-89.25,101.77)&quot;     &quot;0.898&quot;     </span>
-<span class="co">#&gt;    Mariposa         &quot;-87.63 (-143.96,-31.3)&quot;   &quot;0.003&quot;     </span>
-<span class="co">#&gt;    Mendocino        &quot;7.71 (-106.73,122.14)&quot;    &quot;0.895&quot;     </span>
-<span class="co">#&gt;    Merced           &quot;-17.59 (-92.74,57.57)&quot;    &quot;0.647&quot;     </span>
-<span class="co">#&gt;    Monterey         &quot;-23.17 (-102.88,56.55)&quot;   &quot;0.57&quot;      </span>
-<span class="co">#&gt;    Napa             &quot;-53.44 (-112.67,5.79)&quot;    &quot;0.079&quot;     </span>
-<span class="co">#&gt;    Orange           &quot;58.31 (-6,122.61)&quot;        &quot;0.078&quot;     </span>
-<span class="co">#&gt;    Placer           &quot;4.71 (-76.87,86.29)&quot;      &quot;0.91&quot;      </span>
-<span class="co">#&gt;    Riverside        &quot;-55.23 (-125.6,15.14)&quot;    &quot;0.126&quot;     </span>
-<span class="co">#&gt;    Sacramento       &quot;-28.47 (-110.05,53.11)&quot;   &quot;0.495&quot;     </span>
-<span class="co">#&gt;    San Bernardino   &quot;-50.28 (-123.21,22.66)&quot;   &quot;0.179&quot;     </span>
-<span class="co">#&gt;    San Diego        &quot;20.35 (-41.69,82.4)&quot;      &quot;0.521&quot;     </span>
-<span class="co">#&gt;    San Francisco    &quot;-125.39 (-233.85,-16.93)&quot; &quot;0.025&quot;     </span>
-<span class="co">#&gt;    San Joaquin      &quot;-50.45 (-115.19,14.29)&quot;   &quot;0.129&quot;     </span>
-<span class="co">#&gt;    San Mateo        &quot;-26.21 (-144.27,91.85)&quot;   &quot;0.664&quot;     </span>
-<span class="co">#&gt;    Santa Barbara    &quot;-18.6 (-73.55,36.36)&quot;     &quot;0.508&quot;     </span>
-<span class="co">#&gt;    Santa Clara      &quot;-9.75 (-85.89,66.39)&quot;     &quot;0.802&quot;     </span>
-<span class="co">#&gt;    Santa Cruz       &quot;-20.95 (-79.87,37.98)&quot;    &quot;0.487&quot;     </span>
-<span class="co">#&gt;    Shasta           &quot;72.01 (-31.59,175.6)&quot;     &quot;0.175&quot;     </span>
-<span class="co">#&gt;    Siskiyou         &quot;37.72 (-22.34,97.78)&quot;     &quot;0.22&quot;      </span>
-<span class="co">#&gt;    Solano           &quot;34.26 (-31.39,99.91)&quot;     &quot;0.308&quot;     </span>
-<span class="co">#&gt;    Sonoma           &quot;11.83 (-65.01,88.66)&quot;     &quot;0.763&quot;     </span>
-<span class="co">#&gt;    Stanislaus       &quot;-105.52 (-161.41,-49.63)&quot; &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Tehama           &quot;99.7 (34.38,165.02)&quot;      &quot;0.003&quot;     </span>
-<span class="co">#&gt;    Tulare           &quot;16.4 (-53.88,86.68)&quot;      &quot;0.648&quot;     </span>
-<span class="co">#&gt;    Tuolumne         &quot;-60.52 (-117.27,-3.77)&quot;   &quot;0.038&quot;     </span>
-<span class="co">#&gt;    Ventura          &quot;-2.86 (-63.78,58.07)&quot;     &quot;0.927&quot;     </span>
-<span class="co">#&gt;    Yolo             &quot;12.21 (-87.11,111.53)&quot;    &quot;0.81&quot;      </span>
-<span class="co">#&gt; mobility            &quot;0.17 (-0.62,0.96)&quot;        &quot;0.674&quot;     </span>
-<span class="co">#&gt; tt2: 1 vs 0         &quot;15.01 (-8.5,38.52)&quot;       &quot;0.213&quot;     </span>
+<span class="co">#&gt;             crude coeff.(95%CI)    crude P value adj. coeff.(95%CI)   </span>
+<span class="co">#&gt; ell         &quot;-3.73 (-4.35,-3.11)&quot;  &quot;&lt; 0.001&quot;     &quot;-0.51 (-1.27,0.26)&quot; </span>
+<span class="co">#&gt; meals       &quot;-3.38 (-3.71,-3.05)&quot;  &quot;&lt; 0.001&quot;     &quot;-3.11 (-3.65,-2.57)&quot;</span>
+<span class="co">#&gt; tt2: 1 vs 0 &quot;10.98 (-34.16,56.12)&quot; &quot;0.634&quot;       &quot;6.24 (-17.68,30.17)&quot;</span>
+<span class="co">#&gt;             adj. P value</span>
+<span class="co">#&gt; ell         &quot;0.195&quot;     </span>
+<span class="co">#&gt; meals       &quot;&lt; 0.001&quot;   </span>
+<span class="co">#&gt; tt2: 1 vs 0 &quot;0.61&quot;      </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $last.lines</span>
-<span class="co">#&gt; [1] &quot;No. of observations = 200\nAIC value = 2333.9174\n\n&quot;</span>
+<span class="co">#&gt; [1] &quot;No. of observations = 200\nAIC value = 2308.0628\n\n&quot;</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; attr(,&quot;class&quot;)</span>
 <span class="co">#&gt; [1] &quot;display&quot; &quot;list&quot;</span>
@@ -461,141 +379,14 @@ ds2 &lt;-<span class="st"> </span><span class="kw">svyglm</span>(tt<span class="
 <span class="co">#&gt; [1] &quot;Logistic regression predicting tt- weighted data\n&quot;</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $table</span>
-<span class="co">#&gt;                     crude OR.(95%CI)    crude P value</span>
-<span class="co">#&gt; ell                 &quot;1.02 (1,1.05)&quot;     &quot;0.047&quot;      </span>
-<span class="co">#&gt; meals               &quot;1.01 (0.99,1.03)&quot;  &quot;0.255&quot;      </span>
-<span class="co">#&gt; cname: ref.=Alameda NA                  NA           </span>
-<span class="co">#&gt;    Amador           &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;    Butte            &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;    Colusa           &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;    Contra Costa     &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;    El Dorado        &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;    Fresno           &quot;1.74 (0.12,25.84)&quot; &quot;0.687&quot;      </span>
-<span class="co">#&gt;    Humboldt         &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;    Inyo             &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;    Kern             &quot;1.73 (0.09,33.26)&quot; &quot;0.717&quot;      </span>
-<span class="co">#&gt;    Kings            &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;    Los Angeles      &quot;1.86 (0.19,18.54)&quot; &quot;0.598&quot;      </span>
-<span class="co">#&gt;    Marin            &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;    Mariposa         &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;    Mendocino        &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;    Merced           &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;    Monterey         &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;    Napa             &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;    Orange           &quot;1.58 (0.11,22.23)&quot; &quot;0.734&quot;      </span>
-<span class="co">#&gt;    Placer           &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;    Riverside        &quot;2.95 (0.23,38.08)&quot; &quot;0.408&quot;      </span>
-<span class="co">#&gt;    Sacramento       &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;    San Bernardino   &quot;0.74 (0.04,14.17)&quot; &quot;0.839&quot;      </span>
-<span class="co">#&gt;    San Diego        &quot;3.89 (0.29,51.72)&quot; &quot;0.306&quot;      </span>
-<span class="co">#&gt;    San Francisco    &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;    San Joaquin      &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;    San Mateo        &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;    Santa Barbara    &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;    Santa Clara      &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;    Santa Cruz       &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;    Shasta           &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;    Siskiyou         &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;    Solano           &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;    Sonoma           &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;    Stanislaus       &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;    Tehama           &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;    Tulare           &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;    Tuolumne         &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;    Ventura          &quot;7.01 (0.56,88.41)&quot; &quot;0.134&quot;      </span>
-<span class="co">#&gt;    Yolo             &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt; mobility            &quot;1.01 (0.98,1.03)&quot;  &quot;0.506&quot;      </span>
-<span class="co">#&gt; tt2: 1 vs 0         &quot;0 (0,0)&quot;           &quot;&lt; 0.001&quot;    </span>
-<span class="co">#&gt;                     adj. OR.(95%CI)                                                      </span>
-<span class="co">#&gt; ell                 &quot;8642653.71 (3481743.02,21453468.19)&quot;                                </span>
-<span class="co">#&gt; meals               &quot;0.04 (0.03,0.05)&quot;                                                   </span>
-<span class="co">#&gt; cname: ref.=Alameda NA                                                                   </span>
-<span class="co">#&gt;    Amador           &quot;Inf (Inf,Inf)&quot;                                                      </span>
-<span class="co">#&gt;    Butte            &quot;Inf (Inf,Inf)&quot;                                                      </span>
-<span class="co">#&gt;    Colusa           &quot;6.00369858230608e+173 (2.66764006028554e+164,1.35117166681497e+183)&quot;</span>
-<span class="co">#&gt;    Contra Costa     &quot;0 (0,0)&quot;                                                            </span>
-<span class="co">#&gt;    El Dorado        &quot;0.05 (0,0.83)&quot;                                                      </span>
-<span class="co">#&gt;    Fresno           &quot;0 (0,0)&quot;                                                            </span>
-<span class="co">#&gt;    Humboldt         &quot;Inf (Inf,Inf)&quot;                                                      </span>
-<span class="co">#&gt;    Inyo             &quot;3.43810424017151e+27 (4.73418041953878e+25,2.49685472853967e+29)&quot;   </span>
-<span class="co">#&gt;    Kern             &quot;1.0235387865582e+47 (7.3369054568865e+44,1.42789307255652e+49)&quot;     </span>
-<span class="co">#&gt;    Kings            &quot;Inf (Inf,Inf)&quot;                                                      </span>
-<span class="co">#&gt;    Los Angeles      &quot;0 (0,0)&quot;                                                            </span>
-<span class="co">#&gt;    Marin            &quot;Inf (Inf,Inf)&quot;                                                      </span>
-<span class="co">#&gt;    Mariposa         &quot;Inf (Inf,Inf)&quot;                                                      </span>
-<span class="co">#&gt;    Mendocino        &quot;0 (0,0)&quot;                                                            </span>
-<span class="co">#&gt;    Merced           &quot;Inf (Inf,Inf)&quot;                                                      </span>
-<span class="co">#&gt;    Monterey         &quot;1.24710898684862e+117 (9.98245683482956e+110,1.55801407490399e+123)&quot;</span>
-<span class="co">#&gt;    Napa             &quot;Inf (Inf,Inf)&quot;                                                      </span>
-<span class="co">#&gt;    Orange           &quot;0 (0,0)&quot;                                                            </span>
-<span class="co">#&gt;    Placer           &quot;Inf (Inf,Inf)&quot;                                                      </span>
-<span class="co">#&gt;    Riverside        &quot;8.00352162045419e+65 (5.22981865875843e+62,1.2248294349901e+69)&quot;    </span>
-<span class="co">#&gt;    Sacramento       &quot;9.37864737889276e+272 (7.67834271605149e+257,1.14554702636201e+288)&quot;</span>
-<span class="co">#&gt;    San Bernardino   &quot;0 (0,0)&quot;                                                            </span>
-<span class="co">#&gt;    San Diego        &quot;0 (0,0)&quot;                                                            </span>
-<span class="co">#&gt;    San Francisco    &quot;3.10414261410186e+147 (3.65023500899351e+139,2.63974822030432e+155)&quot;</span>
-<span class="co">#&gt;    San Joaquin      &quot;3.77939736089423e+268 (4.84287658008561e+253,2.94945455976946e+283)&quot;</span>
-<span class="co">#&gt;    San Mateo        &quot;Inf (Inf,Inf)&quot;                                                      </span>
-<span class="co">#&gt;    Santa Barbara    &quot;Inf (Inf,Inf)&quot;                                                      </span>
-<span class="co">#&gt;    Santa Clara      &quot;0 (0,0)&quot;                                                            </span>
-<span class="co">#&gt;    Santa Cruz       &quot;1.16743603078086e+38 (4.00441011940044e+35,3.40351473831915e+40)&quot;   </span>
-<span class="co">#&gt;    Shasta           &quot;Inf (Inf,Inf)&quot;                                                      </span>
-<span class="co">#&gt;    Siskiyou         &quot;Inf (Inf,Inf)&quot;                                                      </span>
-<span class="co">#&gt;    Solano           &quot;0 (0,0.03)&quot;                                                         </span>
-<span class="co">#&gt;    Sonoma           &quot;0 (0,0)&quot;                                                            </span>
-<span class="co">#&gt;    Stanislaus       &quot;Inf (Inf,Inf)&quot;                                                      </span>
-<span class="co">#&gt;    Tehama           &quot;Inf (Inf,Inf)&quot;                                                      </span>
-<span class="co">#&gt;    Tulare           &quot;0 (0,0)&quot;                                                            </span>
-<span class="co">#&gt;    Tuolumne         &quot;Inf (Inf,Inf)&quot;                                                      </span>
-<span class="co">#&gt;    Ventura          &quot;2.48993768075818e+63 (9.37351475338794e+59,6.61415682075774e+66)&quot;   </span>
-<span class="co">#&gt;    Yolo             &quot;1.87101280579666e+225 (1.70374718749845e+213,2.05469974955311e+237)&quot;</span>
-<span class="co">#&gt; mobility            &quot;159609.3 (78913.87,322821.96)&quot;                                      </span>
-<span class="co">#&gt; tt2: 1 vs 0         &quot;0 (0,0)&quot;                                                            </span>
-<span class="co">#&gt;                     adj. P value</span>
-<span class="co">#&gt; ell                 &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt; meals               &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt; cname: ref.=Alameda NA          </span>
-<span class="co">#&gt;    Amador           &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Butte            &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Colusa           &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Contra Costa     &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    El Dorado        &quot;0.038&quot;     </span>
-<span class="co">#&gt;    Fresno           &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Humboldt         &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Inyo             &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Kern             &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Kings            &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Los Angeles      &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Marin            &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Mariposa         &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Mendocino        &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Merced           &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Monterey         &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Napa             &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Orange           &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Placer           &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Riverside        &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Sacramento       &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    San Bernardino   &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    San Diego        &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    San Francisco    &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    San Joaquin      &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    San Mateo        &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Santa Barbara    &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Santa Clara      &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Santa Cruz       &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Shasta           &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Siskiyou         &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Solano           &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Sonoma           &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Stanislaus       &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Tehama           &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Tulare           &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Tuolumne         &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Ventura          &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt;    Yolo             &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt; mobility            &quot;&lt; 0.001&quot;   </span>
-<span class="co">#&gt; tt2: 1 vs 0         &quot;&lt; 0.001&quot;   </span>
+<span class="co">#&gt;             crude OR.(95%CI)   crude P value adj. OR.(95%CI)   </span>
+<span class="co">#&gt; ell         &quot;1.02 (1,1.05)&quot;    &quot;0.047&quot;       &quot;1.11 (1.02,1.21)&quot;</span>
+<span class="co">#&gt; meals       &quot;1.01 (0.99,1.03)&quot; &quot;0.255&quot;       &quot;0.97 (0.93,1.01)&quot;</span>
+<span class="co">#&gt; tt2: 1 vs 0 &quot;0 (0,0)&quot;          &quot;&lt; 0.001&quot;     &quot;0 (0,0)&quot;         </span>
+<span class="co">#&gt;             adj. P value</span>
+<span class="co">#&gt; ell         &quot;0.02&quot;      </span>
+<span class="co">#&gt; meals       &quot;0.151&quot;     </span>
+<span class="co">#&gt; tt2: 1 vs 0 &quot;&lt; 0.001&quot;   </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $last.lines</span>
 <span class="co">#&gt; [1] &quot;No. of observations = 200\n\n&quot;</span>
@@ -674,7 +465,7 @@ lung <span class="op">%&gt;%</span><span class="st"> </span>
 
 ## Survey data
 <span class="kw">library</span>(survey)
-data.design &lt;-<span class="st"> </span><span class="kw">svydesign</span>(<span class="dt">id =</span> <span class="op">~</span><span class="dv">1</span>, <span class="dt">data =</span> lung)
+data.design &lt;-<span class="st"> </span><span class="kw">svydesign</span>(<span class="dt">id =</span> <span class="op">~</span><span class="dv">1</span>, <span class="dt">data =</span> lung, <span class="dt">weights =</span> <span class="op">~</span><span class="dv">1</span>)
 <span class="co">#TableSubgroupMultiCox(Surv(time, status) ~ sex, var_subgroups = c(&quot;kk&quot;, &quot;kk1&quot;), data = data.design, line = F)</span></code></pre></div>
 </div>
 

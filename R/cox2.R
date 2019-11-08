@@ -13,6 +13,7 @@
 #' @rdname cox2.display
 #' @export 
 #' @importFrom survival coxph cluster frailty
+#' @importFrom stats formula update
 
 cox2.display <- function (cox.obj.withmodel, dec = 2) 
 {
@@ -32,13 +33,16 @@ cox2.display <- function (cox.obj.withmodel, dec = 2)
     mtype <- "frailty"
     xc <- setdiff(xf.old, xf)
     xc.vn <- strsplit(strsplit(xc, "frailty\\(")[[1]][2], "\\)")[[1]][1]
-  } else if(summary(model)$used.robust == T){
+  } else if(!(is.null(model$call$cluster))){
     mtype <- "cluster"
     #xfull <-  strsplit(as.character(model$call[[2]][3]), " \\+ ")[[1]]
     #xc <- setdiff(xfull, xf)
-    xf <- xf[-grep("cluster\\(",xf)]
-    xc <- setdiff(xf.old, xf)
-    xc.vn <- strsplit(strsplit(xc, "cluster\\(")[[1]][2], "\\)")[[1]][1]
+    #xf <- ifelse(length(grep("cluster\\(",xf)) > 0, xf[-grep("cluster\\(",xf)], xf)
+    #xc <- setdiff(xf.old, xf)
+    xc <- as.character(model$call$cluster)
+    xc.vn <- xc
+    #xc.vn <- strsplit(strsplit(xc, "cluster\\(")[[1]][2], "\\)")[[1]][1]
+
   }
    
   formula.surv <- as.character(model$formula)[2]
@@ -60,7 +64,8 @@ cox2.display <- function (cox.obj.withmodel, dec = 2)
   
   
   if(length(xf) == 1){
-    uni.res <- data.frame(summary(coxph(as.formula(paste("mdata[, 1]", "~", xf, formula.ranef, sep="")), data = mdata))$coefficients)
+    uni.res <- data.frame(summary(model)$coefficients)
+    #uni.res <- data.frame(summary(coxph(as.formula(paste("mdata[, 1]", "~", xf, formula.ranef, sep="")), data = mdata))$coefficients)
     rn.uni <- lapply(list(uni.res), rownames)
     names(uni.res)[ncol(uni.res)] <- "p"
     uni.res2 <- NULL
@@ -76,8 +81,12 @@ cox2.display <- function (cox.obj.withmodel, dec = 2)
     #rownames(fix.all) = ifelse(mtype == "frailty", names(model$coefficients)[-length(model$coefficients)], names(model$coefficients))
     rownames(fix.all) <-  names(model$coefficients)
   } else{
+    basemodel <- update(model, formula(paste(c(". ~ .", xf), collapse=' - ')))
     unis <- lapply(xf, function(x){
-      uni.res <- data.frame(summary(coxph(as.formula(paste("mdata[, 1]", "~", x, formula.ranef, sep="")), data = mdata))$coefficients)
+      newfit <- update(basemodel, formula(paste0(". ~ . +", x)))
+      uni.res <- data.frame(summary(newfit)$coefficients)
+      uni.res <- uni.res[c(2:nrow(uni.res), 1), ]
+      #uni.res <- data.frame(summary(coxph(as.formula(paste("mdata[, 1]", "~", x, formula.ranef, sep="")), data = mdata))$coefficients)
       names(uni.res)[ncol(uni.res)] <- "p"
       uni.res2 <- NULL
       if (mtype == "normal"){
@@ -126,16 +135,17 @@ cox2.display <- function (cox.obj.withmodel, dec = 2)
   ranef.mat = NULL
   if (mtype == "cluster"){
     ranef.mat <- cbind(c(NA, NA), matrix(NA, length(xc) + 1, ncol(fix.all) - 1))
-    clname = strsplit(xc, "\\(")[[1]]
-    cvname = strsplit(paste(clname[-1], collapse = "("), "\\)")[[1]]
-    cvname = paste(cvname[length(cvname)], collapse = ")")
-    rownames(ranef.mat) = c(clname[1], cvname)
+    #clname = strsplit(xc, "\\(")[[1]]
+    clname <- c("cluster", xc)
+    cvname <- strsplit(paste(clname[-1], collapse = "("), "\\)")[[1]]
+    cvname <- paste(cvname[length(cvname)], collapse = ")")
+    rownames(ranef.mat) <- c(clname[1], cvname)
   } else if (mtype == "frailty"){
     ranef.mat <- cbind(c(NA, NA), matrix(NA, length(xc) + 1, ncol(fix.all) - 1))
-    clname = strsplit(xc, "\\(")[[1]]
-    cvname = strsplit(paste(clname[-1], collapse = "("), "\\)")[[1]]
-    cvname = paste(cvname[length(cvname)], collapse = ")")
-    rownames(ranef.mat) = c(clname[1], cvname)
+    clname <- strsplit(xc, "\\(")[[1]]
+    cvname <- strsplit(paste(clname[-1], collapse = "("), "\\)")[[1]]
+    cvname <- paste(cvname[length(cvname)], collapse = ")")
+    rownames(ranef.mat) <- c(clname[1], cvname)
   }
   
 
