@@ -71,6 +71,9 @@ cox2.display <- function (cox.obj.withmodel, dec = 2)
     uni.res2 <- NULL
     if (mtype == "normal"){
       uni.res2 <- uni.res[, c(1, 3, 4, 5)]
+      if (length(grep("robust.se", names(uni.res))) > 0){
+        uni.res2 <- uni.res[, c(1, 4, 5, 6)]
+      }
     } else if (mtype == "cluster"){
       uni.res2 <- uni.res[, c(1, 4, 5, 6)]
     } else {
@@ -81,11 +84,17 @@ cox2.display <- function (cox.obj.withmodel, dec = 2)
     #rownames(fix.all) = ifelse(mtype == "frailty", names(model$coefficients)[-length(model$coefficients)], names(model$coefficients))
     rownames(fix.all) <-  names(model$coefficients)
   } else{
-    basemodel <- update(model, formula(paste(c(". ~ .", xf), collapse=' - ')))
+    mdata2 <- cbind(matrix(sapply(mdata[, 1], `[[`, 1), ncol = 2), mdata[, -1])
+    names(mdata2)[1:2] <- as.character(model$formula[[2]][2:3])
+    if (!is.null(xc.vn)){
+      names(mdata2)[ncol(mdata2)] <- xc.vn 
+    }
+    basemodel <- update(model, formula(paste(c(". ~ .", xf), collapse=' - ')), data = mdata2)
     unis <- lapply(xf, function(x){
-      newfit <- update(basemodel, formula(paste0(". ~ . +", x)))
+      newfit <- update(basemodel, formula(paste0(". ~ . +", x)), data= mdata2)
       uni.res <- data.frame(summary(newfit)$coefficients)
-      uni.res <- uni.res[c(2:nrow(uni.res), 1), ]
+      uni.res <- uni.res[grep(x, rownames(uni.res)), ]
+      #uni.res <- uni.res[c(2:nrow(uni.res), 1), ]
       #uni.res <- data.frame(summary(coxph(as.formula(paste("mdata[, 1]", "~", x, formula.ranef, sep="")), data = mdata))$coefficients)
       names(uni.res)[ncol(uni.res)] <- "p"
       uni.res2 <- NULL
@@ -94,7 +103,7 @@ cox2.display <- function (cox.obj.withmodel, dec = 2)
       } else if (mtype == "cluster"){
         uni.res2 <- uni.res[, c(1, 4, 5, 6)]
       } else {
-        uni.res2 <- uni.res[-nrow(uni.res), c(1, 3, 4, 6)]
+        uni.res2 <- uni.res[, c(1, 3, 4, 6)]
       }
       return(uni.res2)
       })
@@ -119,7 +128,7 @@ cox2.display <- function (cox.obj.withmodel, dec = 2)
   varnum.2fac <- which(lapply(xf, function(x){length(sapply(mdata, levels)[[x]])}) == 2)
   lapply(varnum.2fac, function(x){rn.list[[x]] <<- paste(xf[x], ": ", levels(mdata[, xf[x]])[2], " vs ", levels(mdata[, xf[x]])[1], sep="")})
   lapply(varnum.mfac, function(x){rn.list[[x]] <<- c(paste(xf[x],": ref.=", levels(mdata[, xf[x]])[1], sep=""), gsub(xf[x],"   ", rn.list[[x]]))})
-  if (class(fix.all.unlist) == "character"){
+  if (class(fix.all.unlist)[1] == "character"){
     fix.all.unlist <- t(data.frame(fix.all.unlist))
   }
   rownames(fix.all.unlist) <- unlist(rn.list)
