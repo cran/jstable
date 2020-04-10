@@ -1,6 +1,6 @@
-2c99a477d7d8e7334c1d78af81a5845c *DESCRIPTION
+a4b44b092960925ad194c3f24d7ddfad *DESCRIPTION
 339400136df67341c1261ab5df3f2c4a *NAMESPACE
-fa377e20d5da65838f395c4dc9b9605e *NEWS.md
+b3c3236cea2bfcccfc00ff3527f7d686 *NEWS.md
 e389ce1fff6c1b85af31b4a34cdeccd9 *R/CreateTableOneJS.R
 ad1d0c5d2ace119bf0e3d8c4878f2b4d *R/DToption.R
 734ca199df0d2e8f1bf93bf9ee42976b *R/cox2.R
@@ -11,13 +11,13 @@ ad1d0c5d2ace119bf0e3d8c4878f2b4d *R/DToption.R
 ff90277ba0873370b2733039a270d4b9 *R/label.R
 c13b920d1d23906c27cc97cdda63eac4 *R/lmer.R
 243e106741aeec10d9519bc4e547261c *R/svyCreateTableOneJS.R
-db4d354418edcbeaa2b33347a80e515d *R/svycox.R
+2c63f56a03fe403005432522a9a4476b *R/svycox.R
 6c4a9ee00532fc5d439273aea5e46ecd *R/svyglm.R
 203fca8f03772cc6d90a02ab801325c5 *README.md
-8533aab3ca5c38de9db77ffaf2186587 *build/vignette.rds
+74ee9cbf78146af861b136c9b6565085 *build/vignette.rds
 12462abce7207592f7dcc36ec9805235 *inst/doc/jstable.R
 e21a95e99f7ea67052449aa0d8db3371 *inst/doc/jstable.Rmd
-4e075bf54cd6826d8d83d0a9f7e68b73 *inst/doc/jstable.html
+f916391379d89490f846dc67ce7898f1 *inst/doc/jstable.html
 cb9982fc48d13bbc3d44e061d1f217ba *man/CreateTableOne2.Rd
 f7e155174d309eb21861c848399db40f *man/CreateTableOneJS.Rd
 61b0819fc737d3a71233d54aec739811 *man/LabelepiDisplay.Rd
