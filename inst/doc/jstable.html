@@ -12,7 +12,7 @@
 
 <meta name="author" content="Jinseob Kim" />
 
-<meta name="date" content="2020-04-11" />
+<meta name="date" content="2020-05-04" />
 
 <title>Introduce jstable</title>
 
@@ -95,7 +95,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Introduce jstable</h1>
 <h4 class="author">Jinseob Kim</h4>
-<h4 class="date">2020-04-11</h4>
+<h4 class="date">2020-05-04</h4>
 
 
 
@@ -183,15 +183,15 @@ gee02 &lt;-<span class="st"> </span><span class="kw">geeglm</span> (ddn <span cl
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $table</span>
 <span class="co">#&gt;                crude OR(95%CI)    crude P value adj. OR(95%CI)     adj. P value</span>
-<span class="co">#&gt; Time           &quot;1.02 (0.99,1.05)&quot; &quot;0.24&quot;        &quot;1.02 (0.99,1.05)&quot; &quot;0.237&quot;     </span>
+<span class="co">#&gt; Time           &quot;1.02 (0.99,1.06)&quot; &quot;0.249&quot;       &quot;1.02 (0.99,1.06)&quot; &quot;0.251&quot;     </span>
 <span class="co">#&gt; Cu: ref.=Cu000 NA                 NA            NA                 NA          </span>
-<span class="co">#&gt;       035      &quot;0.84 (0.62,1.14)&quot; &quot;0.261&quot;       &quot;0.84 (0.62,1.14)&quot; &quot;0.258&quot;     </span>
-<span class="co">#&gt;       175      &quot;1.07 (0.78,1.46)&quot; &quot;0.692&quot;       &quot;1.06 (0.78,1.45)&quot; &quot;0.693&quot;     </span>
+<span class="co">#&gt;       035      &quot;1.43 (1.02,2.01)&quot; &quot;0.04&quot;        &quot;1.43 (1.02,2.01)&quot; &quot;0.04&quot;      </span>
+<span class="co">#&gt;       175      &quot;1.71 (1.21,2.42)&quot; &quot;0.002&quot;       &quot;1.71 (1.21,2.42)&quot; &quot;0.002&quot;     </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $metric</span>
 <span class="co">#&gt;                                  crude OR(95%CI) crude P value adj. OR(95%CI)</span>
 <span class="co">#&gt;                                  NA              NA            NA            </span>
-<span class="co">#&gt; Estimated correlation parameters &quot;-0.01&quot;         NA            NA            </span>
+<span class="co">#&gt; Estimated correlation parameters &quot;-0.011&quot;        NA            NA            </span>
 <span class="co">#&gt; No. of clusters                  &quot;72&quot;            NA            NA            </span>
 <span class="co">#&gt; No. of observations              &quot;861&quot;           NA            NA            </span>
 <span class="co">#&gt;                                  adj. P value</span>
@@ -223,7 +223,7 @@ l1 =<span class="st"> </span><span class="kw">lmer</span>(Weight <span class="op
 <span class="co">#&gt; Time                   0.0000000</span>
 <span class="co">#&gt; Cu: ref.=Cu000                NA</span>
 <span class="co">#&gt;       035              0.6527264</span>
-<span class="co">#&gt;       175              0.3442310</span>
+<span class="co">#&gt;       175              0.3442309</span>
 <span class="co">#&gt; Random effects                NA</span>
 <span class="co">#&gt; Pig                           NA</span>
 <span class="co">#&gt; Residual                      NA</span>
@@ -240,22 +240,22 @@ l2 =<span class="st"> </span><span class="kw">glmer</span>(ddn <span class="op">
 <span class="kw">lmer.display</span>(l2)
 <span class="co">#&gt; $table</span>
 <span class="co">#&gt;                      crude OR(95%CI) crude P value   adj. OR(95%CI)</span>
-<span class="co">#&gt; Time                1.02 (0.98,1.06)     0.3366369 1.02 (0.98,1.06)</span>
+<span class="co">#&gt; Time                1.02 (0.98,1.06)   0.304149526 1.02 (0.98,1.06)</span>
 <span class="co">#&gt; Cu: ref.=Cu000                  &lt;NA&gt;            NA             &lt;NA&gt;</span>
-<span class="co">#&gt;       035           0.84 (0.61,1.17)     0.3027078 0.84 (0.61,1.17)</span>
-<span class="co">#&gt;       175           1.07 (0.77,1.48)     0.7075198 1.07 (0.76,1.48)</span>
+<span class="co">#&gt;       035           1.43 (1.03,1.99)   0.033219602 1.43 (1.03,1.99)</span>
+<span class="co">#&gt;       175           1.71 (1.23,2.39)   0.001605341 1.71 (1.23,2.39)</span>
 <span class="co">#&gt; Random effects                  &lt;NA&gt;            NA             &lt;NA&gt;</span>
 <span class="co">#&gt; Pig                                0            NA             &lt;NA&gt;</span>
 <span class="co">#&gt; Metrics                         &lt;NA&gt;            NA             &lt;NA&gt;</span>
 <span class="co">#&gt; No. of groups (Pig)               72            NA             &lt;NA&gt;</span>
 <span class="co">#&gt; No. of observations              861            NA             &lt;NA&gt;</span>
-<span class="co">#&gt; Log-likelihood               -594.93            NA             &lt;NA&gt;</span>
-<span class="co">#&gt; AIC value                    1199.86            NA             &lt;NA&gt;</span>
+<span class="co">#&gt; Log-likelihood               -590.92            NA             &lt;NA&gt;</span>
+<span class="co">#&gt; AIC value                    1191.84            NA             &lt;NA&gt;</span>
 <span class="co">#&gt;                     adj. P value</span>
-<span class="co">#&gt; Time                   0.3335576</span>
+<span class="co">#&gt; Time                 0.306005593</span>
 <span class="co">#&gt; Cu: ref.=Cu000                NA</span>
-<span class="co">#&gt;       035              0.3003034</span>
-<span class="co">#&gt;       175              0.7091404</span>
+<span class="co">#&gt;       035            0.033514533</span>
+<span class="co">#&gt;       175            0.001608617</span>
 <span class="co">#&gt; Random effects                NA</span>
 <span class="co">#&gt; Pig                           NA</span>
 <span class="co">#&gt; Metrics                       NA</span>
@@ -434,7 +434,7 @@ model &lt;-<span class="st"> </span><span class="kw">svycoxph</span>(<span class
 <span class="co">#&gt; &lt;NA&gt;                     NA   NA   NA   NA</span>
 <span class="co">#&gt; No. of observations  312.00   NA   NA   NA</span>
 <span class="co">#&gt; No. of events        144.00   NA   NA   NA</span>
-<span class="co">#&gt; AIC                 1483.12   NA   NA   NA</span>
+<span class="co">#&gt; AIC                 1480.29   NA   NA   NA</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $caption</span>
 <span class="co">#&gt; [1] &quot;Survey cox model on time ('time') to event ('status &gt; 0')&quot;</span></code></pre></div>

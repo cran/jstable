@@ -49,10 +49,10 @@ TableSubgroupCox <- function(formula, var_subgroup = NULL, var_cov = NULL, data,
   
   if (any(class(data) == "survey.design" & !is.null(var_subgroup))){
     if (is.numeric(data$variables[[var_subgroup]])) stop("var_subgroup must categorical.")
-    if (length(unique(data$variables[[as.character(formula[[3]])]])) != 2) stop("Independent variable must have 2 levels.")
+    if (length(levels(data$variables[[as.character(formula[[3]])]])) != 2) stop("Independent variable must have 2 levels.")
   } else if(any(class(data) == "data.frame" & !is.null(var_subgroup))){
     if (is.numeric(data[[var_subgroup]])) stop("var_subgroup must categorical.")
-    if (length(unique(data[[as.character(formula[[3]])]])) != 2) stop("Independent variable must have 2 levels.")
+    if (length(levels(data[[as.character(formula[[3]])]])) != 2) stop("Independent variable must have 2 levels.")
   }
   
   
@@ -99,7 +99,7 @@ TableSubgroupCox <- function(formula, var_subgroup = NULL, var_cov = NULL, data,
     CI <- round(exp(confint(model)[1, ]), decimal.hr)
     event <- purrr::map_dbl(model$y, 1) %>% tail(model$n)
     #prop <- round(prop.table(table(event, model$x[, 1]), 2)[2, ] * 100, decimal.percent)
-    pv <- round(summary(model)$coefficients[1, 5], decimal.pvalue)
+    pv <- round(summary(model)$coefficients[1, "Pr(>|z|)"], decimal.pvalue)
     
     tibble::tibble(Variable = "Overall", Count = model$n, Percent = 100, `Point Estimate` = Point.Estimate, Lower = CI[1], Upper = CI[2]) %>% 
       cbind(t(prop)) %>% 
