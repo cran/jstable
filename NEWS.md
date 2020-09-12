@@ -1,3 +1,16 @@
+# jstable 0.9.7
+
+## Bugfix 
+
+* `TableSubgroupCox`: apply `extend = T` option to `summary.survfit` 
+
+* `LabelepiDisplay`, `LabeljsTable` with only 1 independent variable.
+
+## Update 
+
+* `CreateTableOneJS`, `svyCreateTableOneJS`: Add `showpm` option to show normal distributed continuous variables as Mean ± SD.
+
+
 # jstable 0.9.6
 
 * Bugfix `LabelepiDisplay`, `LabeljsTable`: label error.     

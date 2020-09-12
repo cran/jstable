@@ -12,7 +12,7 @@
 
 <meta name="author" content="Jinseob Kim" />
 
-<meta name="date" content="2020-08-25" />
+<meta name="date" content="2020-09-12" />
 
 <title>Introduce jstable</title>
 
@@ -319,7 +319,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Introduce jstable</h1>
 <h4 class="author">Jinseob Kim</h4>
-<h4 class="date">2020-08-25</h4>
+<h4 class="date">2020-09-12</h4>
 
 
 
@@ -407,15 +407,15 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb3-38"><a href="#cb3-38"></a><span class="co">#&gt; </span></span>
 <span id="cb3-39"><a href="#cb3-39"></a><span class="co">#&gt; $table</span></span>
 <span id="cb3-40"><a href="#cb3-40"></a><span class="co">#&gt;                crude OR(95%CI)    crude P value adj. OR(95%CI)     adj. P value</span></span>
-<span id="cb3-41"><a href="#cb3-41"></a><span class="co">#&gt; Time           &quot;1.01 (0.97,1.05)&quot; &quot;0.689&quot;       &quot;1.01 (0.97,1.05)&quot; &quot;0.682&quot;     </span></span>
+<span id="cb3-41"><a href="#cb3-41"></a><span class="co">#&gt; Time           &quot;1.01 (0.97,1.05)&quot; &quot;0.733&quot;       &quot;1.01 (0.97,1.05)&quot; &quot;0.735&quot;     </span></span>
 <span id="cb3-42"><a href="#cb3-42"></a><span class="co">#&gt; Cu: ref.=Cu000 NA                 NA            NA                 NA          </span></span>
-<span id="cb3-43"><a href="#cb3-43"></a><span class="co">#&gt;       035      &quot;0.68 (0.51,0.91)&quot; &quot;0.009&quot;       &quot;0.68 (0.51,0.91)&quot; &quot;0.009&quot;     </span></span>
-<span id="cb3-44"><a href="#cb3-44"></a><span class="co">#&gt;       175      &quot;0.85 (0.64,1.15)&quot; &quot;0.293&quot;       &quot;0.85 (0.64,1.15)&quot; &quot;0.292&quot;     </span></span>
+<span id="cb3-43"><a href="#cb3-43"></a><span class="co">#&gt;       035      &quot;1.09 (0.78,1.53)&quot; &quot;0.605&quot;       &quot;1.09 (0.78,1.53)&quot; &quot;0.606&quot;     </span></span>
+<span id="cb3-44"><a href="#cb3-44"></a><span class="co">#&gt;       175      &quot;0.93 (0.65,1.33)&quot; &quot;0.694&quot;       &quot;0.93 (0.65,1.33)&quot; &quot;0.693&quot;     </span></span>
 <span id="cb3-45"><a href="#cb3-45"></a><span class="co">#&gt; </span></span>
 <span id="cb3-46"><a href="#cb3-46"></a><span class="co">#&gt; $metric</span></span>
 <span id="cb3-47"><a href="#cb3-47"></a><span class="co">#&gt;                                  crude OR(95%CI) crude P value adj. OR(95%CI)</span></span>
 <span id="cb3-48"><a href="#cb3-48"></a><span class="co">#&gt;                                  NA              NA            NA            </span></span>
-<span id="cb3-49"><a href="#cb3-49"></a><span class="co">#&gt; Estimated correlation parameters &quot;-0.012&quot;        NA            NA            </span></span>
+<span id="cb3-49"><a href="#cb3-49"></a><span class="co">#&gt; Estimated correlation parameters &quot;0.008&quot;         NA            NA            </span></span>
 <span id="cb3-50"><a href="#cb3-50"></a><span class="co">#&gt; No. of clusters                  &quot;72&quot;            NA            NA            </span></span>
 <span id="cb3-51"><a href="#cb3-51"></a><span class="co">#&gt; No. of observations              &quot;861&quot;           NA            NA            </span></span>
 <span id="cb3-52"><a href="#cb3-52"></a><span class="co">#&gt;                                  adj. P value</span></span>
@@ -464,22 +464,22 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb4-36"><a href="#cb4-36"></a><span class="kw">lmer.display</span>(l2)</span>
 <span id="cb4-37"><a href="#cb4-37"></a><span class="co">#&gt; $table</span></span>
 <span id="cb4-38"><a href="#cb4-38"></a><span class="co">#&gt;                      crude OR(95%CI) crude P value   adj. OR(95%CI)</span></span>
-<span id="cb4-39"><a href="#cb4-39"></a><span class="co">#&gt; Time                1.01 (0.97,1.05)    0.66378392 1.01 (0.97,1.05)</span></span>
+<span id="cb4-39"><a href="#cb4-39"></a><span class="co">#&gt; Time                1.01 (0.97,1.05)     0.7402347 1.01 (0.97,1.05)</span></span>
 <span id="cb4-40"><a href="#cb4-40"></a><span class="co">#&gt; Cu: ref.=Cu000                  &lt;NA&gt;            NA             &lt;NA&gt;</span></span>
-<span id="cb4-41"><a href="#cb4-41"></a><span class="co">#&gt;       035           0.68 (0.49,0.95)    0.02308367 0.68 (0.49,0.95)</span></span>
-<span id="cb4-42"><a href="#cb4-42"></a><span class="co">#&gt;       175           0.85 (0.61,1.19)    0.35162804 0.85 (0.61,1.19)</span></span>
+<span id="cb4-41"><a href="#cb4-41"></a><span class="co">#&gt;       035           1.09 (0.78,1.54)     0.6072495 1.09 (0.78,1.54)</span></span>
+<span id="cb4-42"><a href="#cb4-42"></a><span class="co">#&gt;       175           0.93 (0.66,1.32)     0.6829193 0.93 (0.66,1.32)</span></span>
 <span id="cb4-43"><a href="#cb4-43"></a><span class="co">#&gt; Random effects                  &lt;NA&gt;            NA             &lt;NA&gt;</span></span>
-<span id="cb4-44"><a href="#cb4-44"></a><span class="co">#&gt; Pig                                0            NA             &lt;NA&gt;</span></span>
+<span id="cb4-44"><a href="#cb4-44"></a><span class="co">#&gt; Pig                             0.03            NA             &lt;NA&gt;</span></span>
 <span id="cb4-45"><a href="#cb4-45"></a><span class="co">#&gt; Metrics                         &lt;NA&gt;            NA             &lt;NA&gt;</span></span>
 <span id="cb4-46"><a href="#cb4-46"></a><span class="co">#&gt; No. of groups (Pig)               72            NA             &lt;NA&gt;</span></span>
 <span id="cb4-47"><a href="#cb4-47"></a><span class="co">#&gt; No. of observations              861            NA             &lt;NA&gt;</span></span>
-<span id="cb4-48"><a href="#cb4-48"></a><span class="co">#&gt; Log-likelihood               -593.81            NA             &lt;NA&gt;</span></span>
-<span id="cb4-49"><a href="#cb4-49"></a><span class="co">#&gt; AIC value                    1197.62            NA             &lt;NA&gt;</span></span>
+<span id="cb4-48"><a href="#cb4-48"></a><span class="co">#&gt; Log-likelihood               -595.16            NA             &lt;NA&gt;</span></span>
+<span id="cb4-49"><a href="#cb4-49"></a><span class="co">#&gt; AIC value                    1200.32            NA             &lt;NA&gt;</span></span>
 <span id="cb4-50"><a href="#cb4-50"></a><span class="co">#&gt;                     adj. P value</span></span>
-<span id="cb4-51"><a href="#cb4-51"></a><span class="co">#&gt; Time                  0.65495812</span></span>
+<span id="cb4-51"><a href="#cb4-51"></a><span class="co">#&gt; Time                   0.7416864</span></span>
 <span id="cb4-52"><a href="#cb4-52"></a><span class="co">#&gt; Cu: ref.=Cu000                NA</span></span>
-<span id="cb4-53"><a href="#cb4-53"></a><span class="co">#&gt;       035             0.02294434</span></span>
-<span id="cb4-54"><a href="#cb4-54"></a><span class="co">#&gt;       175             0.35100911</span></span>
+<span id="cb4-53"><a href="#cb4-53"></a><span class="co">#&gt;       035              0.6082777</span></span>
+<span id="cb4-54"><a href="#cb4-54"></a><span class="co">#&gt;       175              0.6822318</span></span>
 <span id="cb4-55"><a href="#cb4-55"></a><span class="co">#&gt; Random effects                NA</span></span>
 <span id="cb4-56"><a href="#cb4-56"></a><span class="co">#&gt; Pig                           NA</span></span>
 <span id="cb4-57"><a href="#cb4-57"></a><span class="co">#&gt; Metrics                       NA</span></span>
