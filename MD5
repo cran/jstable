@@ -1,6 +1,6 @@
-8bde10ba3fc2bbec2206ee9a04424b5c *DESCRIPTION
+363682af28fbe0ff63b305e86a7ab08e *DESCRIPTION
 5229188580944ce2e2a6520e506474c7 *NAMESPACE
-78e33b3415a63a6d83fc5bbc19f58a60 *NEWS.md
+ea4e2c696671c3595a13cc9a34734f49 *NEWS.md
 fb28d1af1c758445f6286c207cbc759a *R/CreateTableOneJS.R
 ad1d0c5d2ace119bf0e3d8c4878f2b4d *R/DToption.R
 734ca199df0d2e8f1bf93bf9ee42976b *R/cox2.R
@@ -11,14 +11,14 @@ fa076ba43ff04060d444b9ca28cd5c1b *R/forestglm.R
 56add2535cf9ccb61460fcca9544d793 *R/glmshow.R
 447d25a67ab297cd002816d6b16f1ae7 *R/label.R
 c13b920d1d23906c27cc97cdda63eac4 *R/lmer.R
-c89d2dd9ff5f24fd1f4da71d95f4c8aa *R/svyCreateTableOneJS.R
+79ebede6159a1f4433b2878dc5e707f9 *R/svyCreateTableOneJS.R
 d2d46928a19726355443d6068512f0ec *R/svycox.R
 6c4a9ee00532fc5d439273aea5e46ecd *R/svyglm.R
 3ad161283a0bc7a2fec5ccd0479aa918 *README.md
-9cd27a132023104892f6eb77bdf0295d *build/vignette.rds
+4ed45a76affc1a47791b7f288566456c *build/vignette.rds
 12462abce7207592f7dcc36ec9805235 *inst/doc/jstable.R
 e21a95e99f7ea67052449aa0d8db3371 *inst/doc/jstable.Rmd
-b60513ea961ccd7f9fedb28848475eb9 *inst/doc/jstable.html
+d7fc3ac6b36254b5f27f8720d22175ad *inst/doc/jstable.html
 1300d77b9baecf8a344834c620606f9c *man/CreateTableOne2.Rd
 f7344cb4867e1a687862f7868fc71580 *man/CreateTableOneJS.Rd
 61b0819fc737d3a71233d54aec739811 *man/LabelepiDisplay.Rd
@@ -51,8 +51,8 @@ f7868373a58312139817905dd0f3afa3 *man/mk.lev.var.Rd
 623fa6c1d6a95acff2276c2de7fbe952 *man/opt.simpledown.Rd
 deb4982d7355c71777d0dc1f76961390 *man/opt.tb1.Rd
 d49cd5566df456fe7a31d7e386e11bc1 *man/opt.tbreg.Rd
-1c2f6083d3b6966e36fae681be740036 *man/svyCreateTableOne2.Rd
-4d66906a21d9c4b0abefcc205ad5940f *man/svyCreateTableOneJS.Rd
+5ba366afc963286ec45760bf3be7e694 *man/svyCreateTableOne2.Rd
+92a6205242f4588bd766a9c1c2a535fb *man/svyCreateTableOneJS.Rd
 59a7f597c3769057944adf89667568d3 *man/svycox.display.Rd
 14196c84d220366f8505108e99b1b9b5 *man/svyglm.display.Rd
 6e81d69201b9fb77b05d2973dc856951 *tests/testthat.R
@@ -62,5 +62,5 @@ d49cd5566df456fe7a31d7e386e11bc1 *man/opt.tbreg.Rd
 ddf03724531598051d45ae08323e9797 *tests/testthat/test-forestglm.R
 730972ee3799f85146daa44df9f9b0fd *tests/testthat/test-label.R
 d260f298478f115ecc13fbe924193207 *tests/testthat/test-regtable.R
-cf08eb268fc23baa4b9b658a36578782 *tests/testthat/test-svyCreateTableOne.R
+6283d8efbe6fac2c5d7f9efcd7d7eac7 *tests/testthat/test-svyCreateTableOne.R
 e21a95e99f7ea67052449aa0d8db3371 *vignettes/jstable.Rmd
