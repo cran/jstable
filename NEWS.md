@@ -1,3 +1,11 @@
+# jstable 1.0.9
+
+* Bugfix `coxme.display`: thanks for `Cristina Ganuza Vallejo`
+
+# jstable 1.0.8
+
+* Update: `TableSubgroupGLM` & `TableSubgroupCox` allow subgroup variable with continuous.
+
 # jstable 1.0.7
 
 * Update `*.display`: univariate analysis with `stats::update`
