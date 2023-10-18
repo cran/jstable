@@ -12,15 +12,15 @@
 #' @rdname mk.lev.var
 #' @export 
 
-mk.lev.var = function(data , vname){
-  v.vec = data[[vname]]
-  out = ""
+mk.lev.var <- function(data , vname){
+  v.vec <- data[[vname]]
+  out <- ""
   if (is.numeric(v.vec)){
-    out = c(vname, class(v.vec), NA)
+    out <- c(vname, class(v.vec), NA)
   } else{
-    v.level = levels(v.vec)
-    nr = length(v.level)
-    out = cbind(rep(vname, nr), rep(class(v.vec), nr), v.level)
+    v.level <- levels(v.vec)
+    nr <- length(v.level)
+    out <- cbind(rep(vname, nr), rep(class(v.vec), nr), v.level)
   }
   return(out)
 }
@@ -38,13 +38,16 @@ mk.lev.var = function(data , vname){
 #' @export 
 #' @importFrom data.table data.table :=
 
-mk.lev = function(data){
+mk.lev <- function(data){
   
   variable <- level <- val_label <- NULL
   
-  out.list = lapply(names(data), function(x){mk.lev.var(data, x)})
-  out.dt = data.table::data.table(Reduce(rbind, out.list))
-  names(out.dt) = c("variable", "class","level")
+  out.list <- lapply(names(data), function(x){mk.lev.var(data, x)})
+  out.dt <- data.table::data.table(Reduce(rbind, out.list))
+  if (length(out.list) == 1){
+    out.dt <- data.table::data.table(t(out.dt))
+  }
+  names(out.dt) <- c("variable", "class","level")
   out.dt[, var_label := variable]
   out.dt[, val_label := level]
   return(out.dt[])
@@ -81,12 +84,12 @@ LabelepiDisplay <- function(epiDisplay.obj, label = F, ref){
   if (nrow(tb.main)  <= 2){
     tb.compact <- tb.main
   }
-
+  
   
   ## Var label
   tb.rn <- gsub(" \\(cont. var.\\)", "", rownames(tb.compact))
   rownames(tb.compact) <- tb.rn
- 
+  
   if (nrow(tb.main) < 2 & label == T){
     vname <- strsplit(rownames(tb.compact)[1], ": ")[[1]][1]
     cond.lv2 <- grepl(": ", rownames(tb.compact)[1]) & grepl(" vs ", rownames(tb.compact)[1])
@@ -174,7 +177,7 @@ LabeljsTable <- function(obj.table, ref){
   
   ## Var label
   tb.rn <- rownames(tb.compact)
-
+  
   if (nrow(tb.main) == 1){
     
     vname <- strsplit(rownames(tb.compact)[1], ": ")[[1]][1]
@@ -184,7 +187,7 @@ LabeljsTable <- function(obj.table, ref){
       lv2 <- strsplit(strsplit(rownames(tb.compact)[1], ": ")[[1]][[2]], " vs ")[[1]]
       vll <- ref[variable == vname & level %in% lv2, c("level", "val_label")]
       rownames(tb.compact) <- paste(ref[variable == vname, var_label][1], ": ", vll[level == lv2[1], val_label], " vs ", vll[level == lv2[2], val_label], sep = "")
-      }
+    }
     
   }
   
@@ -226,7 +229,7 @@ LabeljsTable <- function(obj.table, ref){
   #}
   return(out)
 }
-  
+
 
 
 
