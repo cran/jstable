@@ -16,7 +16,7 @@
 #' @rdname svyglm.display
 #' @export
 #' @importFrom survey svyglm
-#' @importFrom stats update
+#' @importFrom stats update confint
 
 
 svyregress.display <- function(svyglm.obj, decimal = 2) {
@@ -29,15 +29,15 @@ svyregress.display <- function(svyglm.obj, decimal = 2) {
   if (length(xs) == 0) {
     stop("No independent variable")
   } else if (length(xs) == 1) {
-    uni <- data.frame(coefNA(model))[-1, ]
+    uni <- cbind(data.frame(coefNA(model))[-1, ], data.frame(stats::confint(model))[-1, ])
     rn.uni <- lapply(list(uni), rownames)
     # uni <- data.frame(summary(survey::svyglm(as.formula(paste(y, " ~ ", xs)), design = design.model, family = model$family))$coefficients)[-1, ]
     if (gaussianT) {
-      summ <- paste(round(uni[, 1], decimal), " (", round(uni[, 1] - 1.96 * uni[, 2], decimal), ",", round(uni[, 1] + 1.96 * uni[, 2], decimal), ")", sep = "")
+      summ <- paste(round(uni[, 1], decimal), " (", round(uni[, 5], decimal), ",", round(uni[, 6], decimal), ")", sep = "")
       uni.res <- matrix(cbind(summ, ifelse(uni[, 4] <= 0.001, "< 0.001", as.character(round(uni[, 4], decimal + 1)))), nrow = nrow(uni))
       colnames(uni.res) <- c(paste("Coeff.(", 100 - 100 * 0.05, "%CI)", sep = ""), "P value")
     } else {
-      summ <- paste(round(exp(uni[, 1]), decimal), " (", round(exp(uni[, 1] - 1.96 * uni[, 2]), decimal), ",", round(exp(uni[, 1] + 1.96 * uni[, 2]), decimal), ")", sep = "")
+      summ <- paste(round(exp(uni[, 1]), decimal), " (", round(exp(uni[, 5]), decimal), ",", round(exp(uni[, 6]), decimal), ")", sep = "")
       uni.res <- matrix(cbind(summ, ifelse(uni[, 4] <= 0.001, "< 0.001", as.character(round(uni[, 4], decimal + 1)))), nrow = nrow(uni))
       colnames(uni.res) <- c(paste("OR.(", 100 - 100 * 0.05, "%CI)", sep = ""), "P value")
     }
@@ -45,8 +45,11 @@ svyregress.display <- function(svyglm.obj, decimal = 2) {
     res <- uni.res
   } else {
     uni <- lapply(xs, function(v) {
-      data.frame(coefNA(stats::update(model, formula(paste(paste(c(". ~ .", xs), collapse = " - "), " + ", v)), design = design.model)))[-1, ]
+      cbind(
+        data.frame(coefNA(stats::update(model, formula(paste(paste(c(". ~ .", xs), collapse = " - "), " + ", v)), design = design.model)))[-1, ], data.frame(stats::confint(stats::update(model, formula(paste(paste(c(". ~ .", xs), collapse = " - "), " + ", v)), design = design.model)))[-1, ]
+      )
     })
+
     # uni <- lapply(xs, function(v){
     #  summary(survey::svyglm(as.formula(paste(y, " ~ ", v)), design = design.model))$coefficients[-1, ]
     # })
@@ -54,23 +57,23 @@ svyregress.display <- function(svyglm.obj, decimal = 2) {
     uni <- Reduce(rbind, uni)
 
     if (gaussianT) {
-      summ <- paste(round(uni[, 1], decimal), " (", round(uni[, 1] - 1.96 * uni[, 2], decimal), ",", round(uni[, 1] + 1.96 * uni[, 2], decimal), ")", sep = "")
+      summ <- paste(round(uni[, 1], decimal), " (", round(uni[, 5], decimal), ",", round(uni[, 6], decimal), ")", sep = "")
       uni.res <- t(rbind(summ, ifelse(uni[, 4] <= 0.001, "< 0.001", as.character(round(uni[, 4], decimal + 1)))))
       colnames(uni.res) <- c(paste("crude coeff.(", 100 - 100 * 0.05, "%CI)", sep = ""), "crude P value")
       rownames(uni.res) <- rownames(uni)
       # mul <- summary(model)$coefficients[-1, ]
-      mul <- coefNA(model)[-1, ]
-      mul.summ <- paste(round(mul[, 1], decimal), " (", round(mul[, 1] - 1.96 * mul[, 2], decimal), ",", round(mul[, 1] + 1.96 * mul[, 2], decimal), ")", sep = "")
+      mul <- cbind(coefNA(model)[-1, ], stats::confint(model)[-1, ])
+      mul.summ <- paste(round(mul[, 1], decimal), " (", round(mul[, 5], decimal), ",", round(mul[, 6], decimal), ")", sep = "")
       mul.res <- t(rbind(mul.summ, ifelse(mul[, 4] <= 0.001, "< 0.001", as.character(round(mul[, 4], decimal + 1)))))
       colnames(mul.res) <- c(paste("adj. coeff.(", 100 - 100 * 0.05, "%CI)", sep = ""), "adj. P value")
     } else {
-      summ <- paste(round(exp(uni[, 1]), decimal), " (", round(exp(uni[, 1] - 1.96 * uni[, 2]), decimal), ",", round(exp(uni[, 1] + 1.96 * uni[, 2]), decimal), ")", sep = "")
+      summ <- paste(round(exp(uni[, 1]), decimal), " (", round(exp(uni[, 5]), decimal), ",", round(exp(uni[, 6]), decimal), ")", sep = "")
       uni.res <- t(rbind(summ, ifelse(uni[, 4] <= 0.001, "< 0.001", as.character(round(uni[, 4], decimal + 1)))))
       colnames(uni.res) <- c(paste("crude OR.(", 100 - 100 * 0.05, "%CI)", sep = ""), "crude P value")
       rownames(uni.res) <- rownames(uni)
       # mul <- summary(model)$coefficients[-1, ]
-      mul <- coefNA(model)[-1, ]
-      mul.summ <- paste(round(exp(mul[, 1]), decimal), " (", round(exp(mul[, 1] - 1.96 * mul[, 2]), decimal), ",", round(exp(mul[, 1] + 1.96 * mul[, 2]), decimal), ")", sep = "")
+      mul <- cbind(coefNA(model)[-1, ], stats::confint(model)[-1, ])
+      mul.summ <- paste(round(exp(mul[, 1]), decimal), " (", round(exp(mul[, 5]), decimal), ",", round(exp(mul[, 6]), decimal), ")", sep = "")
       mul.res <- t(rbind(mul.summ, ifelse(mul[, 4] <= 0.001, "< 0.001", as.character(round(mul[, 4], decimal + 1)))))
       colnames(mul.res) <- c(paste("adj. OR.(", 100 - 100 * 0.05, "%CI)", sep = ""), "adj. P value")
     }
