@@ -24,7 +24,7 @@ TableSubgroupGLM(
 
 \item{data}{Data or svydesign in survey package.}
 
-\item{family}{family, "gaussian" or "binomial"}
+\item{family}{family, "gaussian" or "binomial" or 'poisson' or 'quasipoisson'}
 
 \item{decimal.estimate}{Decimal for estimate, Default: 2}
 
@@ -63,5 +63,4 @@ TableSubgroupGLM(status ~ sex, var_subgroup = "kk", data = data.design, family =
 \code{\link[purrr]{safely}},\code{\link[purrr]{map}},\code{\link[purrr]{map2}}
  \code{\link[stats]{glm}}
  \code{\link[survey]{svyglm}}
- \code{\link[stats]{confint}}
 }
