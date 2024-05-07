@@ -1,7 +1,7 @@
 Package: jstable
 Title: Create Tables from Different Types of Regression
-Version: 1.1.9
-Date: 2024-03-22
+Version: 1.2.5
+Date: 2024-05-08
 Authors@R: c(person("Jinseob", "Kim", email = "jinseob2kim@gmail.com", role = c("aut", "cre"),  comment = c(ORCID = "0000-0002-9403-605X")),
              person("Zarathu", role = c("cph", "fnd")),
              person("Yoonkyoung","Jeon", role = c("aut"))
@@ -20,10 +20,10 @@ Suggests: testthat, knitr, rmarkdown
 VignetteBuilder: knitr
 LazyData: true
 NeedsCompilation: no
-Packaged: 2024-03-27 02:07:26 UTC; js
+Packaged: 2024-05-07 16:27:35 UTC; js
 Author: Jinseob Kim [aut, cre] (<https://orcid.org/0000-0002-9403-605X>),
   Zarathu [cph, fnd],
   Yoonkyoung Jeon [aut]
 Maintainer: Jinseob Kim <jinseob2kim@gmail.com>
 Repository: CRAN
-Date/Publication: 2024-03-27 06:50:02 UTC
+Date/Publication: 2024-05-07 16:50:03 UTC

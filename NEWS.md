@@ -1,3 +1,27 @@
+# jstable 1.2.5
+
+* Update: Add `cluster` option to `TableSubgroupCox` and `TableSubgroupMultiCox` for marginal cox model. ex: `cluster = "inst"`
+
+# jstable 1.2.4
+
+* Fix: error for multi-category independent variable in `forestcox` and `forestglm`.
+
+# jstable 1.2.3
+
+* Fix: error and ref. for interaction terms in `svycox` and `svyglm`.
+
+# jstable 1.2.2
+
+* Fix: error and ref. for interaction terms in `lmer`.
+
+# jstable 1.2.1
+
+* Fix: error about interaction terms in `coxme`.
+
+# jstable 1.2.0
+
+* Fix: ref. for interaction terms in `cox2`.
+
 # jstable 1.1.9
 
 * Fix: ref. for interaction terms in `glmshow`.

@@ -94,7 +94,11 @@ cox2.display <- function(cox.obj.withmodel, dec = 2) {
     unis <- lapply(xf, function(x) {
       newfit <- update(basemodel, stats::formula(paste0(". ~ . +", x)), data = mdata2)
       uni.res <- data.frame(summary(newfit)$coefficients)
-      uni.res <- uni.res[grep(x, rownames(uni.res)), ]
+      if (grepl(":", x)) {
+        uni.res <- uni.res[rownames(uni.res) %in% rownames(summary(model)$coefficients), ]
+      } else {
+        uni.res <- uni.res[grep(x, rownames(uni.res)), ]
+      }
       # uni.res <- uni.res[c(2:nrow(uni.res), 1), ]
       # uni.res <- data.frame(summary(coxph(as.formula(paste("mdata[, 1]", "~", x, formula.ranef, sep="")), data = mdata))$coefficients)
       names(uni.res)[ncol(uni.res)] <- "p"
@@ -139,7 +143,19 @@ cox2.display <- function(cox.obj.withmodel, dec = 2) {
     rn.list[[x]] <<- paste(xf[x], ": ", levels(mdata[, xf[x]])[2], " vs ", levels(mdata[, xf[x]])[1], sep = "")
   })
   lapply(varnum.mfac, function(x) {
-    rn.list[[x]] <<- c(paste(xf[x], ": ref.=", levels(mdata[, xf[x]])[1], sep = ""), gsub(xf[x], "   ", rn.list[[x]]))
+    if (grepl(":", xf[x])) {
+      a <- unlist(strsplit(xf[x], ":"))[1]
+      b <- unlist(strsplit(xf[x], ":"))[2]
+
+      if (a %in% xf && b %in% xf) {
+        ref <- paste0(a, levels(mdata[, a])[1], ":", b, levels(mdata[, b])[1])
+        rn.list[[x]] <<- c(paste(xf[x], ": ref.=", ref, sep = ""), gsub(xf[x], "   ", rn.list[[x]]))
+      } else {
+        rn.list[[x]] <<- c(paste(xf[x], ": ref.=NA", model$xlevels[[xf[x]]][1], sep = ""), gsub(xf[x], "   ", rn.list[[x]]))
+      }
+    } else {
+      rn.list[[x]] <<- c(paste(xf[x], ": ref.=", levels(mdata[, xf[x]])[1], sep = ""), gsub(xf[x], "   ", rn.list[[x]]))
+    }
   })
   if (class(fix.all.unlist)[1] == "character") {
     fix.all.unlist <- t(data.frame(fix.all.unlist))
