@@ -1,11 +1,11 @@
-917626e3397411ebcc89002dafed7028 *DESCRIPTION
+4d86b12ac85ba21683c9f0b4ab8fe6cb *DESCRIPTION
 a659453399fff884b16132cb030ab5e3 *NAMESPACE
-fc289e79cfcb33e751452108e431210a *NEWS.md
+525e29948567fdd692f8e054c82114a0 *NEWS.md
 9aacbe3536427b1a67ad9da7cd12532e *R/CreateTableOneJS.R
 9433f059aaf1d460b5ca6f398661ded1 *R/DToption.R
-4c265c17f66a0c21dca5eea4d0fbcfa6 *R/cox2.R
+d2f0d5660fa86969fae0fd3fbc077280 *R/cox2.R
 99f85b832660f05b8a4e4a71deeb5a3f *R/coxme.R
-4d3a8cbca8d55f8b06288fc00e63f0f7 *R/forestcox.R
+738b2b2d0d50a85a0a9559d4e9161eb4 *R/forestcox.R
 22df24d24c831b7c30e047b5fb95b6c7 *R/forestglm.R
 4b74dc57851f3b3239f6125df7b0132f *R/gee.R
 8fda8cfe1148a90d2602d5d6f0d19261 *R/glmshow.R
@@ -19,7 +19,7 @@ ce09f22b490974fbc8192af73983905e *README.md
 2783cf23d56cb086ffe6a3904372e50e *data/mort.rda
 2a06f35fa8be0e1a8ace05047c359c91 *inst/doc/jstable.R
 450f9c2c576b037f7e7533efc511fd20 *inst/doc/jstable.Rmd
-1f34fc7d74d9d8590dde88bd52ed6359 *inst/doc/jstable.html
+5ac2e5cdfb82ffdee6f3d07242930009 *inst/doc/jstable.html
 15ae7f7fae34babed484d699f0faabe3 *man/CreateTableOne2.Rd
 7c9e81fc304f97da65589c54fd5d479f *man/CreateTableOneJS.Rd
 dbb4dda13a20cc7fb1e8084e27a57cb3 *man/LabelepiDisplay.Rd
