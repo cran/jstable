@@ -1,3 +1,13 @@
+# jstable 1.3.0
+
+* Update: Add `weights` option to `TableSubgroupCox` and `TableSubgroupMultiCox` for marginal cox model. ex: `weights = "weights"`
+* Update: Add `strata` option to `TableSubgroupCox` and `TableSubgroupMultiCox` for marginal cox model. ex: `strata = "sex"`
+* Fix: error in `TableSubgroupMultiCox` with cluster
+
+# jstable 1.2.7
+
+* Fix: Interaction P when 3 or more categorical subgroups in `TableSubgroupCox` and `TableSubgroupMultiCox`
+
 # jstable 1.2.6
 
 * Add AIC metric to `cox2.display`.

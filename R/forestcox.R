@@ -9,6 +9,8 @@
 #' @param decimal.percent Decimal for percent, Default: 1
 #' @param decimal.pvalue Decimal for pvalue, Default: 3
 #' @param cluster Cluster variable for coxph, Default: NULL
+#' @param strata Strata variable for coxph, Default: NULL
+#' @param weights Weights variable for coxph, Default: NULL
 #' @return Sub-group analysis table.
 #' @details This result is used to make forestplot.
 #' @examples
@@ -51,7 +53,7 @@
 #' @importFrom utils tail
 
 
-TableSubgroupCox <- function(formula, var_subgroup = NULL, var_cov = NULL, data, time_eventrate = 3 * 365, decimal.hr = 2, decimal.percent = 1, decimal.pvalue = 3, cluster = NULL) {
+TableSubgroupCox <- function(formula, var_subgroup = NULL, var_cov = NULL, data, time_eventrate = 3 * 365, decimal.hr = 2, decimal.percent = 1, decimal.pvalue = 3, cluster = NULL, strata = NULL, weights = NULL) {
   . <- NULL
 
   ### var_subgroup이 categorical variable이 아닌 경우 중단 ###
@@ -91,10 +93,14 @@ TableSubgroupCox <- function(formula, var_subgroup = NULL, var_cov = NULL, data,
 
   if (is.null(var_subgroup)) {
     ### subgroup 지정 안 한 경우 ###
-
     # 공변량 있는 경우 formula 변경
     if (!is.null(var_cov)) {
       formula <- as.formula(paste0(deparse(formula), " + ", paste(var_cov, collapse = "+")))
+    }
+
+    # Strata !is.null인 경우 formula 변경
+    if (!is.null(strata)) {
+      formula <- as.formula(paste0(deparse(formula), " + ", paste0("strata(", strata, ")")))
     }
 
     if (any(class(data) == "survey.design")) {
@@ -114,10 +120,18 @@ TableSubgroupCox <- function(formula, var_subgroup = NULL, var_cov = NULL, data,
       }
     } else {
       ### survey data가 아닌 경우 ###
-      if (is.null(cluster)) {
-        model <- survival::coxph(formula, data = data, x = TRUE)
+      weights <- if (!is.null(weights)) {
+        data[[weights]]
       } else {
-        model <- survival::coxph(formula, data = data, x = TRUE, cluster = get(cluster))
+        NULL
+      }
+      if (!is.null(cluster)) {
+        formula.1 <- as.formula(
+          paste0(deparse(formula), " + ", "cluster(", cluster, ")")
+        )
+        model <- survival::coxph(formula.1, data = data, x = T)
+      } else {
+        model <- survival::coxph(formula, data = data, x = T)
       }
       # if (!is.null(model$xlevels) & length(model$xlevels[[1]]) != 2) stop("Categorical independent variable must have 2 levels.")
 
@@ -184,6 +198,11 @@ TableSubgroupCox <- function(formula, var_subgroup = NULL, var_cov = NULL, data,
       formula <- as.formula(paste0(deparse(formula), " + ", paste(var_cov, collapse = "+")))
     }
 
+    # Strata !is.null인 경우 formula 변경
+    if (!is.null(strata)) {
+      formula <- as.formula(paste0(deparse(formula), " + ", paste0("strata(", strata, ")")))
+    }
+
     if (any(class(data) == "survey.design")) {
       ### survey data인 경우 ###
 
@@ -241,16 +260,51 @@ TableSubgroupCox <- function(formula, var_subgroup = NULL, var_cov = NULL, data,
       }
     } else {
       ### survey data가 아닌 경우 ###
+      weights_option <- if (!is.null(weights)) TRUE else FALSE
+
+      # Coxph 함수를 각 subgroup에 대해 적용시키기 위한 함수
+      run_coxph <- function(subgroup_var, subgroup_value, data, formula, weights_option) {
+        subset_data <- data[data[[subgroup_var]] == subgroup_value, ]
+
+        if (nrow(subset_data) == 0 || all(is.na(subset_data$time)) || all(is.na(subset_data$status))) {
+          return(NULL)
+        }
+
+        subset_weights <- if (weights_option) {
+          as.numeric(as.character(subset_data[[weights]]))
+        } else {
+          NULL
+        }
+        cc <- substitute(
+          survival::coxph(formula, data = subset_data, x = T, weights = .weights),
+          list(.weights = subset_weights)
+        )
+        eval(cc)
+      }
+
       if (is.null(cluster)) {
-        model <- data %>%
-          filter(!is.na(get(var_subgroup))) %>%
-          split(.[[var_subgroup]]) %>%
-          purrr::map(~ possible_coxph(formula, data = ., x = T))
+        model <- sapply(var_subgroup, function(var) {
+          unique_vals <- unique(data[[var]])
+          unique_vals <- unique_vals[!is.na(unique_vals)]
+          lapply(unique_vals, function(value) {
+            result <- run_coxph(var, value, data, formula, weights_option)
+          })
+        })
       } else {
-        model <- data %>%
-          filter(!is.na(get(var_subgroup))) %>%
-          split(.[[var_subgroup]]) %>%
-          purrr::map(~ tryCatch(coxph(formula, data = ., x = T, cluster = get(cluster)), error = function(e) NA))
+        formula <- as.formula(paste0(deparse(formula), " + ", "cluster(", cluster, ")"))
+
+        model <- sapply(var_subgroup, function(var) {
+          unique_vals <- unique(data[[var]])
+          unique_vals <- unique_vals[!is.na(unique_vals)]
+          lapply(unique_vals, function(value) {
+            result <- run_coxph(var, value, data, formula, weights_option)
+          })
+        })
+      }
+      weights <- if (!is.null(weights)) {
+        data[[weights]]
+      } else {
+        NULL
       }
 
 
@@ -261,12 +315,20 @@ TableSubgroupCox <- function(formula, var_subgroup = NULL, var_cov = NULL, data,
         names() -> label_val
       xlev <- survival::coxph(formula, data = data)$xlevels
 
-      if (is.null(cluster)) {
+
+      # strata만 공식에 추가하는 경우 P for interaction에서 <NA>가 나타나는 문제가 있어 수정
+      if (is.null(cluster) & is.null(weights) & !is.null(strata)) {
         model.int <- possible_coxph(as.formula(gsub(xlabel, paste0(xlabel, "*", var_subgroup), deparse(formula))), data = data)
       } else {
-        model.int <- tryCatch(coxph(as.formula(gsub(xlabel, paste0(xlabel, "*", var_subgroup), deparse(formula))), data = data, cluster = get(cluster)), error = function(e) NA)
-      }
+      
+        model.int <- tryCatch(eval(substitute(coxph(as.formula(gsub(xlabel, paste0(xlabel, "*", var_subgroup), deparse(formula))), data = data, weights = .weights), list(.weights = weights))), error = function(e) NA)
+      # if (!is.null(cluster)) {
+      #   model.int <- eval(substitute(possible_coxph(as.formula(gsub(xlabel, paste0(xlabel, "*", var_subgroup), deparse(formula))), data = data, weights = .weights), list(.weights = weights)))
+      # } else {
+      #   model.int <- tryCatch(eval(substitute(coxph(as.formula(gsub(xlabel, paste0(xlabel, "*", var_subgroup), deparse(formula))), data = data, weights = .weights), list(.weights = weights))), error = function(e) NA)
+      # }
 
+      }
 
 
       # KM 구하기(categorical인 경우만)
@@ -325,7 +387,7 @@ TableSubgroupCox <- function(formula, var_subgroup = NULL, var_cov = NULL, data,
         model.int$call$formula <- as.formula(gsub(xlabel, paste0(xlabel, "*", var_subgroup), deparse(formula)))
         model.int$call$data <- as.name("data")
         pv_anova <- tryCatch(anova(model.int), error = function(e) NA)
-        if (is.na(pv_anova) & !is.null(cluster)) {
+        if (is.logical(pv_anova) & !is.null(cluster)) {
           warning("Warning: Anova test is not available for cluster data. So Interaction P value is NA when 3 and more categorical subgroup variable.")
         }
         pv_int <- tryCatch(round(pv_anova[nrow(pv_anova), 4], decimal.pvalue), error = function(e) NA)
@@ -440,6 +502,8 @@ TableSubgroupCox <- function(formula, var_subgroup = NULL, var_cov = NULL, data,
 #' @param decimal.pvalue Decimal for pvalue, Default: 3
 #' @param line Include new-line between sub-group variables, Default: F
 #' @param cluster Cluster variable for coxph, Default: NULL
+#' @param strata Strata variable for coxph, Default: NULL
+#' @param weights Weights variable for coxph, Default: NULL
 #' @return Multiple sub-group analysis table.
 #' @details This result is used to make forestplot.
 #' @examples
@@ -473,17 +537,21 @@ TableSubgroupCox <- function(formula, var_subgroup = NULL, var_cov = NULL, data,
 #' @importFrom magrittr %>%
 #' @importFrom dplyr bind_rows
 
-TableSubgroupMultiCox <- function(formula, var_subgroups = NULL, var_cov = NULL, data, time_eventrate = 3 * 365, decimal.hr = 2, decimal.percent = 1, decimal.pvalue = 3, line = F, cluster = NULL) {
+TableSubgroupMultiCox <- function(formula, var_subgroups = NULL, var_cov = NULL, data, time_eventrate = 3 * 365, decimal.hr = 2, decimal.percent = 1, decimal.pvalue = 3, line = F, cluster = NULL, strata = NULL, weights = NULL) {
   . <- NULL
   xlabel <- setdiff(as.character(formula)[[3]], "+")[1]
 
-  out.all <- TableSubgroupCox(formula, var_subgroup = NULL, var_cov = var_cov, data = data, time_eventrate = time_eventrate, decimal.hr = decimal.hr, decimal.percent = decimal.percent, decimal.pvalue = decimal.pvalue, cluster = cluster)
+  out.all <- TableSubgroupCox(formula, var_subgroup = NULL, var_cov = var_cov, data = data, time_eventrate = time_eventrate, decimal.hr = decimal.hr, decimal.percent = decimal.percent, decimal.pvalue = decimal.pvalue, cluster = cluster, strata = strata, weights = weights)
   out.all <- dplyr::mutate_all(out.all, as.character)
 
   if (is.null(var_subgroups)) {
     return(out.all)
   } else {
-    out.list <- purrr::map(var_subgroups, ~ TableSubgroupCox(formula, var_subgroup = ., var_cov = var_cov, data = data, time_eventrate = time_eventrate, decimal.hr = decimal.hr, decimal.percent = decimal.percent, decimal.pvalue = decimal.pvalue, cluster = cluster))
+    out.list <- lapply(var_subgroups, function(subgroup) {
+      TableSubgroupCox(formula, var_subgroup = subgroup, var_cov = var_cov, data = data, time_eventrate = time_eventrate, decimal.hr = decimal.hr, decimal.percent = decimal.percent, decimal.pvalue = decimal.pvalue, cluster = cluster, strata = strata, weights = weights)
+    })
+
+    # out.list <- purrr::map(var_subgroups, ~ TableSubgroupCox(formula, var_subgroup = ., var_cov = var_cov, data = data, time_eventrate = time_eventrate, decimal.hr = decimal.hr, decimal.percent = decimal.percent, decimal.pvalue = decimal.pvalue, cluster = cluster, weights = weights_vec))
     if (line) {
       out.newline <- out.list %>% purrr::map(~ rbind(NA, .))
       result <- bind_rows(out.all, out.newline %>% dplyr::bind_rows() %>% dplyr::mutate_all(as.character))

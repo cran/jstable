@@ -1,16 +1,17 @@
 Package: jstable
 Title: Create Tables from Different Types of Regression
-Version: 1.2.6
-Date: 2024-05-31
+Version: 1.3.0
+Date: 2024-07-05
 Authors@R: c(person("Jinseob", "Kim", email = "jinseob2kim@gmail.com", role = c("aut", "cre"),  comment = c(ORCID = "0000-0002-9403-605X")),
              person("Zarathu", role = c("cph", "fnd")),
-             person("Yoonkyoung","Jeon", role = c("aut"))
+             person("Yoonkyoung","Jeon", role = c("aut")),
+             person("Jaehun", "Shon", role = c("aut"))
              )
 Description: Create regression tables from generalized linear model(GLM), generalized estimating equation(GEE), generalized linear mixed-effects model(GLMM), Cox proportional hazards model, survey-weighted generalized linear model(svyglm) and survey-weighted Cox model results for publication.
 Depends: R (>= 3.4.0)
 License: Apache License 2.0
 Encoding: UTF-8
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Imports: geepack, lme4, stats, data.table, labelled, tableone, coxme,
         survival (>= 3.0.0), survey, methods, dplyr, purrr, magrittr,
         tibble
@@ -20,10 +21,11 @@ Suggests: testthat, knitr, rmarkdown
 VignetteBuilder: knitr
 LazyData: true
 NeedsCompilation: no
-Packaged: 2024-05-31 05:02:43 UTC; js
+Packaged: 2024-07-05 14:33:42 UTC; js
 Author: Jinseob Kim [aut, cre] (<https://orcid.org/0000-0002-9403-605X>),
   Zarathu [cph, fnd],
-  Yoonkyoung Jeon [aut]
+  Yoonkyoung Jeon [aut],
+  Jaehun Shon [aut]
 Maintainer: Jinseob Kim <jinseob2kim@gmail.com>
 Repository: CRAN
-Date/Publication: 2024-05-31 05:30:03 UTC
+Date/Publication: 2024-07-06 13:30:06 UTC
