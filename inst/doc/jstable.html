@@ -12,7 +12,7 @@
 
 <meta name="author" content="Jinseob Kim" />
 
-<meta name="date" content="2024-07-05" />
+<meta name="date" content="2024-08-30" />
 
 <title>Introduce jstable</title>
 
@@ -340,7 +340,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Introduce jstable</h1>
 <h4 class="author">Jinseob Kim</h4>
-<h4 class="date">2024-07-05</h4>
+<h4 class="date">2024-08-30</h4>
 
 
 
@@ -430,15 +430,15 @@ Results for Publication.</p>
 <span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a><span class="co">#&gt; $table</span></span>
 <span id="cb3-40"><a href="#cb3-40" tabindex="-1"></a><span class="co">#&gt;                crude OR(95%CI)    crude P value adj. OR(95%CI)     adj. P value</span></span>
-<span id="cb3-41"><a href="#cb3-41" tabindex="-1"></a><span class="co">#&gt; Time           &quot;0.98 (0.94,1.02)&quot; &quot;0.381&quot;       &quot;0.98 (0.94,1.02)&quot; &quot;0.381&quot;     </span></span>
+<span id="cb3-41"><a href="#cb3-41" tabindex="-1"></a><span class="co">#&gt; Time           &quot;0.98 (0.95,1.02)&quot; &quot;0.362&quot;       &quot;0.98 (0.95,1.02)&quot; &quot;0.369&quot;     </span></span>
 <span id="cb3-42"><a href="#cb3-42" tabindex="-1"></a><span class="co">#&gt; Cu: ref.=Cu000 NA                 NA            NA                 NA          </span></span>
-<span id="cb3-43"><a href="#cb3-43" tabindex="-1"></a><span class="co">#&gt;       035      &quot;0.97 (0.73,1.3)&quot;  &quot;0.841&quot;       &quot;0.97 (0.73,1.3)&quot;  &quot;0.845&quot;     </span></span>
-<span id="cb3-44"><a href="#cb3-44" tabindex="-1"></a><span class="co">#&gt;       175      &quot;0.72 (0.55,0.96)&quot; &quot;0.025&quot;       &quot;0.72 (0.55,0.96)&quot; &quot;0.025&quot;     </span></span>
+<span id="cb3-43"><a href="#cb3-43" tabindex="-1"></a><span class="co">#&gt;       035      &quot;0.72 (0.52,0.99)&quot; &quot;0.041&quot;       &quot;0.72 (0.52,0.99)&quot; &quot;0.042&quot;     </span></span>
+<span id="cb3-44"><a href="#cb3-44" tabindex="-1"></a><span class="co">#&gt;       175      &quot;1.07 (0.77,1.5)&quot;  &quot;0.684&quot;       &quot;1.07 (0.77,1.5)&quot;  &quot;0.683&quot;     </span></span>
 <span id="cb3-45"><a href="#cb3-45" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb3-46"><a href="#cb3-46" tabindex="-1"></a><span class="co">#&gt; $metric</span></span>
 <span id="cb3-47"><a href="#cb3-47" tabindex="-1"></a><span class="co">#&gt;                                  crude OR(95%CI) crude P value adj. OR(95%CI)</span></span>
 <span id="cb3-48"><a href="#cb3-48" tabindex="-1"></a><span class="co">#&gt;                                  NA              NA            NA            </span></span>
-<span id="cb3-49"><a href="#cb3-49" tabindex="-1"></a><span class="co">#&gt; Estimated correlation parameters &quot;-0.01&quot;         NA            NA            </span></span>
+<span id="cb3-49"><a href="#cb3-49" tabindex="-1"></a><span class="co">#&gt; Estimated correlation parameters &quot;-0.007&quot;        NA            NA            </span></span>
 <span id="cb3-50"><a href="#cb3-50" tabindex="-1"></a><span class="co">#&gt; No. of clusters                  &quot;72&quot;            NA            NA            </span></span>
 <span id="cb3-51"><a href="#cb3-51" tabindex="-1"></a><span class="co">#&gt; No. of observations              &quot;861&quot;           NA            NA            </span></span>
 <span id="cb3-52"><a href="#cb3-52" tabindex="-1"></a><span class="co">#&gt;                                  adj. P value</span></span>
@@ -488,22 +488,22 @@ object from <strong>lme4</strong> package</h2>
 <span id="cb4-36"><a href="#cb4-36" tabindex="-1"></a><span class="fu">lmer.display</span>(l2)</span>
 <span id="cb4-37"><a href="#cb4-37" tabindex="-1"></a><span class="co">#&gt; $table</span></span>
 <span id="cb4-38"><a href="#cb4-38" tabindex="-1"></a><span class="co">#&gt;                      crude OR(95%CI) crude P value   adj. OR(95%CI)</span></span>
-<span id="cb4-39"><a href="#cb4-39" tabindex="-1"></a><span class="co">#&gt; Time                0.98 (0.94,1.02)    0.35756675 0.98 (0.94,1.02)</span></span>
+<span id="cb4-39"><a href="#cb4-39" tabindex="-1"></a><span class="co">#&gt; Time                0.98 (0.95,1.02)    0.39436881 0.98 (0.95,1.02)</span></span>
 <span id="cb4-40"><a href="#cb4-40" tabindex="-1"></a><span class="co">#&gt; Cu: ref.=Cu000                  &lt;NA&gt;            NA             &lt;NA&gt;</span></span>
-<span id="cb4-41"><a href="#cb4-41" tabindex="-1"></a><span class="co">#&gt;       035            0.97 (0.7,1.35)    0.85803837  0.97 (0.7,1.35)</span></span>
-<span id="cb4-42"><a href="#cb4-42" tabindex="-1"></a><span class="co">#&gt;       175           0.72 (0.52,1.01)    0.05673674 0.72 (0.52,1.01)</span></span>
+<span id="cb4-41"><a href="#cb4-41" tabindex="-1"></a><span class="co">#&gt;       035           0.72 (0.52,0.99)    0.04596759 0.72 (0.52,0.99)</span></span>
+<span id="cb4-42"><a href="#cb4-42" tabindex="-1"></a><span class="co">#&gt;       175            1.07 (0.77,1.5)    0.67983318  1.07 (0.77,1.5)</span></span>
 <span id="cb4-43"><a href="#cb4-43" tabindex="-1"></a><span class="co">#&gt; Random effects                  &lt;NA&gt;            NA             &lt;NA&gt;</span></span>
 <span id="cb4-44"><a href="#cb4-44" tabindex="-1"></a><span class="co">#&gt; Pig                                0            NA             &lt;NA&gt;</span></span>
 <span id="cb4-45"><a href="#cb4-45" tabindex="-1"></a><span class="co">#&gt; Metrics                         &lt;NA&gt;            NA             &lt;NA&gt;</span></span>
 <span id="cb4-46"><a href="#cb4-46" tabindex="-1"></a><span class="co">#&gt; No. of groups (Pig)               72            NA             &lt;NA&gt;</span></span>
 <span id="cb4-47"><a href="#cb4-47" tabindex="-1"></a><span class="co">#&gt; No. of observations              861            NA             &lt;NA&gt;</span></span>
-<span id="cb4-48"><a href="#cb4-48" tabindex="-1"></a><span class="co">#&gt; Log-likelihood               -593.55            NA             &lt;NA&gt;</span></span>
-<span id="cb4-49"><a href="#cb4-49" tabindex="-1"></a><span class="co">#&gt; AIC value                     1197.1            NA             &lt;NA&gt;</span></span>
+<span id="cb4-48"><a href="#cb4-48" tabindex="-1"></a><span class="co">#&gt; Log-likelihood               -592.53            NA             &lt;NA&gt;</span></span>
+<span id="cb4-49"><a href="#cb4-49" tabindex="-1"></a><span class="co">#&gt; AIC value                    1195.06            NA             &lt;NA&gt;</span></span>
 <span id="cb4-50"><a href="#cb4-50" tabindex="-1"></a><span class="co">#&gt;                     adj. P value</span></span>
-<span id="cb4-51"><a href="#cb4-51" tabindex="-1"></a><span class="co">#&gt; Time                  0.35673910</span></span>
+<span id="cb4-51"><a href="#cb4-51" tabindex="-1"></a><span class="co">#&gt; Time                  0.39815987</span></span>
 <span id="cb4-52"><a href="#cb4-52" tabindex="-1"></a><span class="co">#&gt; Cu: ref.=Cu000                NA</span></span>
-<span id="cb4-53"><a href="#cb4-53" tabindex="-1"></a><span class="co">#&gt;       035             0.86142325</span></span>
-<span id="cb4-54"><a href="#cb4-54" tabindex="-1"></a><span class="co">#&gt;       175             0.05690926</span></span>
+<span id="cb4-53"><a href="#cb4-53" tabindex="-1"></a><span class="co">#&gt;       035             0.04631698</span></span>
+<span id="cb4-54"><a href="#cb4-54" tabindex="-1"></a><span class="co">#&gt;       175             0.67818553</span></span>
 <span id="cb4-55"><a href="#cb4-55" tabindex="-1"></a><span class="co">#&gt; Random effects                NA</span></span>
 <span id="cb4-56"><a href="#cb4-56" tabindex="-1"></a><span class="co">#&gt; Pig                           NA</span></span>
 <span id="cb4-57"><a href="#cb4-57" tabindex="-1"></a><span class="co">#&gt; Metrics                       NA</span></span>
@@ -523,9 +523,9 @@ options</h2>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> ph.ecog <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">frailty</span>(inst), lung, <span class="at">model =</span> T)</span>
 <span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="fu">cox2.display</span>(fit1)</span>
 <span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt; $table</span></span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt;         crude HR(95%CI)    crude P value adj. HR(95%CI)  adj. P value</span></span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt; ph.ecog &quot;1.61 (1.25,2.08)&quot; &quot;&lt; 0.001&quot;     &quot;1.56 (1.22,2)&quot; &quot;&lt; 0.001&quot;   </span></span>
-<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#&gt; age     &quot;1.02 (1.01,1.03)&quot; &quot;0.007&quot;       &quot;1.01 (1,1.02)&quot; &quot;0.085&quot;     </span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt;         crude HR(95%CI)       crude P value adj. HR(95%CI)     adj. P value</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt; ph.ecog &quot;38.34 (38.32,38.36)&quot; &quot;&lt; 0.001&quot;     &quot;33.03 (33,33.06)&quot; &quot;&lt; 0.001&quot;   </span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#&gt; age     &quot;14.67 (14.46,14.88)&quot; &quot;0.007&quot;       &quot;5.59 (4.73,6.61)&quot; &quot;0.085&quot;     </span></span>
 <span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#&gt; $ranef</span></span>
 <span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt;         [,1] [,2] [,3] [,4]</span></span>
@@ -543,9 +543,9 @@ options</h2>
 <span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Marginal Cox model on time (&#39;time&#39;) to event (&#39;status&#39;) - Group inst&quot;</span></span>
 <span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a><span class="fu">cox2.display</span>(fit2)</span>
 <span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a><span class="co">#&gt; $table</span></span>
-<span id="cb5-26"><a href="#cb5-26" tabindex="-1"></a><span class="co">#&gt;         crude HR(95%CI)    crude P value adj. HR(95%CI)     adj. P value</span></span>
-<span id="cb5-27"><a href="#cb5-27" tabindex="-1"></a><span class="co">#&gt; ph.ecog &quot;1.64 (1.31,2.05)&quot; &quot;&lt; 0.001&quot;     &quot;1.58 (1.26,1.99)&quot; &quot;&lt; 0.001&quot;   </span></span>
-<span id="cb5-28"><a href="#cb5-28" tabindex="-1"></a><span class="co">#&gt; age     &quot;1.02 (1,1.04)&quot;    &quot;0.041&quot;       &quot;1.01 (0.99,1.03)&quot; &quot;0.225&quot;     </span></span>
+<span id="cb5-26"><a href="#cb5-26" tabindex="-1"></a><span class="co">#&gt;         crude HR(95%CI) crude P value adj. HR(95%CI)     adj. P value</span></span>
+<span id="cb5-27"><a href="#cb5-27" tabindex="-1"></a><span class="co">#&gt; ph.ecog &quot;1 (0.38,2.63)&quot; &quot;&lt; 0.001&quot;     &quot;1 (0.41,2.47)&quot;    &quot;&lt; 0.001&quot;   </span></span>
+<span id="cb5-28"><a href="#cb5-28" tabindex="-1"></a><span class="co">#&gt; age     &quot;1.04 (1,1.08)&quot; &quot;0.041&quot;       &quot;1.25 (1.22,1.28)&quot; &quot;0.225&quot;     </span></span>
 <span id="cb5-29"><a href="#cb5-29" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb5-30"><a href="#cb5-30" tabindex="-1"></a><span class="co">#&gt; $ranef</span></span>
 <span id="cb5-31"><a href="#cb5-31" tabindex="-1"></a><span class="co">#&gt;         [,1] [,2] [,3] [,4]</span></span>

@@ -1,3 +1,18 @@
+# jstable 1.3.3
+* Update: Add cox2.display available in fine-and-gray(competing risk), Multi-State Model (MSM)
+* Update: Add TableSubgroupMultiCox available in fine-and-gray(competing risk)
+* Fix: error in `forestcox` and `forestglm` with datatype of P value in table
+
+# jstable 1.3.2
+
+* Fix: error in subgroup option due to non-existent item in `forestcox`
+* Fix: Factor order error in `forestcox`
+
+# jstable 1.3.1
+
+* Fix: `addOverall` options to  `svyCreateTableOneJS` 
+* Fix: `TableSubgroupCox`
+
 # jstable 1.3.0
 
 * Update: Add `weights` option to `TableSubgroupCox` and `TableSubgroupMultiCox` for marginal cox model. ex: `weights = "weights"`
