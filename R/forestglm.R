@@ -91,9 +91,9 @@ TableSubgroupGLM <- function(formula, var_subgroup = NULL, var_cov = NULL, data,
       model <- stats::glm(formula, data = data, x = T, family = family)
       # if (!is.null(model$xlevels) & length(model$xlevels[[1]]) != 2) stop("Categorical independent variable must have 2 levels.")
     }
-    
+
     xlev <- NA
-    if (length(model$xlevels[[xlabel]]) > 0){
+    if (length(model$xlevels[[xlabel]]) > 0) {
       xlev <- model$xlevels[[xlabel]]
     }
 
@@ -168,10 +168,10 @@ TableSubgroupGLM <- function(formula, var_subgroup = NULL, var_cov = NULL, data,
         names() -> label_val
       label_val %>% purrr::map(~ possible_svyglm(formula, design = subset(data, get(var_subgroup) == .), x = TRUE, family = family.svyglm)) -> model
       xlev <- NA
-      if (length(survey::svyglm(formula, design = data)$xlevels[[xlabel]]) > 0){
+      if (length(survey::svyglm(formula, design = data)$xlevels[[xlabel]]) > 0) {
         xlev <- survey::svyglm(formula, design = data)$xlevels[[xlabel]]
       }
-      
+
       # pv_int 구하기
       pv_int <- tryCatch(
         {
@@ -217,9 +217,9 @@ TableSubgroupGLM <- function(formula, var_subgroup = NULL, var_cov = NULL, data,
         select(dplyr::all_of(var_subgroup)) %>%
         table() %>%
         names() -> label_val
-      
+
       xlev <- NA
-      if (length(stats::glm(formula, data = data, family = family)$xlevels[[xlabel]]) > 0){
+      if (length(stats::glm(formula, data = data, family = family)$xlevels[[xlabel]]) > 0) {
         xlev <- stats::glm(formula, data = data, family = family)$xlevels[[xlabel]]
       }
       model.int <- possible_glm(as.formula(gsub(xlabel, paste(xlabel, "*", var_subgroup, sep = ""), deparse(formula))), data = data, family = family)
@@ -414,6 +414,8 @@ TableSubgroupMultiGLM <- function(formula, var_subgroups = NULL, var_cov = NULL,
     return(out.all)
   } else {
     out.list <- purrr::map(var_subgroups, ~ TableSubgroupGLM(formula, var_subgroup = ., var_cov = var_cov, data = data, family = family, decimal.estimate = decimal.estimate, decimal.percent = decimal.percent, decimal.pvalue = decimal.pvalue))
+    out.list <- purrr::map(out.list, ~ .x %>%
+      dplyr::mutate(`P value` = purrr::map_chr(`P value`, ~ if (is.list(.)) as.character(unlist(.)) else as.character(.))))
     if (line) {
       out.newline <- out.list %>% purrr::map(~ rbind(NA, .))
       return(rbind(out.all, out.newline %>% dplyr::bind_rows()))
