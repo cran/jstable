@@ -8,6 +8,7 @@
 #' @param decimal.estimate Decimal for estimate, Default: 2
 #' @param decimal.percent Decimal for percent, Default: 1
 #' @param decimal.pvalue Decimal for pvalue, Default: 3
+#' @param labeldata Label info, made by `mk.lev` function, Default: NULL
 #' @return Sub-group analysis table.
 #' @details This result is used to make forestplot.
 #' @examples
@@ -40,9 +41,8 @@
 #' @importFrom stats glm coefficients anova gaussian quasibinomial poisson quasipoisson qnorm
 #' @importFrom utils tail
 
-TableSubgroupGLM <- function(formula, var_subgroup = NULL, var_cov = NULL, data, family = "binomial", decimal.estimate = 2, decimal.percent = 1, decimal.pvalue = 3) {
-  . <- NULL
-
+TableSubgroupGLM <- function(formula, var_subgroup = NULL, var_cov = NULL, data, family = "binomial", decimal.estimate = 2, decimal.percent = 1, decimal.pvalue = 3, labeldata = NULL) {
+  . <- variable <- var_label <- val_label <- level <- NULL
   ### 경고문 ###
   if (length(formula[[3]]) > 1) stop("Formula must contains only 1 independent variable")
   if (any(class(data) == "survey.design" & !is.null(var_subgroup))) {
@@ -147,6 +147,12 @@ TableSubgroupGLM <- function(formula, var_subgroup = NULL, var_cov = NULL, data,
       }
 
       rownames(out) <- NULL
+
+      if (!is.null(labeldata)) {
+        out$Levels <- paste0(labeldata[variable == xlabel, var_label[1]], "=", sapply(xlev, function(x) {
+          labeldata[variable == xlabel & level == x, val_label]
+        }))
+      }
     }
 
     return(out)
@@ -334,6 +340,12 @@ TableSubgroupGLM <- function(formula, var_subgroup = NULL, var_cov = NULL, data,
       data.frame(Variable = paste("  ", label_val), Count = Count, Percent = round(Count / sum(Count) * 100, decimal.percent), `Point Estimate` = unlist(Point.Estimate), Lower = unlist(purrr::map(CI, 1)), Upper = unlist(purrr::map(CI, 2))) %>%
         dplyr::mutate(`P value` = ifelse(pv >= 0.001, pv, "<0.001"), `P for interaction` = NA) -> out
 
+      if (!is.null(labeldata)) {
+        out$Variable <- paste0(" ", sapply(label_val, function(x) {
+          labeldata[variable == var_subgroup & level == x, val_label]
+        }))
+      }
+
       if (family == "binomial") {
         names(out)[4] <- "OR"
       }
@@ -353,9 +365,22 @@ TableSubgroupGLM <- function(formula, var_subgroup = NULL, var_cov = NULL, data,
       if (family %in% c("poisson", "quasipoisson")) {
         names(out)[5] <- "RR"
       }
+
+      if (!is.null(labeldata)) {
+        out$Variable <- unlist(lapply(label_val, function(x) c(labeldata[variable == var_subgroup & level == x, val_label], rep("", length(xlev) - 1))))
+        out$Levels <- rep(paste0(labeldata[variable == xlabel, var_label[1]], "=", sapply(xlev, function(x) {
+          labeldata[variable == xlabel & level == x, val_label]
+        })), length(label_val))
+      }
     }
 
-    return(rbind(c(var_subgroup, rep(NA, ncol(out) - 2), ifelse(pv_int >= 0.001, pv_int, "<0.001")), out))
+    var_subgroup_rev <- var_subgroup
+    if (!is.null(labeldata)) {
+      var_subgroup_rev <- labeldata[variable == var_subgroup, var_label[1]]
+    }
+
+
+    return(rbind(c(var_subgroup_rev, rep(NA, ncol(out) - 2), ifelse(pv_int >= 0.001, pv_int, "<0.001")), out))
   }
 }
 
@@ -372,6 +397,7 @@ TableSubgroupGLM <- function(formula, var_subgroup = NULL, var_cov = NULL, data,
 #' @param decimal.percent Decimal for percent, Default: 1
 #' @param decimal.pvalue Decimal for pvalue, Default: 3
 #' @param line Include new-line between sub-group variables, Default: F
+#' @param labeldata Label info, made by `mk.lev` function, Default: NULL
 #' @return Multiple sub-group analysis table.
 #' @details This result is used to make forestplot.
 #' @examples
@@ -406,14 +432,14 @@ TableSubgroupGLM <- function(formula, var_subgroup = NULL, var_cov = NULL, data,
 #' @importFrom dplyr bind_rows
 
 
-TableSubgroupMultiGLM <- function(formula, var_subgroups = NULL, var_cov = NULL, data, family = "binomial", decimal.estimate = 2, decimal.percent = 1, decimal.pvalue = 3, line = F) {
+TableSubgroupMultiGLM <- function(formula, var_subgroups = NULL, var_cov = NULL, data, family = "binomial", decimal.estimate = 2, decimal.percent = 1, decimal.pvalue = 3, line = F, labeldata = NULL) {
   . <- NULL
-  out.all <- TableSubgroupGLM(formula, var_subgroup = NULL, var_cov = var_cov, data = data, family = family, decimal.estimate = decimal.estimate, decimal.percent = decimal.percent, decimal.pvalue = decimal.pvalue)
+  out.all <- TableSubgroupGLM(formula, var_subgroup = NULL, var_cov = var_cov, data = data, family = family, decimal.estimate = decimal.estimate, decimal.percent = decimal.percent, decimal.pvalue = decimal.pvalue, labeldata = labeldata)
 
   if (is.null(var_subgroups)) {
     return(out.all)
   } else {
-    out.list <- purrr::map(var_subgroups, ~ TableSubgroupGLM(formula, var_subgroup = ., var_cov = var_cov, data = data, family = family, decimal.estimate = decimal.estimate, decimal.percent = decimal.percent, decimal.pvalue = decimal.pvalue))
+    out.list <- purrr::map(var_subgroups, ~ TableSubgroupGLM(formula, var_subgroup = ., var_cov = var_cov, data = data, family = family, decimal.estimate = decimal.estimate, decimal.percent = decimal.percent, decimal.pvalue = decimal.pvalue, labeldata = labeldata))
     out.list <- purrr::map(out.list, ~ .x %>%
       dplyr::mutate(`P value` = purrr::map_chr(`P value`, ~ if (is.list(.)) as.character(unlist(.)) else as.character(.))))
     if (line) {
