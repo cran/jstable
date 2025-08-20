@@ -1,3 +1,13 @@
+# jstable 1.3.16
+* Update: Now in `CreateTableOneJS` and `svyCreateTableOneJS`, column names are more descriptive when using `psub = T` with `strata`, `strata2`.
+
+# jstable 1.3.15
+* Update: Add `data_for_univariate` in `cox2.display`, `geeglm.display`, `lmer.display`, crude p-values in univariate tables are now computed directly from the raw data passed via `data_for_univariate`.
+
+# jstable 1.3.14
+* Fix: error in `cox2.display` when all status 0
+* Update: Add testcode of `cox2.display` when all status 0 (isList, column&row name diff check)
+
 # jstable 1.3.13
 * Fix: error in handling `id` and `weight` columns from input data in the Cox module.
 

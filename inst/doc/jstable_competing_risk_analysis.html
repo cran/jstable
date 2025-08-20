@@ -12,7 +12,7 @@
 
 <meta name="author" content="Jinseob Kim" />
 
-<meta name="date" content="2025-07-01" />
+<meta name="date" content="2025-08-20" />
 
 <title>Competing risk analysis</title>
 
@@ -51,7 +51,7 @@ overflow: visible;
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -340,7 +340,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Competing risk analysis</h1>
 <h4 class="author">Jinseob Kim</h4>
-<h4 class="date">2025-07-01</h4>
+<h4 class="date">2025-08-20</h4>
 
 
 
@@ -356,24 +356,24 @@ data with the finegray function from the survival package is required.
 The finegray function generates a new dataset containing fgstart,
 fgstop, fgstatus, and fgwt. The TableSubgroupMultiCox function then
 displays results based on the corresponding formula and weights.</h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> mgus2</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>data<span class="sc">$</span>etime <span class="ot">&lt;-</span> <span class="fu">with</span>(data, <span class="fu">ifelse</span>(pstat <span class="sc">==</span> <span class="dv">0</span>, futime, ptime))</span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>data<span class="sc">$</span>event <span class="ot">&lt;-</span> <span class="fu">with</span>(data, <span class="fu">ifelse</span>(pstat <span class="sc">==</span> <span class="dv">0</span>, <span class="dv">2</span> <span class="sc">*</span> death, <span class="dv">1</span>))</span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>data<span class="sc">$</span>event <span class="ot">&lt;-</span> <span class="fu">factor</span>(data<span class="sc">$</span>event, <span class="dv">0</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;censor&quot;</span>, <span class="st">&quot;pcm&quot;</span>, <span class="st">&quot;death&quot;</span>))</span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>data<span class="sc">$</span>age65 <span class="ot">&lt;-</span> <span class="fu">with</span>(data, <span class="fu">ifelse</span>(age <span class="sc">&gt;</span> <span class="dv">65</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>data<span class="sc">$</span>age65 <span class="ot">&lt;-</span> <span class="fu">factor</span>(data<span class="sc">$</span>age65)</span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>pdata <span class="ot">&lt;-</span> survival<span class="sc">::</span><span class="fu">finegray</span>(survival<span class="sc">::</span><span class="fu">Surv</span>(etime, event) <span class="sc">~</span> ., <span class="at">data =</span> data)</span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="fu">TableSubgroupMultiCox</span>(<span class="at">formula =</span> <span class="fu">Surv</span>(fgstart, fgstop, fgstatus) <span class="sc">~</span> sex, <span class="at">data =</span> pdata, <span class="at">var_cov =</span> <span class="st">&quot;age&quot;</span>, <span class="at">weights =</span> <span class="st">&quot;fgwt&quot;</span>, <span class="at">var_subgroups =</span> <span class="fu">c</span>(<span class="st">&quot;age65&quot;</span>))</span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co">#&gt;     Variable Count Percent Point Estimate Lower Upper sex=F sex=M P value</span></span>
-<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co">#&gt; sex  Overall 41775     100           0.77  0.54   1.1  10.4   8.1   0.153</span></span>
-<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="co">#&gt; 1      age65  &lt;NA&gt;    &lt;NA&gt;           &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;</span></span>
-<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="co">#&gt; 2          0  7572    18.1           0.71   0.4  1.27  17.2  10.5   0.252</span></span>
-<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="co">#&gt; 3          1 34203    81.9            0.8  0.51  1.25   8.7   7.3    0.33</span></span>
-<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="co">#&gt;     P for interaction</span></span>
-<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="co">#&gt; sex              &lt;NA&gt;</span></span>
-<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="co">#&gt; 1               0.673</span></span>
-<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="co">#&gt; 2                &lt;NA&gt;</span></span>
-<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a><span class="co">#&gt; 3                &lt;NA&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> mgus2</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>etime <span class="ot">&lt;-</span> <span class="fu">with</span>(data, <span class="fu">ifelse</span>(pstat <span class="sc">==</span> <span class="dv">0</span>, futime, ptime))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>event <span class="ot">&lt;-</span> <span class="fu">with</span>(data, <span class="fu">ifelse</span>(pstat <span class="sc">==</span> <span class="dv">0</span>, <span class="dv">2</span> <span class="sc">*</span> death, <span class="dv">1</span>))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>event <span class="ot">&lt;-</span> <span class="fu">factor</span>(data<span class="sc">$</span>event, <span class="dv">0</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;censor&quot;</span>, <span class="st">&quot;pcm&quot;</span>, <span class="st">&quot;death&quot;</span>))</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>age65 <span class="ot">&lt;-</span> <span class="fu">with</span>(data, <span class="fu">ifelse</span>(age <span class="sc">&gt;</span> <span class="dv">65</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>age65 <span class="ot">&lt;-</span> <span class="fu">factor</span>(data<span class="sc">$</span>age65)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>pdata <span class="ot">&lt;-</span> survival<span class="sc">::</span><span class="fu">finegray</span>(survival<span class="sc">::</span><span class="fu">Surv</span>(etime, event) <span class="sc">~</span> ., <span class="at">data =</span> data)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">TableSubgroupMultiCox</span>(<span class="at">formula =</span> <span class="fu">Surv</span>(fgstart, fgstop, fgstatus) <span class="sc">~</span> sex, <span class="at">data =</span> pdata, <span class="at">var_cov =</span> <span class="st">&quot;age&quot;</span>, <span class="at">weights =</span> <span class="st">&quot;fgwt&quot;</span>, <span class="at">var_subgroups =</span> <span class="fu">c</span>(<span class="st">&quot;age65&quot;</span>))</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Variable Count Percent Point Estimate Lower Upper sex=F sex=M P value</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sex  Overall 41775     100           0.77  0.54   1.1  10.4   8.1   0.153</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1      age65  &lt;NA&gt;    &lt;NA&gt;           &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2          0  7572    18.1           0.71   0.4  1.27  17.2  10.5   0.252</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3          1 34203    81.9            0.8  0.51  1.25   8.7   7.3    0.33</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     P for interaction</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sex              &lt;NA&gt;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1               0.673</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2                &lt;NA&gt;</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3                &lt;NA&gt;</span></span></code></pre></div>
 </div>
 </div>
 <div id="cox2.display" class="section level2">
@@ -382,25 +382,25 @@ displays results based on the corresponding formula and weights.</h3>
 <h3>As written above, preprocessing the data with finegray function is
 also required. By using corresponding formula and weights, cox2.display
 function will display table results.</h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>fgfit <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(fgstart, fgstop, fgstatus) <span class="sc">~</span> age <span class="sc">+</span> sex,</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="at">weight =</span> fgwt, <span class="at">data =</span> pdata, <span class="at">model =</span> T</span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>)</span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="fu">cox2.display</span>(fgfit)</span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt; $table</span></span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt;             crude HR(95%CI)    crude P value adj. HR(95%CI)     adj. P value</span></span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; age         &quot;0.98 (0.97,0.99)&quot; &quot;0.003&quot;       &quot;0.98 (0.97,0.99)&quot; &quot;0.002&quot;     </span></span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt; sex: M vs F &quot;0.8 (0.56,1.13)&quot;  &quot;0.207&quot;       &quot;0.77 (0.54,1.1)&quot;  &quot;0.153&quot;     </span></span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt; $metric</span></span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt;                     [,1]               [,2] [,3] [,4]</span></span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt; &lt;NA&gt;                NA                 NA   NA   NA  </span></span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt; No. of observations &quot;41775&quot;            NA   NA   NA  </span></span>
-<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt; No. of events       &quot;115&quot;              NA   NA   NA  </span></span>
-<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt; AIC                 &quot;1583.87165275874&quot; NA   NA   NA  </span></span>
-<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt; C-Index             &quot;0.548(0.026)&quot;     NA   NA   NA  </span></span>
-<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="co">#&gt; $caption</span></span>
-<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Cox model on time (&#39;fgstart, fgstop&#39;) to event (&#39;fgstatus&#39;)&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>fgfit <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(fgstart, fgstop, fgstatus) <span class="sc">~</span> age <span class="sc">+</span> sex,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">weight =</span> fgwt, <span class="at">data =</span> pdata, <span class="at">model =</span> T</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cox2.display</span>(fgfit)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $table</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             crude HR(95%CI)    crude P value adj. HR(95%CI)     adj. P value</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; age         &quot;0.98 (0.97,0.99)&quot; &quot;0.003&quot;       &quot;0.98 (0.14,6.75)&quot; &quot;0.002&quot;     </span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sex: M vs F &quot;0.8 (0.56,1.13)&quot;  &quot;0.207&quot;       &quot;0.77 (0.17,3.5)&quot;  &quot;0.153&quot;     </span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $metric</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                     [,1]               [,2] [,3] [,4]</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;NA&gt;                NA                 NA   NA   NA  </span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; No. of observations &quot;41775&quot;            NA   NA   NA  </span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; No. of events       &quot;115&quot;              NA   NA   NA  </span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; AIC                 &quot;1583.87165275874&quot; NA   NA   NA  </span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; C-Index             &quot;0.548(0.026)&quot;     NA   NA   NA  </span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $caption</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Cox model on time (&#39;fgstart, fgstop&#39;) to event (&#39;fgstatus&#39;)&quot;</span></span></code></pre></div>
 </div>
 </div>
 
