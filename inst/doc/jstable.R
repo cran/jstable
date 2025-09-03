@@ -7,8 +7,8 @@ knitr::opts_chunk$set(
 library(jstable)
 
 ## ----eval = F-----------------------------------------------------------------
-#  remotes::install_github("jinseob2kim/jstable")
-#  library(jstable)
+# remotes::install_github("jinseob2kim/jstable")
+# library(jstable)
 
 ## -----------------------------------------------------------------------------
 ## Gaussian

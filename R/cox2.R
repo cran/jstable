@@ -16,10 +16,14 @@
 #' cox2.display(fit2)
 #' @rdname cox2.display
 #' @export
-#' @importFrom survival coxph cluster frailty
-#' @importFrom stats formula update AIC
+#' @importFrom survival coxph cluster frailty Surv
+#' @importFrom data.table is.data.table as.data.table .SD
+#' @importFrom stats formula update AIC na.omit
 #'
 cox2.display <- function(cox.obj.withmodel, dec = 2, msm = NULL, pcut.univariate = NULL, data_for_univariate = NULL) {
+  if (!is.null(data_for_univariate) && !data.table::is.data.table(data_for_univariate)) {
+    data_for_univariate <- data.table::as.data.table(data_for_univariate)
+  }
   model <- cox.obj.withmodel
   if (!any(class(model) == "coxph")) {
     stop("Model not from Cox model")
@@ -211,46 +215,58 @@ cox2.display <- function(cox.obj.withmodel, dec = 2, msm = NULL, pcut.univariate
         unis2 <- Reduce(rbind, unis)
         uni.res <- unis2
         colnames(uni.res) <- c("coef","se","z","p")
-        } else {unis <- lapply(xf, function(x) {
-          lhs      <- paste(deparse(model$call$formula[[2]]), collapse = "")
-          randTerm <- if (mtype=="cluster") {
-            paste0("+cluster(", xc.vn, ")")
-          } else if (mtype=="frailty") {
-            paste0("+frailty(", xc.vn, ")")
-          } else ""
-          uni_fmla <- as.formula(paste0(lhs, " ~ ", x, randTerm))
-
-          needed   <- all.vars(model$call$formula[[2]])
-          if (randTerm!="") needed <- c(needed, xc.vn)
-          df_uni   <- data_for_univariate[complete.cases(data_for_univariate[, c(needed, x)]), ]
-          
-          fit_uni  <- survival::coxph(uni_fmla,
-                                      data      = df_uni,
-                                      model     = TRUE,
-                                      na.action = "na.omit")
-          
-          cm       <- summary(fit_uni)$coefficients
-          cols     <- c(1,
-                        which(colnames(cm) %in% c("se(coef)","robust.se")),
-                        which(colnames(cm)=="z"),
-                        which(colnames(cm) %in% c("Pr(>|z|)","Pr(>|t|)")))[1:4]
-          return(cm[, cols, drop=FALSE])
-        })
-        keep <- !vapply(unis, is.null, logical(1))
-        unis        <- unis[keep]
-        xf_keep     <- xf[keep]
-        if (length(unis) == 0) stop("All univariate fits failed")
-        rn.uni <- lapply(unis, rownames)
-        unis2 <- Reduce(rbind, unis)
-        uni.res <- unis2
-        colnames(uni.res) <- c("coef","se","z","p")
+      } else {unis <- lapply(xf, function(x) {
+        lhs      <- paste(deparse(model$call$formula[[2]]), collapse = "")
+        randTerm <- if (mtype=="cluster") {
+          paste0("+cluster(", xc.vn, ")")
+        } else if (mtype=="frailty") {
+          paste0("+frailty(", xc.vn, ")")
+        } else ""
+        uni_fmla <- as.formula(paste0(lhs, " ~ ", x, randTerm))
         
+        needed   <- all.vars(model$call$formula[[2]])
+        if (randTerm!="") needed <- c(needed, xc.vn)
+        # Handle both data.frame and data.table
+        cols_to_check <- c(needed, x)
+        subset_data <- data_for_univariate[, .SD, .SDcols = cols_to_check]
+        df_uni <- data_for_univariate[complete.cases(subset_data), ]
+        
+        # Check if variable has variation
+        if (is.factor(df_uni[[x]])) {
+          if (length(unique(df_uni[[x]])) <= 1) {
+            return(NULL)  # Skip variables with no variation
+          }
+        }
+        
+        tryCatch({
+          fit_uni <- survival::coxph(uni_fmla, data = df_uni, model = T, na.action = na.omit)
+          cm  <- summary(fit_uni)$coefficients
+          cols <- c(1,
+                    which(colnames(cm) %in% c("se(coef)","robust.se")),
+                    which(colnames(cm)=="z"),
+                    which(colnames(cm) %in% c("Pr(>|z|)","Pr(>|t|)")))[1:4]
+          return(cm[, cols, drop=FALSE])
+        }, error = function(e) {
+          return(NULL)  # Return NULL if model fails
+        })
+      })
+      keep <- !vapply(unis, is.null, logical(1))
+      unis        <- unis[keep]
+      xf_keep     <- xf[keep]
+      if (length(unis) == 0) stop("All univariate fits failed")
+      rn.uni <- lapply(unis, rownames)
+      unis2 <- Reduce(rbind, unis)
+      uni.res <- unis2
+      colnames(uni.res) <- c("coef","se","z","p")
+      
       }
       
       if (is.null(pcut.univariate)){
         mul.res <- data.frame(coefNA(model))
       }else{
-        significant_vars <- rownames(uni.res)[as.numeric(uni.res[, 4]) < pcut.univariate]
+        # Filter out NA p-values
+        p_values <- as.numeric(uni.res[, 4])
+        significant_vars <- rownames(uni.res)[!is.na(p_values) & p_values < pcut.univariate]
         
         if (length(categorical_vars) != 0){
           factor_vars_list <- lapply(categorical_vars, function(factor_var) {
@@ -266,16 +282,23 @@ cox2.display <- function(cox.obj.withmodel, dec = 2, msm = NULL, pcut.univariate
           for (key in names(factor_vars_list)) {
             variables <- factor_vars_list[[key]]
             
-            p_values <- uni.res[variables, 4]
+            # Check which variables are actually in uni.res
+            variables_in_uni <- variables[variables %in% rownames(uni.res)]
             
-            if (any(p_values < pcut.univariate, na.rm = TRUE)) {
-              significant_vars <- setdiff(significant_vars, variables)
+            if (length(variables_in_uni) > 0) {
+              p_values <- uni.res[variables_in_uni, 4]
               
-              significant_vars <- unique(c(significant_vars, key))
+              if (any(p_values < pcut.univariate, na.rm = TRUE)) {
+                significant_vars <- setdiff(significant_vars, variables_in_uni)
+                
+                significant_vars <- unique(c(significant_vars, key))
+              }
             }
           }
         }
         
+        # Store selected_model for metrics if pcut.univariate is used
+        selected_model <- NULL
         if (length(significant_vars) == 0 ){
           mul.res <- matrix(NA, nrow = nrow(uni.res), ncol = ncol(data.frame(coefNA(model))))
           rownames(mul.res) <- rownames(uni.res)
@@ -287,7 +310,9 @@ cox2.display <- function(cox.obj.withmodel, dec = 2, msm = NULL, pcut.univariate
           }else{
             selected_formula <- as.formula(paste(formula.surv, "~", paste(significant_vars, collapse = " + "),"+",paste0(mtype, '(',xc.vn,')')))
           }
-          selected_model <- coxph(selected_formula, data = mdata2, model = TRUE) 
+          # Use data_for_univariate if provided, otherwise use mdata2
+          data_for_multi <- if (!is.null(data_for_univariate)) data_for_univariate else mdata2
+          selected_model <- coxph(selected_formula, data = data_for_multi, model = TRUE) 
           mul <- coefNA(selected_model)
           mul.res <- matrix(NA, nrow = nrow(uni.res), ncol = ncol(data.frame(coefNA(model))))
           rownames(mul.res) <- rownames(uni.res)
@@ -308,8 +333,24 @@ cox2.display <- function(cox.obj.withmodel, dec = 2, msm = NULL, pcut.univariate
       
       uni.res <- uni.res[rownames(uni.res) %in% rownames(mul.res), ]
       colnames(mul.res)[ncol(mul.res)] <- "p"
-      mul_for_exp <- mul.res[rownames(uni.res), c(1, 2, ncol(mul.res)), drop = FALSE]
-      colnames(mul_for_exp)[3] <- "p"  # 세 번째 열이 p가 되게 만듭니다
+      
+      # Determine the correct SE column from the multivariate model results
+      se_col_name <- if ("robust.se" %in% colnames(mul.res)) {
+        "robust.se"
+      } else if ("se.coef." %in% colnames(mul.res)) {
+        "se.coef."
+      } else {
+        "se(coef)"
+      }
+      se_col_idx <- which(colnames(mul.res) == se_col_name)
+      
+      # Create mul_for_exp with the correct columns for coxExp: coef, se, p
+      p_col_idx <- which(colnames(mul.res) == "p")
+      coef_col_idx <- which(colnames(mul.res) == "coef")
+      
+      # Ensure mul_for_exp has columns in the order coxExp expects: coef, se, p
+      mul_for_exp <- mul.res[rownames(uni.res), c(coef_col_idx, se_col_idx, p_col_idx), drop = FALSE]
+      
       fix.all <- cbind(
         coxExp(uni.res,    dec = dec),
         coxExp(mul_for_exp, dec = dec)
@@ -358,38 +399,52 @@ cox2.display <- function(cox.obj.withmodel, dec = 2, msm = NULL, pcut.univariate
         colnames(uni.res) <- c("coef","se","z","p")
       } else {
         unis <- lapply(xf, function(x) {
-        lhs      <- paste(deparse(model$call$formula[[2]]), collapse = "")
-        randTerm <- if (mtype=="cluster") {
-          paste0("+cluster(", xc.vn, ")")
-        } else if (mtype=="frailty") {
-          paste0("+frailty(", xc.vn, ")")
-        } else ""
-        uni_fmla <- as.formula(paste0(lhs, " ~ ", x, randTerm))
-        
-        needed   <- all.vars(model$call$formula[[2]])
-        if (randTerm!="") needed <- c(needed, xc.vn)
-        df_uni   <- data_for_univariate[complete.cases(data_for_univariate[, c(needed, x)]), ]
-        
-        fit_uni  <- survival::coxph(uni_fmla,
-                                    data      = df_uni,
-                                    model     = TRUE,
-                                    na.action = "na.omit")
-        
-        cm       <- summary(fit_uni)$coefficients
-        cols     <- c(1,
-                      which(colnames(cm) %in% c("se(coef)","robust.se")),
-                      which(colnames(cm)=="z"),
-                      which(colnames(cm) %in% c("Pr(>|z|)","Pr(>|t|)")))[1:4]
-        return(cm[, cols, drop=FALSE])
-      })
-      keep <- !vapply(unis, is.null, logical(1))
-      unis        <- unis[keep]
-      xf_keep     <- xf[keep]
-      if (length(unis) == 0) stop("All univariate fits failed")
-      rn.uni <- lapply(unis, rownames)
-      unis2 <- Reduce(rbind, unis)
-      uni.res <- unis2
-      colnames(uni.res) <- c("coef","se","z","p")
+          lhs      <- paste(deparse(model$call$formula[[2]]), collapse = "")
+          randTerm <- if (mtype=="cluster") {
+            paste0("+cluster(", xc.vn, ")")
+          } else if (mtype=="frailty") {
+            paste0("+frailty(", xc.vn, ")")
+          } else ""
+          uni_fmla <- as.formula(paste0(lhs, " ~ ", x, randTerm))
+          
+          needed   <- all.vars(model$call$formula[[2]])
+          if (randTerm!="") needed <- c(needed, xc.vn)
+          # Handle both data.frame and data.table
+          cols_to_check <- c(needed, x)
+          subset_data <- data_for_univariate[, .SD, .SDcols = cols_to_check]
+          df_uni <- data_for_univariate[complete.cases(subset_data), ]
+          
+          # Check if variable has variation
+          if (is.factor(df_uni[[x]])) {
+            if (length(unique(df_uni[[x]])) <= 1) {
+              return(NULL)  # Skip variables with no variation
+            }
+          }
+          
+          tryCatch({
+            fit_uni  <- survival::coxph(uni_fmla,
+                                        data      = df_uni,
+                                        model     = TRUE,
+                                        na.action = na.omit)
+            
+            cm       <- summary(fit_uni)$coefficients
+            cols     <- c(1,
+                          which(colnames(cm) %in% c("se(coef)","robust.se")),
+                          which(colnames(cm)=="z"),
+                          which(colnames(cm) %in% c("Pr(>|z|)","Pr(>|t|)")))[1:4]
+            return(cm[, cols, drop=FALSE])
+          }, error = function(e) {
+            return(NULL)  # Return NULL if model fails
+          })
+        })
+        keep <- !vapply(unis, is.null, logical(1))
+        unis        <- unis[keep]
+        xf_keep     <- xf[keep]
+        if (length(unis) == 0) stop("All univariate fits failed")
+        rn.uni <- lapply(unis, rownames)
+        unis2 <- Reduce(rbind, unis)
+        uni.res <- unis2
+        colnames(uni.res) <- c("coef","se","z","p")
       }
       
       
@@ -397,7 +452,9 @@ cox2.display <- function(cox.obj.withmodel, dec = 2, msm = NULL, pcut.univariate
         mul.res <- data.frame(coefNA(model))
       }else{
         
-        significant_vars <- rownames(uni.res)[as.numeric(uni.res[, 4]) < pcut.univariate]
+        # Filter out NA p-values
+        p_values <- as.numeric(uni.res[, 4])
+        significant_vars <- rownames(uni.res)[!is.na(p_values) & p_values < pcut.univariate]
         
         if (length(categorical_vars) != 0){
           factor_vars_list <- lapply(categorical_vars, function(factor_var) {
@@ -413,16 +470,23 @@ cox2.display <- function(cox.obj.withmodel, dec = 2, msm = NULL, pcut.univariate
           for (key in names(factor_vars_list)) {
             variables <- factor_vars_list[[key]]
             
-            p_values <- uni.res[variables, 4]
+            # Check which variables are actually in uni.res
+            variables_in_uni <- variables[variables %in% rownames(uni.res)]
             
-            if (any(p_values < pcut.univariate, na.rm = TRUE)) {
-              significant_vars <- setdiff(significant_vars, variables)
+            if (length(variables_in_uni) > 0) {
+              p_values <- uni.res[variables_in_uni, 4]
               
-              significant_vars <- unique(c(significant_vars, key))
+              if (any(p_values < pcut.univariate, na.rm = TRUE)) {
+                significant_vars <- setdiff(significant_vars, variables_in_uni)
+                
+                significant_vars <- unique(c(significant_vars, key))
+              }
             }
           }
         }
         
+        # Store selected_model for metrics if pcut.univariate is used
+        selected_model <- NULL
         if (length(significant_vars) == 0 ){
           mul.res <- matrix(NA, nrow = nrow(uni.res), ncol = ncol(data.frame(coefNA(model))))
           rownames(mul.res) <- rownames(uni.res)
@@ -434,7 +498,9 @@ cox2.display <- function(cox.obj.withmodel, dec = 2, msm = NULL, pcut.univariate
           }else{
             selected_formula <- as.formula(paste(formula.surv, "~", paste(significant_vars, collapse = " + "),"+",paste0(mtype, '(',xc.vn,')')))
           }
-          selected_model <- coxph(selected_formula, data = mdata2, model = TRUE) 
+          # Use data_for_univariate if provided, otherwise use mdata2
+          data_for_multi <- if (!is.null(data_for_univariate)) data_for_univariate else mdata2
+          selected_model <- coxph(selected_formula, data = data_for_multi, model = TRUE) 
           mul <- coefNA(selected_model)
           mul.res <- matrix(NA, nrow = nrow(uni.res), ncol = ncol(data.frame(coefNA(model))))
           rownames(mul.res) <- rownames(uni.res)
@@ -455,8 +521,24 @@ cox2.display <- function(cox.obj.withmodel, dec = 2, msm = NULL, pcut.univariate
       
       uni.res <- uni.res[rownames(uni.res) %in% rownames(mul.res), ]
       colnames(mul.res)[ncol(mul.res)] <- "p"
-      mul_for_exp <- mul.res[rownames(uni.res), c(1, 2, ncol(mul.res)), drop = FALSE]
-      colnames(mul_for_exp)[3] <- "p"  # 세 번째 열이 p가 되게 만듭니다
+      
+      # Determine the correct SE column from the multivariate model results
+      se_col_name <- if ("robust.se" %in% colnames(mul.res)) {
+        "robust.se"
+      } else if ("se.coef." %in% colnames(mul.res)) {
+        "se.coef."
+      } else {
+        "se(coef)"
+      }
+      se_col_idx <- which(colnames(mul.res) == se_col_name)
+      
+      # Create mul_for_exp with the correct columns for coxExp: coef, se, p
+      p_col_idx <- which(colnames(mul.res) == "p")
+      coef_col_idx <- which(colnames(mul.res) == "coef")
+      
+      # Ensure mul_for_exp has columns in the order coxExp expects: coef, se, p
+      mul_for_exp <- mul.res[rownames(uni.res), c(coef_col_idx, se_col_idx, p_col_idx), drop = FALSE]
+      
       fix.all <- cbind(
         coxExp(uni.res,    dec = dec),
         coxExp(mul_for_exp, dec = dec)
@@ -533,11 +615,13 @@ cox2.display <- function(cox.obj.withmodel, dec = 2, msm = NULL, pcut.univariate
   
   
   ## metric
-  # no.grp = unlist(lapply(model$frail, length))
-  no.obs <- model$n
-  no.event <- model$nevent
-  aic <- stats::AIC(model)
-  ccd <- model$concordance
+  # Use selected_model metrics if pcut.univariate was applied, otherwise use original model
+  metric_model <- if (!is.null(pcut.univariate) && exists("selected_model") && !is.null(selected_model)) selected_model else model
+  
+  no.obs <- metric_model$n
+  no.event <- metric_model$nevent
+  aic <- stats::AIC(metric_model)
+  ccd <- metric_model$concordance
   concordance_value <- round(ccd["concordance"], 3)
   std_value <- round(ccd["std"], 3)
   c_index <- paste0(concordance_value, "(", std_value, ")")

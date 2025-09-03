@@ -12,7 +12,7 @@
 
 <meta name="author" content="Jinseob Kim" />
 
-<meta name="date" content="2025-08-20" />
+<meta name="date" content="2025-09-03" />
 
 <title>Introducing jstable options</title>
 
@@ -51,7 +51,7 @@ overflow: visible;
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -62,7 +62,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -340,7 +340,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Introducing jstable options</h1>
 <h4 class="author">Jinseob Kim</h4>
-<h4 class="date">2025-08-20</h4>
+<h4 class="date">2025-09-03</h4>
 
 
 
@@ -349,27 +349,27 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </div>
 <div id="tablesubgroupmulticox" class="section level2">
 <h2>TableSubgroupMultiCox</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>lung <span class="sc">%&gt;%</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">status =</span> <span class="fu">as.integer</span>(status <span class="sc">==</span> <span class="dv">1</span>),</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">sex =</span> <span class="fu">factor</span>(sex),</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">kk =</span> <span class="fu">factor</span>(<span class="fu">as.integer</span>(pat.karno <span class="sc">&gt;=</span> <span class="dv">70</span>)),</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">kk1 =</span> <span class="fu">factor</span>(<span class="fu">as.integer</span>(pat.karno <span class="sc">&gt;=</span> <span class="dv">60</span>)),</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">ph.ecog =</span> <span class="fu">factor</span>(ph.ecog)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="ot">-&gt;</span> lung</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>lung.label <span class="ot">&lt;-</span> <span class="fu">mk.lev</span>(lung)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>lung.label <span class="ot">&lt;-</span> lung.label <span class="sc">%&gt;%</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">val_label =</span> <span class="fu">case_when</span>(</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>      variable <span class="sc">==</span> <span class="st">&quot;sex&quot;</span> <span class="sc">&amp;</span> level <span class="sc">==</span> <span class="st">&quot;1&quot;</span> <span class="sc">~</span> <span class="st">&quot;Male&quot;</span>,</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>      variable <span class="sc">==</span> <span class="st">&quot;sex&quot;</span> <span class="sc">&amp;</span> level <span class="sc">==</span> <span class="st">&quot;2&quot;</span> <span class="sc">~</span> <span class="st">&quot;Female&quot;</span>,</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>      variable <span class="sc">==</span> <span class="st">&quot;kk&quot;</span> <span class="sc">&amp;</span> level <span class="sc">==</span> <span class="st">&quot;0&quot;</span> <span class="sc">~</span> <span class="st">&quot;No&quot;</span>,</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>      variable <span class="sc">==</span> <span class="st">&quot;kk&quot;</span> <span class="sc">&amp;</span> level <span class="sc">==</span> <span class="st">&quot;1&quot;</span> <span class="sc">~</span> <span class="st">&quot;Yes&quot;</span>,</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>      variable <span class="sc">==</span> <span class="st">&quot;kk1&quot;</span> <span class="sc">&amp;</span> level <span class="sc">==</span> <span class="st">&quot;0&quot;</span> <span class="sc">~</span> <span class="st">&quot;No&quot;</span>,</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>      variable <span class="sc">==</span> <span class="st">&quot;kk1&quot;</span> <span class="sc">&amp;</span> level <span class="sc">==</span> <span class="st">&quot;1&quot;</span> <span class="sc">~</span> <span class="st">&quot;Yes&quot;</span>,</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> val_label</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>lung <span class="sc">%&gt;%</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>    <span class="at">status =</span> <span class="fu">as.integer</span>(status <span class="sc">==</span> <span class="dv">1</span>),</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>    <span class="at">sex =</span> <span class="fu">factor</span>(sex),</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>    <span class="at">kk =</span> <span class="fu">factor</span>(<span class="fu">as.integer</span>(pat.karno <span class="sc">&gt;=</span> <span class="dv">70</span>)),</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>    <span class="at">kk1 =</span> <span class="fu">factor</span>(<span class="fu">as.integer</span>(pat.karno <span class="sc">&gt;=</span> <span class="dv">60</span>)),</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>    <span class="at">ph.ecog =</span> <span class="fu">factor</span>(ph.ecog)</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>  ) <span class="ot">-&gt;</span> lung</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>lung.label <span class="ot">&lt;-</span> <span class="fu">mk.lev</span>(lung)</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>lung.label <span class="ot">&lt;-</span> lung.label <span class="sc">%&gt;%</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>    <span class="at">val_label =</span> <span class="fu">case_when</span>(</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>      variable <span class="sc">==</span> <span class="st">&quot;sex&quot;</span> <span class="sc">&amp;</span> level <span class="sc">==</span> <span class="st">&quot;1&quot;</span> <span class="sc">~</span> <span class="st">&quot;Male&quot;</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>      variable <span class="sc">==</span> <span class="st">&quot;sex&quot;</span> <span class="sc">&amp;</span> level <span class="sc">==</span> <span class="st">&quot;2&quot;</span> <span class="sc">~</span> <span class="st">&quot;Female&quot;</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>      variable <span class="sc">==</span> <span class="st">&quot;kk&quot;</span> <span class="sc">&amp;</span> level <span class="sc">==</span> <span class="st">&quot;0&quot;</span> <span class="sc">~</span> <span class="st">&quot;No&quot;</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>      variable <span class="sc">==</span> <span class="st">&quot;kk&quot;</span> <span class="sc">&amp;</span> level <span class="sc">==</span> <span class="st">&quot;1&quot;</span> <span class="sc">~</span> <span class="st">&quot;Yes&quot;</span>,</span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>      variable <span class="sc">==</span> <span class="st">&quot;kk1&quot;</span> <span class="sc">&amp;</span> level <span class="sc">==</span> <span class="st">&quot;0&quot;</span> <span class="sc">~</span> <span class="st">&quot;No&quot;</span>,</span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a>      variable <span class="sc">==</span> <span class="st">&quot;kk1&quot;</span> <span class="sc">&amp;</span> level <span class="sc">==</span> <span class="st">&quot;1&quot;</span> <span class="sc">~</span> <span class="st">&quot;Yes&quot;</span>,</span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> val_label</span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a>    )</span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a>  )</span></code></pre></div>
 </div>
 <div id="counting-the-number-of-independent-variables-for-comparison" class="section level2">
 <h2>Counting the Number of Independent Variables for Comparison</h2>
@@ -377,27 +377,27 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h3>The default option for count_by is set to NULL. By specifying an
 independent variable in the count_by option, the table will display the
 counts for each level of the independent variable.</h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TableSubgroupMultiCox</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> sex, <span class="at">var_subgroups =</span> <span class="fu">c</span>(<span class="st">&quot;kk&quot;</span>, <span class="st">&quot;kk1&quot;</span>), <span class="at">data =</span> lung, <span class="at">time_eventrate =</span> <span class="dv">100</span>, <span class="at">line =</span> <span class="cn">TRUE</span>, <span class="at">cluster =</span> <span class="st">&quot;inst&quot;</span>, <span class="at">strata =</span> <span class="st">&quot;inst&quot;</span>, <span class="at">weights =</span> <span class="st">&quot;age&quot;</span>, <span class="at">event =</span> <span class="cn">FALSE</span>, <span class="at">count_by =</span> <span class="st">&quot;sex&quot;</span>, <span class="at">labeldata =</span> lung.label)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Variable Count Count(sex=Male) Count(sex=Female) Percent Point Estimate</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sex  Overall   227             138                90     100           1.66</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1       &lt;NA&gt;  &lt;NA&gt;            &lt;NA&gt;              &lt;NA&gt;    &lt;NA&gt;           &lt;NA&gt;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2         kk  &lt;NA&gt;            &lt;NA&gt;              &lt;NA&gt;    &lt;NA&gt;           &lt;NA&gt;</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3         No    38              22                16      17   193294637.42</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4        Yes   186             114                73      83           1.44</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5       &lt;NA&gt;  &lt;NA&gt;            &lt;NA&gt;              &lt;NA&gt;    &lt;NA&gt;           &lt;NA&gt;</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6        kk1  &lt;NA&gt;            &lt;NA&gt;              &lt;NA&gt;    &lt;NA&gt;           &lt;NA&gt;</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7         No     8               4                 4     3.6           &lt;NA&gt;</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8        Yes   216             132                85    96.4           1.55</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           Lower         Upper sex=1 sex=2 P value P for interaction</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sex        1.09          2.53     0   1.2   0.019              &lt;NA&gt;</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1          &lt;NA&gt;          &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;              &lt;NA&gt;</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2          &lt;NA&gt;          &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;             0.562</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   27228158.02 1372212428.98     0     0  &lt;0.001              &lt;NA&gt;</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4          0.95          2.18     0   1.5   0.084              &lt;NA&gt;</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5          &lt;NA&gt;          &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;              &lt;NA&gt;</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6          &lt;NA&gt;          &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;            &lt;0.001</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7          &lt;NA&gt;          &lt;NA&gt;     0     0    &lt;NA&gt;              &lt;NA&gt;</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8             1          2.41     0   1.3   0.049              &lt;NA&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">TableSubgroupMultiCox</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> sex, <span class="at">var_subgroups =</span> <span class="fu">c</span>(<span class="st">&quot;kk&quot;</span>, <span class="st">&quot;kk1&quot;</span>), <span class="at">data =</span> lung, <span class="at">time_eventrate =</span> <span class="dv">100</span>, <span class="at">line =</span> <span class="cn">TRUE</span>, <span class="at">cluster =</span> <span class="st">&quot;inst&quot;</span>, <span class="at">strata =</span> <span class="st">&quot;inst&quot;</span>, <span class="at">weights =</span> <span class="st">&quot;age&quot;</span>, <span class="at">event =</span> <span class="cn">FALSE</span>, <span class="at">count_by =</span> <span class="st">&quot;sex&quot;</span>, <span class="at">labeldata =</span> lung.label)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#&gt;     Variable Count Count(sex=Male) Count(sex=Female) Percent Point Estimate</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt; sex  Overall   227             138                90     100           1.66</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt; 1       &lt;NA&gt;  &lt;NA&gt;            &lt;NA&gt;              &lt;NA&gt;    &lt;NA&gt;           &lt;NA&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt; 2         kk  &lt;NA&gt;            &lt;NA&gt;              &lt;NA&gt;    &lt;NA&gt;           &lt;NA&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt; 3         No    38              22                16      17   193294637.42</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; 4        Yes   186             114                73      83           1.44</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt; 5       &lt;NA&gt;  &lt;NA&gt;            &lt;NA&gt;              &lt;NA&gt;    &lt;NA&gt;           &lt;NA&gt;</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt; 6        kk1  &lt;NA&gt;            &lt;NA&gt;              &lt;NA&gt;    &lt;NA&gt;           &lt;NA&gt;</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt; 7         No     8               4                 4     3.6           &lt;NA&gt;</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt; 8        Yes   216             132                85    96.4           1.55</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt;           Lower         Upper sex=1 sex=2 P value P for interaction</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt; sex        1.09          2.53     0   1.2   0.019              &lt;NA&gt;</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt; 1          &lt;NA&gt;          &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;              &lt;NA&gt;</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt; 2          &lt;NA&gt;          &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;             0.562</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt; 3   27228158.02 1372212428.98     0     0  &lt;0.001              &lt;NA&gt;</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="co">#&gt; 4          0.95          2.18     0   1.5   0.084              &lt;NA&gt;</span></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="co">#&gt; 5          &lt;NA&gt;          &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;              &lt;NA&gt;</span></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="co">#&gt; 6          &lt;NA&gt;          &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;            &lt;0.001</span></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a><span class="co">#&gt; 7          &lt;NA&gt;          &lt;NA&gt;     0     0    &lt;NA&gt;              &lt;NA&gt;</span></span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a><span class="co">#&gt; 8             1          2.41     0   1.3   0.049              &lt;NA&gt;</span></span></code></pre></div>
 </div>
 </div>
 <div id="calculate-crude-incidence-rate-of-event" class="section level2">
@@ -408,37 +408,37 @@ event to TRUE, the table will display the crude incidence rate of
 events. This rate is calculated using the number of events as the
 numerator and the count of the independent variable as the
 denominator.(Different from Kaplan-Meier Estimates)</h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TableSubgroupMultiCox</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> sex, <span class="at">var_subgroups =</span> <span class="fu">c</span>(<span class="st">&quot;kk&quot;</span>, <span class="st">&quot;kk1&quot;</span>), <span class="at">data =</span> lung, <span class="at">time_eventrate =</span> <span class="dv">100</span>, <span class="at">line =</span> <span class="cn">TRUE</span>, <span class="at">cluster =</span> <span class="st">&quot;inst&quot;</span>, <span class="at">strata =</span> <span class="st">&quot;inst&quot;</span>, <span class="at">weights =</span> <span class="st">&quot;age&quot;</span>, <span class="at">event =</span> <span class="cn">TRUE</span>, <span class="at">count_by =</span> <span class="st">&quot;sex&quot;</span>, <span class="at">labeldata =</span> lung.label)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Variable          Count Count(sex=Male) Count(sex=Female) Percent</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sex  Overall 63/228 (27.6%)  26/138 (18.8%)     37/90 (41.1%)     100</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1       &lt;NA&gt;           &lt;NA&gt;            &lt;NA&gt;              &lt;NA&gt;    &lt;NA&gt;</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2         kk           &lt;NA&gt;            &lt;NA&gt;              &lt;NA&gt;    &lt;NA&gt;</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3         No   5/38 (13.2%)     1/22 (4.5%)        4/16 (25%)      17</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4        Yes   58/187 (31%)  25/114 (21.9%)     33/73 (45.2%)      83</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5       &lt;NA&gt;           &lt;NA&gt;            &lt;NA&gt;              &lt;NA&gt;    &lt;NA&gt;</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6        kk1           &lt;NA&gt;            &lt;NA&gt;              &lt;NA&gt;    &lt;NA&gt;</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7         No      2/8 (25%)        0/4 (0%)         2/4 (50%)     3.6</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8        Yes 61/217 (28.1%)  26/132 (19.7%)     35/85 (41.2%)    96.4</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Point Estimate       Lower         Upper sex=1 sex=2 P value</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sex           1.66        1.09          2.53     0   1.2   0.019</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1             &lt;NA&gt;        &lt;NA&gt;          &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2             &lt;NA&gt;        &lt;NA&gt;          &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     193294637.42 27228158.02 1372212428.98     0     0  &lt;0.001</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4             1.44        0.95          2.18     0   1.5   0.084</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5             &lt;NA&gt;        &lt;NA&gt;          &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6             &lt;NA&gt;        &lt;NA&gt;          &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7             &lt;NA&gt;        &lt;NA&gt;          &lt;NA&gt;     0     0    &lt;NA&gt;</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8             1.55           1          2.41     0   1.3   0.049</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     P for interaction</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sex              &lt;NA&gt;</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1                &lt;NA&gt;</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2               0.562</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3                &lt;NA&gt;</span></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4                &lt;NA&gt;</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5                &lt;NA&gt;</span></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6              &lt;0.001</span></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7                &lt;NA&gt;</span></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8                &lt;NA&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">TableSubgroupMultiCox</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> sex, <span class="at">var_subgroups =</span> <span class="fu">c</span>(<span class="st">&quot;kk&quot;</span>, <span class="st">&quot;kk1&quot;</span>), <span class="at">data =</span> lung, <span class="at">time_eventrate =</span> <span class="dv">100</span>, <span class="at">line =</span> <span class="cn">TRUE</span>, <span class="at">cluster =</span> <span class="st">&quot;inst&quot;</span>, <span class="at">strata =</span> <span class="st">&quot;inst&quot;</span>, <span class="at">weights =</span> <span class="st">&quot;age&quot;</span>, <span class="at">event =</span> <span class="cn">TRUE</span>, <span class="at">count_by =</span> <span class="st">&quot;sex&quot;</span>, <span class="at">labeldata =</span> lung.label)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#&gt;     Variable          Count Count(sex=Male) Count(sex=Female) Percent</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt; sex  Overall 63/228 (27.6%)  26/138 (18.8%)     37/90 (41.1%)     100</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt; 1       &lt;NA&gt;           &lt;NA&gt;            &lt;NA&gt;              &lt;NA&gt;    &lt;NA&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt; 2         kk           &lt;NA&gt;            &lt;NA&gt;              &lt;NA&gt;    &lt;NA&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt; 3         No   5/38 (13.2%)     1/22 (4.5%)        4/16 (25%)      17</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt; 4        Yes   58/187 (31%)  25/114 (21.9%)     33/73 (45.2%)      83</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt; 5       &lt;NA&gt;           &lt;NA&gt;            &lt;NA&gt;              &lt;NA&gt;    &lt;NA&gt;</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">#&gt; 6        kk1           &lt;NA&gt;            &lt;NA&gt;              &lt;NA&gt;    &lt;NA&gt;</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">#&gt; 7         No      2/8 (25%)        0/4 (0%)         2/4 (50%)     3.6</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="co">#&gt; 8        Yes 61/217 (28.1%)  26/132 (19.7%)     35/85 (41.2%)    96.4</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="co">#&gt;     Point Estimate       Lower         Upper sex=1 sex=2 P value</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="co">#&gt; sex           1.66        1.09          2.53     0   1.2   0.019</span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="co">#&gt; 1             &lt;NA&gt;        &lt;NA&gt;          &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;</span></span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="co">#&gt; 2             &lt;NA&gt;        &lt;NA&gt;          &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;</span></span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="co">#&gt; 3     193294637.42 27228158.02 1372212428.98     0     0  &lt;0.001</span></span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="co">#&gt; 4             1.44        0.95          2.18     0   1.5   0.084</span></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="co">#&gt; 5             &lt;NA&gt;        &lt;NA&gt;          &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;</span></span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="co">#&gt; 6             &lt;NA&gt;        &lt;NA&gt;          &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;</span></span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="co">#&gt; 7             &lt;NA&gt;        &lt;NA&gt;          &lt;NA&gt;     0     0    &lt;NA&gt;</span></span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="co">#&gt; 8             1.55           1          2.41     0   1.3   0.049</span></span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="co">#&gt;     P for interaction</span></span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a><span class="co">#&gt; sex              &lt;NA&gt;</span></span>
+<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a><span class="co">#&gt; 1                &lt;NA&gt;</span></span>
+<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a><span class="co">#&gt; 2               0.562</span></span>
+<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a><span class="co">#&gt; 3                &lt;NA&gt;</span></span>
+<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a><span class="co">#&gt; 4                &lt;NA&gt;</span></span>
+<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a><span class="co">#&gt; 5                &lt;NA&gt;</span></span>
+<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a><span class="co">#&gt; 6              &lt;0.001</span></span>
+<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a><span class="co">#&gt; 7                &lt;NA&gt;</span></span>
+<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a><span class="co">#&gt; 8                &lt;NA&gt;</span></span></code></pre></div>
 </div>
 </div>
 <div id="using-both-count_by-and-event-option-is-also-available" class="section level2">
@@ -447,27 +447,27 @@ denominator.(Different from Kaplan-Meier Estimates)</h3>
 <h3>By using both count_by and event option, the table will display
 crude incidence rate and the counts for each level of the independant
 variable.</h3>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TableSubgroupMultiCox</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> sex, <span class="at">var_subgroups =</span> <span class="fu">c</span>(<span class="st">&quot;kk&quot;</span>, <span class="st">&quot;kk1&quot;</span>), <span class="at">data =</span> lung, <span class="at">time_eventrate =</span> <span class="dv">100</span>, <span class="at">line =</span> <span class="cn">TRUE</span>, <span class="at">cluster =</span> <span class="st">&quot;inst&quot;</span>, <span class="at">strata =</span> <span class="st">&quot;inst&quot;</span>, <span class="at">weights =</span> <span class="st">&quot;age&quot;</span>, <span class="at">event =</span> <span class="cn">TRUE</span>, <span class="at">count_by =</span> <span class="cn">NULL</span>, <span class="at">labeldata =</span> lung.label)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Variable          Count Percent Point Estimate       Lower         Upper</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sex  Overall 63/228 (27.6%)     100           1.66        1.09          2.53</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1       &lt;NA&gt;           &lt;NA&gt;    &lt;NA&gt;           &lt;NA&gt;        &lt;NA&gt;          &lt;NA&gt;</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2         kk           &lt;NA&gt;    &lt;NA&gt;           &lt;NA&gt;        &lt;NA&gt;          &lt;NA&gt;</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3         No             38      17   193294637.42 27228158.02 1372212428.98</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4        Yes            186      83           1.44        0.95          2.18</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5       &lt;NA&gt;           &lt;NA&gt;    &lt;NA&gt;           &lt;NA&gt;        &lt;NA&gt;          &lt;NA&gt;</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6        kk1           &lt;NA&gt;    &lt;NA&gt;           &lt;NA&gt;        &lt;NA&gt;          &lt;NA&gt;</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7         No              8     3.6           &lt;NA&gt;        &lt;NA&gt;          &lt;NA&gt;</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8        Yes            216    96.4           1.55           1          2.41</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     sex=1 sex=2 P value P for interaction</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sex     0   1.2   0.019              &lt;NA&gt;</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;              &lt;NA&gt;</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2    &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;             0.562</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3       0     0  &lt;0.001              &lt;NA&gt;</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4       0   1.5   0.084              &lt;NA&gt;</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5    &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;              &lt;NA&gt;</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6    &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;            &lt;0.001</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7       0     0    &lt;NA&gt;              &lt;NA&gt;</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8       0   1.3   0.049              &lt;NA&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">TableSubgroupMultiCox</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> sex, <span class="at">var_subgroups =</span> <span class="fu">c</span>(<span class="st">&quot;kk&quot;</span>, <span class="st">&quot;kk1&quot;</span>), <span class="at">data =</span> lung, <span class="at">time_eventrate =</span> <span class="dv">100</span>, <span class="at">line =</span> <span class="cn">TRUE</span>, <span class="at">cluster =</span> <span class="st">&quot;inst&quot;</span>, <span class="at">strata =</span> <span class="st">&quot;inst&quot;</span>, <span class="at">weights =</span> <span class="st">&quot;age&quot;</span>, <span class="at">event =</span> <span class="cn">TRUE</span>, <span class="at">count_by =</span> <span class="cn">NULL</span>, <span class="at">labeldata =</span> lung.label)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co">#&gt;     Variable          Count Percent Point Estimate       Lower         Upper</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt; sex  Overall 63/228 (27.6%)     100           1.66        1.09          2.53</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt; 1       &lt;NA&gt;           &lt;NA&gt;    &lt;NA&gt;           &lt;NA&gt;        &lt;NA&gt;          &lt;NA&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; 2         kk           &lt;NA&gt;    &lt;NA&gt;           &lt;NA&gt;        &lt;NA&gt;          &lt;NA&gt;</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt; 3         No             38      17   193294637.42 27228158.02 1372212428.98</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; 4        Yes            186      83           1.44        0.95          2.18</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt; 5       &lt;NA&gt;           &lt;NA&gt;    &lt;NA&gt;           &lt;NA&gt;        &lt;NA&gt;          &lt;NA&gt;</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt; 6        kk1           &lt;NA&gt;    &lt;NA&gt;           &lt;NA&gt;        &lt;NA&gt;          &lt;NA&gt;</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt; 7         No              8     3.6           &lt;NA&gt;        &lt;NA&gt;          &lt;NA&gt;</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt; 8        Yes            216    96.4           1.55           1          2.41</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt;     sex=1 sex=2 P value P for interaction</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co">#&gt; sex     0   1.2   0.019              &lt;NA&gt;</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="co">#&gt; 1    &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;              &lt;NA&gt;</span></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co">#&gt; 2    &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;             0.562</span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co">#&gt; 3       0     0  &lt;0.001              &lt;NA&gt;</span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="co">#&gt; 4       0   1.5   0.084              &lt;NA&gt;</span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a><span class="co">#&gt; 5    &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;              &lt;NA&gt;</span></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="co">#&gt; 6    &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;            &lt;0.001</span></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a><span class="co">#&gt; 7       0     0    &lt;NA&gt;              &lt;NA&gt;</span></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a><span class="co">#&gt; 8       0   1.3   0.049              &lt;NA&gt;</span></span></code></pre></div>
 </div>
 </div>
 <div id="introducing-pairwise-option" class="section level1">
@@ -479,166 +479,166 @@ CreateTableOneJS</h2>
 <h3>The default value for the pairwise option is FALSE. By setting
 pairwise to TRUE, the table will display p-values for pairwise
 comparisons of stratified groups.</h3>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">CreateTableOneJS</span>(<span class="at">vars =</span> <span class="fu">names</span>(lung), <span class="at">strata =</span> <span class="st">&quot;ph.ecog&quot;</span>, <span class="at">data =</span> lung, <span class="at">showAllLevels =</span> F, <span class="at">labeldata =</span> lung.label, <span class="at">Labels =</span> T, <span class="at">pairwise =</span> T)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $table</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                  0                 1                 2                </span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; n                &quot;    63&quot;          &quot;   113&quot;          &quot;    50&quot;         </span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; inst             &quot;  9.60 ± 8.20&quot;   &quot; 11.41 ± 7.99&quot;   &quot; 12.02 ± 9.08&quot;  </span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; time             &quot;351.87 ± 220.47&quot; &quot;314.44 ± 207.08&quot; &quot;234.08 ± 189.85&quot;</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; status           &quot;  0.41 ± 0.50&quot;   &quot;  0.27 ± 0.45&quot;   &quot;  0.12 ± 0.33&quot;  </span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; age              &quot; 61.16 ± 9.57&quot;   &quot; 61.45 ± 8.87&quot;   &quot; 66.22 ± 8.11&quot;  </span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sex = Female (%) &quot;    27 ( 42.9) &quot; &quot;    42 ( 37.2) &quot; &quot;    21 ( 42.0) &quot;</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ph.ecog (%)      &quot;    &quot;            &quot;   &quot;             &quot;    &quot;           </span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    0             &quot;    63 (100.0) &quot; &quot;     0 (  0.0) &quot; &quot;     0 (  0.0) &quot;</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    1             &quot;     0 (  0.0) &quot; &quot;   113 (100.0) &quot; &quot;     0 (  0.0) &quot;</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    2             &quot;     0 (  0.0) &quot; &quot;     0 (  0.0) &quot; &quot;    50 (100.0) &quot;</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    3             &quot;     0 (  0.0) &quot; &quot;     0 (  0.0) &quot; &quot;     0 (  0.0) &quot;</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ph.karno         &quot; 93.97 ± 5.83&quot;   &quot; 82.65 ± 7.44&quot;   &quot; 65.71 ± 7.91&quot;  </span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pat.karno        &quot; 87.42 ± 10.23&quot;  &quot; 82.30 ± 11.95&quot;  &quot; 65.21 ± 15.16&quot; </span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; meal.cal         &quot;924.84 ± 388.40&quot; &quot;992.26 ± 384.22&quot; &quot;796.12 ± 435.37&quot;</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; wt.loss          &quot;  6.00 ± 8.81&quot;   &quot; 10.59 ± 14.18&quot;  &quot; 12.51 ± 14.40&quot; </span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; kk = Yes (%)     &quot;    61 ( 98.4) &quot; &quot;   101 ( 89.4) &quot; &quot;    23 ( 47.9) &quot;</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; kk1 = Yes (%)    &quot;    62 (100.0) &quot; &quot;   113 (100.0) &quot; &quot;    40 ( 83.3) &quot;</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                  3                  p        test    p(0 vs 1) p(0 vs 2)</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; n                &quot;      1&quot;          &quot;&quot;       &quot;&quot;      &quot;&quot;        &quot;&quot;       </span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; inst             &quot;  13.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot; 0.161&quot;  &quot; 0.148&quot; </span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; time             &quot; 118.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot; 0.272&quot;  &quot; 0.003&quot; </span></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; status           &quot;   0.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot; 0.069&quot;  &quot;&lt;0.001&quot; </span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; age              &quot;  70.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot; 0.842&quot;  &quot; 0.003&quot; </span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sex = Female (%) &quot;      0 (  0.0) &quot; &quot; 0.823&quot; &quot;exact&quot; &quot; 0.562&quot;  &quot; 1.000&quot; </span></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ph.ecog (%)      &quot;      &quot;           &quot;    NA&quot; &quot;exact&quot; &quot;&quot;        &quot;&quot;       </span></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    0             &quot;      0 (  0.0) &quot; &quot;&quot;       &quot;&quot;      &quot;&quot;        &quot;&quot;       </span></span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    1             &quot;      0 (  0.0) &quot; &quot;&quot;       &quot;&quot;      &quot;&quot;        &quot;&quot;       </span></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    2             &quot;      0 (  0.0) &quot; &quot;&quot;       &quot;&quot;      &quot;&quot;        &quot;&quot;       </span></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    3             &quot;      1 (100.0) &quot; &quot;&quot;       &quot;&quot;      &quot;&quot;        &quot;&quot;       </span></span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ph.karno         &quot;  60.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot;&lt;0.001&quot;  &quot;&lt;0.001&quot; </span></span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pat.karno        &quot;  70.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot; 0.003&quot;  &quot;&lt;0.001&quot; </span></span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; meal.cal         &quot;1075.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot; 0.329&quot;  &quot; 0.139&quot; </span></span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; wt.loss          &quot;  20.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot; 0.011&quot;  &quot; 0.009&quot; </span></span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; kk = Yes (%)     &quot;      1 (100.0) &quot; &quot;&lt;0.001&quot; &quot;exact&quot; &quot; 0.034&quot;  &quot;&lt;0.001&quot; </span></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; kk1 = Yes (%)    &quot;      1 (100.0) &quot; &quot;&lt;0.001&quot; &quot;exact&quot; &quot; 1.000&quot;  &quot; 0.001&quot; </span></span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                  p(0 vs 3) p(1 vs 2) p(1 vs 3) p(2 vs 3) sig </span></span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; n                &quot;&quot;        &quot;&quot;        &quot;&quot;        &quot;&quot;        NA  </span></span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; inst             &quot; NA&quot;     &quot; 0.684&quot;  &quot; NA&quot;     &quot; NA&quot;     NA  </span></span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; time             &quot; NA&quot;     &quot; 0.017&quot;  &quot; NA&quot;     &quot; NA&quot;     NA  </span></span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; status           &quot; NA&quot;     &quot; 0.015&quot;  &quot; NA&quot;     &quot; NA&quot;     NA  </span></span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; age              &quot; NA&quot;     &quot; 0.001&quot;  &quot; NA&quot;     &quot; NA&quot;     NA  </span></span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sex = Female (%) &quot; 1.000&quot;  &quot; 0.682&quot;  &quot; 1.000&quot;  &quot; 1.000&quot;  &quot;&quot;  </span></span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ph.ecog (%)      &quot;&quot;        &quot;&quot;        &quot;&quot;        &quot;&quot;        NA  </span></span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    0             &quot;&quot;        &quot;&quot;        &quot;&quot;        &quot;&quot;        NA  </span></span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    1             &quot;&quot;        &quot;&quot;        &quot;&quot;        &quot;&quot;        NA  </span></span>
-<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    2             &quot;&quot;        &quot;&quot;        &quot;&quot;        &quot;&quot;        NA  </span></span>
-<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    3             &quot;&quot;        &quot;&quot;        &quot;&quot;        &quot;&quot;        NA  </span></span>
-<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ph.karno         &quot; NA&quot;     &quot;&lt;0.001&quot;  &quot; NA&quot;     &quot; NA&quot;     NA  </span></span>
-<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pat.karno        &quot; NA&quot;     &quot;&lt;0.001&quot;  &quot; NA&quot;     &quot; NA&quot;     NA  </span></span>
-<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; meal.cal         &quot; NA&quot;     &quot; 0.014&quot;  &quot; NA&quot;     &quot; NA&quot;     NA  </span></span>
-<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; wt.loss          &quot; NA&quot;     &quot; 0.455&quot;  &quot; NA&quot;     &quot; NA&quot;     NA  </span></span>
-<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; kk = Yes (%)     &quot; 1.000&quot;  &quot;&lt;0.001&quot;  &quot; 1.000&quot;  &quot; 0.490&quot;  &quot;**&quot;</span></span>
-<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; kk1 = Yes (%)    &quot; 1.000&quot;  &quot;&lt;0.001&quot;  &quot; 1.000&quot;  &quot; 1.000&quot;  &quot;**&quot;</span></span>
-<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $caption</span></span>
-<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Stratified by ph.ecog&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">CreateTableOneJS</span>(<span class="at">vars =</span> <span class="fu">names</span>(lung), <span class="at">strata =</span> <span class="st">&quot;ph.ecog&quot;</span>, <span class="at">data =</span> lung, <span class="at">showAllLevels =</span> F, <span class="at">labeldata =</span> lung.label, <span class="at">Labels =</span> T, <span class="at">pairwise =</span> T)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co">#&gt; $table</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co">#&gt;                  0                 1                 2                </span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; n                &quot;    63&quot;          &quot;   113&quot;          &quot;    50&quot;         </span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt; inst             &quot;  9.60 ± 8.20&quot;   &quot; 11.41 ± 7.99&quot;   &quot; 12.02 ± 9.08&quot;  </span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt; time             &quot;351.87 ± 220.47&quot; &quot;314.44 ± 207.08&quot; &quot;234.08 ± 189.85&quot;</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt; status           &quot;  0.41 ± 0.50&quot;   &quot;  0.27 ± 0.45&quot;   &quot;  0.12 ± 0.33&quot;  </span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#&gt; age              &quot; 61.16 ± 9.57&quot;   &quot; 61.45 ± 8.87&quot;   &quot; 66.22 ± 8.11&quot;  </span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co">#&gt; sex = Female (%) &quot;    27 ( 42.9) &quot; &quot;    42 ( 37.2) &quot; &quot;    21 ( 42.0) &quot;</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#&gt; ph.ecog (%)      &quot;    &quot;            &quot;   &quot;             &quot;    &quot;           </span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt;    0             &quot;    63 (100.0) &quot; &quot;     0 (  0.0) &quot; &quot;     0 (  0.0) &quot;</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co">#&gt;    1             &quot;     0 (  0.0) &quot; &quot;   113 (100.0) &quot; &quot;     0 (  0.0) &quot;</span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co">#&gt;    2             &quot;     0 (  0.0) &quot; &quot;     0 (  0.0) &quot; &quot;    50 (100.0) &quot;</span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="co">#&gt;    3             &quot;     0 (  0.0) &quot; &quot;     0 (  0.0) &quot; &quot;     0 (  0.0) &quot;</span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co">#&gt; ph.karno         &quot; 93.97 ± 5.83&quot;   &quot; 82.65 ± 7.44&quot;   &quot; 65.71 ± 7.91&quot;  </span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="co">#&gt; pat.karno        &quot; 87.42 ± 10.23&quot;  &quot; 82.30 ± 11.95&quot;  &quot; 65.21 ± 15.16&quot; </span></span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="co">#&gt; meal.cal         &quot;924.84 ± 388.40&quot; &quot;992.26 ± 384.22&quot; &quot;796.12 ± 435.37&quot;</span></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="co">#&gt; wt.loss          &quot;  6.00 ± 8.81&quot;   &quot; 10.59 ± 14.18&quot;  &quot; 12.51 ± 14.40&quot; </span></span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a><span class="co">#&gt; kk = Yes (%)     &quot;    61 ( 98.4) &quot; &quot;   101 ( 89.4) &quot; &quot;    23 ( 47.9) &quot;</span></span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a><span class="co">#&gt; kk1 = Yes (%)    &quot;    62 (100.0) &quot; &quot;   113 (100.0) &quot; &quot;    40 ( 83.3) &quot;</span></span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a><span class="co">#&gt;                  3                  p        test    p(0 vs 1) p(0 vs 2)</span></span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a><span class="co">#&gt; n                &quot;      1&quot;          &quot;&quot;       &quot;&quot;      &quot;&quot;        &quot;&quot;       </span></span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a><span class="co">#&gt; inst             &quot;  13.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot; 0.161&quot;  &quot; 0.148&quot; </span></span>
+<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a><span class="co">#&gt; time             &quot; 118.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot; 0.272&quot;  &quot; 0.003&quot; </span></span>
+<span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a><span class="co">#&gt; status           &quot;   0.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot; 0.069&quot;  &quot;&lt;0.001&quot; </span></span>
+<span id="cb5-26"><a href="#cb5-26" tabindex="-1"></a><span class="co">#&gt; age              &quot;  70.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot; 0.842&quot;  &quot; 0.003&quot; </span></span>
+<span id="cb5-27"><a href="#cb5-27" tabindex="-1"></a><span class="co">#&gt; sex = Female (%) &quot;      0 (  0.0) &quot; &quot; 0.823&quot; &quot;exact&quot; &quot; 0.562&quot;  &quot; 1.000&quot; </span></span>
+<span id="cb5-28"><a href="#cb5-28" tabindex="-1"></a><span class="co">#&gt; ph.ecog (%)      &quot;      &quot;           &quot;    NA&quot; &quot;exact&quot; &quot;&quot;        &quot;&quot;       </span></span>
+<span id="cb5-29"><a href="#cb5-29" tabindex="-1"></a><span class="co">#&gt;    0             &quot;      0 (  0.0) &quot; &quot;&quot;       &quot;&quot;      &quot;&quot;        &quot;&quot;       </span></span>
+<span id="cb5-30"><a href="#cb5-30" tabindex="-1"></a><span class="co">#&gt;    1             &quot;      0 (  0.0) &quot; &quot;&quot;       &quot;&quot;      &quot;&quot;        &quot;&quot;       </span></span>
+<span id="cb5-31"><a href="#cb5-31" tabindex="-1"></a><span class="co">#&gt;    2             &quot;      0 (  0.0) &quot; &quot;&quot;       &quot;&quot;      &quot;&quot;        &quot;&quot;       </span></span>
+<span id="cb5-32"><a href="#cb5-32" tabindex="-1"></a><span class="co">#&gt;    3             &quot;      1 (100.0) &quot; &quot;&quot;       &quot;&quot;      &quot;&quot;        &quot;&quot;       </span></span>
+<span id="cb5-33"><a href="#cb5-33" tabindex="-1"></a><span class="co">#&gt; ph.karno         &quot;  60.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot;&lt;0.001&quot;  &quot;&lt;0.001&quot; </span></span>
+<span id="cb5-34"><a href="#cb5-34" tabindex="-1"></a><span class="co">#&gt; pat.karno        &quot;  70.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot; 0.003&quot;  &quot;&lt;0.001&quot; </span></span>
+<span id="cb5-35"><a href="#cb5-35" tabindex="-1"></a><span class="co">#&gt; meal.cal         &quot;1075.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot; 0.329&quot;  &quot; 0.139&quot; </span></span>
+<span id="cb5-36"><a href="#cb5-36" tabindex="-1"></a><span class="co">#&gt; wt.loss          &quot;  20.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot; 0.011&quot;  &quot; 0.009&quot; </span></span>
+<span id="cb5-37"><a href="#cb5-37" tabindex="-1"></a><span class="co">#&gt; kk = Yes (%)     &quot;      1 (100.0) &quot; &quot;&lt;0.001&quot; &quot;exact&quot; &quot; 0.034&quot;  &quot;&lt;0.001&quot; </span></span>
+<span id="cb5-38"><a href="#cb5-38" tabindex="-1"></a><span class="co">#&gt; kk1 = Yes (%)    &quot;      1 (100.0) &quot; &quot;&lt;0.001&quot; &quot;exact&quot; &quot; 1.000&quot;  &quot; 0.001&quot; </span></span>
+<span id="cb5-39"><a href="#cb5-39" tabindex="-1"></a><span class="co">#&gt;                  p(0 vs 3) p(1 vs 2) p(1 vs 3) p(2 vs 3) sig </span></span>
+<span id="cb5-40"><a href="#cb5-40" tabindex="-1"></a><span class="co">#&gt; n                &quot;&quot;        &quot;&quot;        &quot;&quot;        &quot;&quot;        NA  </span></span>
+<span id="cb5-41"><a href="#cb5-41" tabindex="-1"></a><span class="co">#&gt; inst             &quot; NA&quot;     &quot; 0.684&quot;  &quot; NA&quot;     &quot; NA&quot;     NA  </span></span>
+<span id="cb5-42"><a href="#cb5-42" tabindex="-1"></a><span class="co">#&gt; time             &quot; NA&quot;     &quot; 0.017&quot;  &quot; NA&quot;     &quot; NA&quot;     NA  </span></span>
+<span id="cb5-43"><a href="#cb5-43" tabindex="-1"></a><span class="co">#&gt; status           &quot; NA&quot;     &quot; 0.015&quot;  &quot; NA&quot;     &quot; NA&quot;     NA  </span></span>
+<span id="cb5-44"><a href="#cb5-44" tabindex="-1"></a><span class="co">#&gt; age              &quot; NA&quot;     &quot; 0.001&quot;  &quot; NA&quot;     &quot; NA&quot;     NA  </span></span>
+<span id="cb5-45"><a href="#cb5-45" tabindex="-1"></a><span class="co">#&gt; sex = Female (%) &quot; 1.000&quot;  &quot; 0.682&quot;  &quot; 1.000&quot;  &quot; 1.000&quot;  &quot;&quot;  </span></span>
+<span id="cb5-46"><a href="#cb5-46" tabindex="-1"></a><span class="co">#&gt; ph.ecog (%)      &quot;&quot;        &quot;&quot;        &quot;&quot;        &quot;&quot;        NA  </span></span>
+<span id="cb5-47"><a href="#cb5-47" tabindex="-1"></a><span class="co">#&gt;    0             &quot;&quot;        &quot;&quot;        &quot;&quot;        &quot;&quot;        NA  </span></span>
+<span id="cb5-48"><a href="#cb5-48" tabindex="-1"></a><span class="co">#&gt;    1             &quot;&quot;        &quot;&quot;        &quot;&quot;        &quot;&quot;        NA  </span></span>
+<span id="cb5-49"><a href="#cb5-49" tabindex="-1"></a><span class="co">#&gt;    2             &quot;&quot;        &quot;&quot;        &quot;&quot;        &quot;&quot;        NA  </span></span>
+<span id="cb5-50"><a href="#cb5-50" tabindex="-1"></a><span class="co">#&gt;    3             &quot;&quot;        &quot;&quot;        &quot;&quot;        &quot;&quot;        NA  </span></span>
+<span id="cb5-51"><a href="#cb5-51" tabindex="-1"></a><span class="co">#&gt; ph.karno         &quot; NA&quot;     &quot;&lt;0.001&quot;  &quot; NA&quot;     &quot; NA&quot;     NA  </span></span>
+<span id="cb5-52"><a href="#cb5-52" tabindex="-1"></a><span class="co">#&gt; pat.karno        &quot; NA&quot;     &quot;&lt;0.001&quot;  &quot; NA&quot;     &quot; NA&quot;     NA  </span></span>
+<span id="cb5-53"><a href="#cb5-53" tabindex="-1"></a><span class="co">#&gt; meal.cal         &quot; NA&quot;     &quot; 0.014&quot;  &quot; NA&quot;     &quot; NA&quot;     NA  </span></span>
+<span id="cb5-54"><a href="#cb5-54" tabindex="-1"></a><span class="co">#&gt; wt.loss          &quot; NA&quot;     &quot; 0.455&quot;  &quot; NA&quot;     &quot; NA&quot;     NA  </span></span>
+<span id="cb5-55"><a href="#cb5-55" tabindex="-1"></a><span class="co">#&gt; kk = Yes (%)     &quot; 1.000&quot;  &quot;&lt;0.001&quot;  &quot; 1.000&quot;  &quot; 0.490&quot;  &quot;**&quot;</span></span>
+<span id="cb5-56"><a href="#cb5-56" tabindex="-1"></a><span class="co">#&gt; kk1 = Yes (%)    &quot; 1.000&quot;  &quot;&lt;0.001&quot;  &quot; 1.000&quot;  &quot; 1.000&quot;  &quot;**&quot;</span></span>
+<span id="cb5-57"><a href="#cb5-57" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-58"><a href="#cb5-58" tabindex="-1"></a><span class="co">#&gt; $caption</span></span>
+<span id="cb5-59"><a href="#cb5-59" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Stratified by ph.ecog&quot;</span></span></code></pre></div>
 </div>
 <div id="by-setting-pairwise.showtest-option-to-true-the-table-will-display-test-used-to-calculate-p-values-for-pairwise-comparisons-of-stratified-groups.-default-test-for-categorical-variables-are-chi-sq-test-and-continuous-variables-are-t-test." class="section level3">
 <h3>By setting pairwise.showtest option to TRUE, the table will display
 test used to calculate p-values for pairwise comparisons of stratified
 groups. Default test for categorical variables are chi-sq test and
 continuous variables are t-test.</h3>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">CreateTableOneJS</span>(<span class="at">vars =</span> <span class="fu">names</span>(lung), <span class="at">strata =</span> <span class="st">&quot;ph.ecog&quot;</span>, <span class="at">data =</span> lung, <span class="at">showAllLevels =</span> F, <span class="at">labeldata =</span> lung.label, <span class="at">Labels =</span> T, <span class="at">pairwise =</span> T, <span class="at">pairwise.showtest =</span> T)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $table</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                  0                 1                 2                </span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; n                &quot;    63&quot;          &quot;   113&quot;          &quot;    50&quot;         </span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; inst             &quot;  9.60 ± 8.20&quot;   &quot; 11.41 ± 7.99&quot;   &quot; 12.02 ± 9.08&quot;  </span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; time             &quot;351.87 ± 220.47&quot; &quot;314.44 ± 207.08&quot; &quot;234.08 ± 189.85&quot;</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; status           &quot;  0.41 ± 0.50&quot;   &quot;  0.27 ± 0.45&quot;   &quot;  0.12 ± 0.33&quot;  </span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; age              &quot; 61.16 ± 9.57&quot;   &quot; 61.45 ± 8.87&quot;   &quot; 66.22 ± 8.11&quot;  </span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sex = Female (%) &quot;    27 ( 42.9) &quot; &quot;    42 ( 37.2) &quot; &quot;    21 ( 42.0) &quot;</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ph.ecog (%)      &quot;    &quot;            &quot;   &quot;             &quot;    &quot;           </span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    0             &quot;    63 (100.0) &quot; &quot;     0 (  0.0) &quot; &quot;     0 (  0.0) &quot;</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    1             &quot;     0 (  0.0) &quot; &quot;   113 (100.0) &quot; &quot;     0 (  0.0) &quot;</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    2             &quot;     0 (  0.0) &quot; &quot;     0 (  0.0) &quot; &quot;    50 (100.0) &quot;</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    3             &quot;     0 (  0.0) &quot; &quot;     0 (  0.0) &quot; &quot;     0 (  0.0) &quot;</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ph.karno         &quot; 93.97 ± 5.83&quot;   &quot; 82.65 ± 7.44&quot;   &quot; 65.71 ± 7.91&quot;  </span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pat.karno        &quot; 87.42 ± 10.23&quot;  &quot; 82.30 ± 11.95&quot;  &quot; 65.21 ± 15.16&quot; </span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; meal.cal         &quot;924.84 ± 388.40&quot; &quot;992.26 ± 384.22&quot; &quot;796.12 ± 435.37&quot;</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; wt.loss          &quot;  6.00 ± 8.81&quot;   &quot; 10.59 ± 14.18&quot;  &quot; 12.51 ± 14.40&quot; </span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; kk = Yes (%)     &quot;    61 ( 98.4) &quot; &quot;   101 ( 89.4) &quot; &quot;    23 ( 47.9) &quot;</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; kk1 = Yes (%)    &quot;    62 (100.0) &quot; &quot;   113 (100.0) &quot; &quot;    40 ( 83.3) &quot;</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                  3                  p        test    p(0 vs 1) test(0 vs 1)</span></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; n                &quot;      1&quot;          &quot;&quot;       &quot;&quot;      &quot;&quot;        &quot;&quot;          </span></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; inst             &quot;  13.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot; 0.161&quot;  &quot;&quot;          </span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; time             &quot; 118.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot; 0.272&quot;  &quot;&quot;          </span></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; status           &quot;   0.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot; 0.069&quot;  &quot;&quot;          </span></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; age              &quot;  70.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot; 0.842&quot;  &quot;&quot;          </span></span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sex = Female (%) &quot;      0 (  0.0) &quot; &quot; 0.823&quot; &quot;exact&quot; &quot; 0.562&quot;  &quot;&quot;          </span></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ph.ecog (%)      &quot;      &quot;           &quot;    NA&quot; &quot;exact&quot; &quot;&quot;        &quot;&quot;          </span></span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    0             &quot;      0 (  0.0) &quot; &quot;&quot;       &quot;&quot;      &quot;&quot;        &quot;&quot;          </span></span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    1             &quot;      0 (  0.0) &quot; &quot;&quot;       &quot;&quot;      &quot;&quot;        &quot;&quot;          </span></span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    2             &quot;      0 (  0.0) &quot; &quot;&quot;       &quot;&quot;      &quot;&quot;        &quot;&quot;          </span></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    3             &quot;      1 (100.0) &quot; &quot;&quot;       &quot;&quot;      &quot;&quot;        &quot;&quot;          </span></span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ph.karno         &quot;  60.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot;&lt;0.001&quot;  &quot;&quot;          </span></span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pat.karno        &quot;  70.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot; 0.003&quot;  &quot;&quot;          </span></span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; meal.cal         &quot;1075.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot; 0.329&quot;  &quot;&quot;          </span></span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; wt.loss          &quot;  20.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot; 0.011&quot;  &quot;&quot;          </span></span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; kk = Yes (%)     &quot;      1 (100.0) &quot; &quot;&lt;0.001&quot; &quot;exact&quot; &quot; 0.034&quot;  &quot;exact&quot;     </span></span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; kk1 = Yes (%)    &quot;      1 (100.0) &quot; &quot;&lt;0.001&quot; &quot;exact&quot; &quot; 1.000&quot;  &quot;exact&quot;     </span></span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                  p(0 vs 2) test(0 vs 2) p(0 vs 3) test(0 vs 3) p(1 vs 2)</span></span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; n                &quot;&quot;        &quot;&quot;           &quot;&quot;        &quot;&quot;           &quot;&quot;       </span></span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; inst             &quot; 0.148&quot;  &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot; 0.684&quot; </span></span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; time             &quot; 0.003&quot;  &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot; 0.017&quot; </span></span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; status           &quot;&lt;0.001&quot;  &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot; 0.015&quot; </span></span>
-<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; age              &quot; 0.003&quot;  &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot; 0.001&quot; </span></span>
-<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sex = Female (%) &quot; 1.000&quot;  &quot;&quot;           &quot; 1.000&quot;  &quot;exact&quot;      &quot; 0.682&quot; </span></span>
-<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ph.ecog (%)      &quot;&quot;        &quot;&quot;           &quot;&quot;        &quot;&quot;           &quot;&quot;       </span></span>
-<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    0             &quot;&quot;        &quot;&quot;           &quot;&quot;        &quot;&quot;           &quot;&quot;       </span></span>
-<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    1             &quot;&quot;        &quot;&quot;           &quot;&quot;        &quot;&quot;           &quot;&quot;       </span></span>
-<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    2             &quot;&quot;        &quot;&quot;           &quot;&quot;        &quot;&quot;           &quot;&quot;       </span></span>
-<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    3             &quot;&quot;        &quot;&quot;           &quot;&quot;        &quot;&quot;           &quot;&quot;       </span></span>
-<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ph.karno         &quot;&lt;0.001&quot;  &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot;&lt;0.001&quot; </span></span>
-<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pat.karno        &quot;&lt;0.001&quot;  &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot;&lt;0.001&quot; </span></span>
-<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; meal.cal         &quot; 0.139&quot;  &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot; 0.014&quot; </span></span>
-<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; wt.loss          &quot; 0.009&quot;  &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot; 0.455&quot; </span></span>
-<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; kk = Yes (%)     &quot;&lt;0.001&quot;  &quot;&quot;           &quot; 1.000&quot;  &quot;exact&quot;      &quot;&lt;0.001&quot; </span></span>
-<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; kk1 = Yes (%)    &quot; 0.001&quot;  &quot;exact&quot;      &quot; 1.000&quot;  &quot;exact&quot;      &quot;&lt;0.001&quot; </span></span>
-<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                  test(1 vs 2) p(1 vs 3) test(1 vs 3) p(2 vs 3) test(2 vs 3)</span></span>
-<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; n                &quot;&quot;           &quot;&quot;        &quot;&quot;           &quot;&quot;        &quot;&quot;          </span></span>
-<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; inst             &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot; NA&quot;     &quot;&quot;          </span></span>
-<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; time             &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot; NA&quot;     &quot;&quot;          </span></span>
-<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; status           &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot; NA&quot;     &quot;&quot;          </span></span>
-<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; age              &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot; NA&quot;     &quot;&quot;          </span></span>
-<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sex = Female (%) &quot;&quot;           &quot; 1.000&quot;  &quot;exact&quot;      &quot; 1.000&quot;  &quot;exact&quot;     </span></span>
-<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ph.ecog (%)      &quot;&quot;           &quot;&quot;        &quot;&quot;           &quot;&quot;        &quot;&quot;          </span></span>
-<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    0             &quot;&quot;           &quot;&quot;        &quot;&quot;           &quot;&quot;        &quot;&quot;          </span></span>
-<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    1             &quot;&quot;           &quot;&quot;        &quot;&quot;           &quot;&quot;        &quot;&quot;          </span></span>
-<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    2             &quot;&quot;           &quot;&quot;        &quot;&quot;           &quot;&quot;        &quot;&quot;          </span></span>
-<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    3             &quot;&quot;           &quot;&quot;        &quot;&quot;           &quot;&quot;        &quot;&quot;          </span></span>
-<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ph.karno         &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot; NA&quot;     &quot;&quot;          </span></span>
-<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pat.karno        &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot; NA&quot;     &quot;&quot;          </span></span>
-<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; meal.cal         &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot; NA&quot;     &quot;&quot;          </span></span>
-<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; wt.loss          &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot; NA&quot;     &quot;&quot;          </span></span>
-<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; kk = Yes (%)     &quot;&quot;           &quot; 1.000&quot;  &quot;exact&quot;      &quot; 0.490&quot;  &quot;exact&quot;     </span></span>
-<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; kk1 = Yes (%)    &quot;exact&quot;      &quot; 1.000&quot;  &quot;exact&quot;      &quot; 1.000&quot;  &quot;exact&quot;     </span></span>
-<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                  sig </span></span>
-<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; n                NA  </span></span>
-<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; inst             NA  </span></span>
-<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; time             NA  </span></span>
-<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; status           NA  </span></span>
-<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; age              NA  </span></span>
-<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sex = Female (%) &quot;&quot;  </span></span>
-<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ph.ecog (%)      NA  </span></span>
-<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    0             NA  </span></span>
-<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    1             NA  </span></span>
-<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    2             NA  </span></span>
-<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    3             NA  </span></span>
-<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ph.karno         NA  </span></span>
-<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pat.karno        NA  </span></span>
-<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; meal.cal         NA  </span></span>
-<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; wt.loss          NA  </span></span>
-<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; kk = Yes (%)     &quot;**&quot;</span></span>
-<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; kk1 = Yes (%)    &quot;**&quot;</span></span>
-<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $caption</span></span>
-<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Stratified by ph.ecog&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">CreateTableOneJS</span>(<span class="at">vars =</span> <span class="fu">names</span>(lung), <span class="at">strata =</span> <span class="st">&quot;ph.ecog&quot;</span>, <span class="at">data =</span> lung, <span class="at">showAllLevels =</span> F, <span class="at">labeldata =</span> lung.label, <span class="at">Labels =</span> T, <span class="at">pairwise =</span> T, <span class="at">pairwise.showtest =</span> T)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co">#&gt; $table</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#&gt;                  0                 1                 2                </span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#&gt; n                &quot;    63&quot;          &quot;   113&quot;          &quot;    50&quot;         </span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt; inst             &quot;  9.60 ± 8.20&quot;   &quot; 11.41 ± 7.99&quot;   &quot; 12.02 ± 9.08&quot;  </span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#&gt; time             &quot;351.87 ± 220.47&quot; &quot;314.44 ± 207.08&quot; &quot;234.08 ± 189.85&quot;</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#&gt; status           &quot;  0.41 ± 0.50&quot;   &quot;  0.27 ± 0.45&quot;   &quot;  0.12 ± 0.33&quot;  </span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt; age              &quot; 61.16 ± 9.57&quot;   &quot; 61.45 ± 8.87&quot;   &quot; 66.22 ± 8.11&quot;  </span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#&gt; sex = Female (%) &quot;    27 ( 42.9) &quot; &quot;    42 ( 37.2) &quot; &quot;    21 ( 42.0) &quot;</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co">#&gt; ph.ecog (%)      &quot;    &quot;            &quot;   &quot;             &quot;    &quot;           </span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co">#&gt;    0             &quot;    63 (100.0) &quot; &quot;     0 (  0.0) &quot; &quot;     0 (  0.0) &quot;</span></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co">#&gt;    1             &quot;     0 (  0.0) &quot; &quot;   113 (100.0) &quot; &quot;     0 (  0.0) &quot;</span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="co">#&gt;    2             &quot;     0 (  0.0) &quot; &quot;     0 (  0.0) &quot; &quot;    50 (100.0) &quot;</span></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="co">#&gt;    3             &quot;     0 (  0.0) &quot; &quot;     0 (  0.0) &quot; &quot;     0 (  0.0) &quot;</span></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co">#&gt; ph.karno         &quot; 93.97 ± 5.83&quot;   &quot; 82.65 ± 7.44&quot;   &quot; 65.71 ± 7.91&quot;  </span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="co">#&gt; pat.karno        &quot; 87.42 ± 10.23&quot;  &quot; 82.30 ± 11.95&quot;  &quot; 65.21 ± 15.16&quot; </span></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a><span class="co">#&gt; meal.cal         &quot;924.84 ± 388.40&quot; &quot;992.26 ± 384.22&quot; &quot;796.12 ± 435.37&quot;</span></span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a><span class="co">#&gt; wt.loss          &quot;  6.00 ± 8.81&quot;   &quot; 10.59 ± 14.18&quot;  &quot; 12.51 ± 14.40&quot; </span></span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a><span class="co">#&gt; kk = Yes (%)     &quot;    61 ( 98.4) &quot; &quot;   101 ( 89.4) &quot; &quot;    23 ( 47.9) &quot;</span></span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a><span class="co">#&gt; kk1 = Yes (%)    &quot;    62 (100.0) &quot; &quot;   113 (100.0) &quot; &quot;    40 ( 83.3) &quot;</span></span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a><span class="co">#&gt;                  3                  p        test    p(0 vs 1) test(0 vs 1)</span></span>
+<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a><span class="co">#&gt; n                &quot;      1&quot;          &quot;&quot;       &quot;&quot;      &quot;&quot;        &quot;&quot;          </span></span>
+<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a><span class="co">#&gt; inst             &quot;  13.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot; 0.161&quot;  &quot;&quot;          </span></span>
+<span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a><span class="co">#&gt; time             &quot; 118.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot; 0.272&quot;  &quot;&quot;          </span></span>
+<span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a><span class="co">#&gt; status           &quot;   0.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot; 0.069&quot;  &quot;&quot;          </span></span>
+<span id="cb6-26"><a href="#cb6-26" tabindex="-1"></a><span class="co">#&gt; age              &quot;  70.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot; 0.842&quot;  &quot;&quot;          </span></span>
+<span id="cb6-27"><a href="#cb6-27" tabindex="-1"></a><span class="co">#&gt; sex = Female (%) &quot;      0 (  0.0) &quot; &quot; 0.823&quot; &quot;exact&quot; &quot; 0.562&quot;  &quot;&quot;          </span></span>
+<span id="cb6-28"><a href="#cb6-28" tabindex="-1"></a><span class="co">#&gt; ph.ecog (%)      &quot;      &quot;           &quot;    NA&quot; &quot;exact&quot; &quot;&quot;        &quot;&quot;          </span></span>
+<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a><span class="co">#&gt;    0             &quot;      0 (  0.0) &quot; &quot;&quot;       &quot;&quot;      &quot;&quot;        &quot;&quot;          </span></span>
+<span id="cb6-30"><a href="#cb6-30" tabindex="-1"></a><span class="co">#&gt;    1             &quot;      0 (  0.0) &quot; &quot;&quot;       &quot;&quot;      &quot;&quot;        &quot;&quot;          </span></span>
+<span id="cb6-31"><a href="#cb6-31" tabindex="-1"></a><span class="co">#&gt;    2             &quot;      0 (  0.0) &quot; &quot;&quot;       &quot;&quot;      &quot;&quot;        &quot;&quot;          </span></span>
+<span id="cb6-32"><a href="#cb6-32" tabindex="-1"></a><span class="co">#&gt;    3             &quot;      1 (100.0) &quot; &quot;&quot;       &quot;&quot;      &quot;&quot;        &quot;&quot;          </span></span>
+<span id="cb6-33"><a href="#cb6-33" tabindex="-1"></a><span class="co">#&gt; ph.karno         &quot;  60.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot;&lt;0.001&quot;  &quot;&quot;          </span></span>
+<span id="cb6-34"><a href="#cb6-34" tabindex="-1"></a><span class="co">#&gt; pat.karno        &quot;  70.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot; 0.003&quot;  &quot;&quot;          </span></span>
+<span id="cb6-35"><a href="#cb6-35" tabindex="-1"></a><span class="co">#&gt; meal.cal         &quot;1075.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot; 0.329&quot;  &quot;&quot;          </span></span>
+<span id="cb6-36"><a href="#cb6-36" tabindex="-1"></a><span class="co">#&gt; wt.loss          &quot;  20.00 ± NA&quot;     &quot; NA&quot;    &quot;&quot;      &quot; 0.011&quot;  &quot;&quot;          </span></span>
+<span id="cb6-37"><a href="#cb6-37" tabindex="-1"></a><span class="co">#&gt; kk = Yes (%)     &quot;      1 (100.0) &quot; &quot;&lt;0.001&quot; &quot;exact&quot; &quot; 0.034&quot;  &quot;exact&quot;     </span></span>
+<span id="cb6-38"><a href="#cb6-38" tabindex="-1"></a><span class="co">#&gt; kk1 = Yes (%)    &quot;      1 (100.0) &quot; &quot;&lt;0.001&quot; &quot;exact&quot; &quot; 1.000&quot;  &quot;exact&quot;     </span></span>
+<span id="cb6-39"><a href="#cb6-39" tabindex="-1"></a><span class="co">#&gt;                  p(0 vs 2) test(0 vs 2) p(0 vs 3) test(0 vs 3) p(1 vs 2)</span></span>
+<span id="cb6-40"><a href="#cb6-40" tabindex="-1"></a><span class="co">#&gt; n                &quot;&quot;        &quot;&quot;           &quot;&quot;        &quot;&quot;           &quot;&quot;       </span></span>
+<span id="cb6-41"><a href="#cb6-41" tabindex="-1"></a><span class="co">#&gt; inst             &quot; 0.148&quot;  &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot; 0.684&quot; </span></span>
+<span id="cb6-42"><a href="#cb6-42" tabindex="-1"></a><span class="co">#&gt; time             &quot; 0.003&quot;  &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot; 0.017&quot; </span></span>
+<span id="cb6-43"><a href="#cb6-43" tabindex="-1"></a><span class="co">#&gt; status           &quot;&lt;0.001&quot;  &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot; 0.015&quot; </span></span>
+<span id="cb6-44"><a href="#cb6-44" tabindex="-1"></a><span class="co">#&gt; age              &quot; 0.003&quot;  &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot; 0.001&quot; </span></span>
+<span id="cb6-45"><a href="#cb6-45" tabindex="-1"></a><span class="co">#&gt; sex = Female (%) &quot; 1.000&quot;  &quot;&quot;           &quot; 1.000&quot;  &quot;exact&quot;      &quot; 0.682&quot; </span></span>
+<span id="cb6-46"><a href="#cb6-46" tabindex="-1"></a><span class="co">#&gt; ph.ecog (%)      &quot;&quot;        &quot;&quot;           &quot;&quot;        &quot;&quot;           &quot;&quot;       </span></span>
+<span id="cb6-47"><a href="#cb6-47" tabindex="-1"></a><span class="co">#&gt;    0             &quot;&quot;        &quot;&quot;           &quot;&quot;        &quot;&quot;           &quot;&quot;       </span></span>
+<span id="cb6-48"><a href="#cb6-48" tabindex="-1"></a><span class="co">#&gt;    1             &quot;&quot;        &quot;&quot;           &quot;&quot;        &quot;&quot;           &quot;&quot;       </span></span>
+<span id="cb6-49"><a href="#cb6-49" tabindex="-1"></a><span class="co">#&gt;    2             &quot;&quot;        &quot;&quot;           &quot;&quot;        &quot;&quot;           &quot;&quot;       </span></span>
+<span id="cb6-50"><a href="#cb6-50" tabindex="-1"></a><span class="co">#&gt;    3             &quot;&quot;        &quot;&quot;           &quot;&quot;        &quot;&quot;           &quot;&quot;       </span></span>
+<span id="cb6-51"><a href="#cb6-51" tabindex="-1"></a><span class="co">#&gt; ph.karno         &quot;&lt;0.001&quot;  &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot;&lt;0.001&quot; </span></span>
+<span id="cb6-52"><a href="#cb6-52" tabindex="-1"></a><span class="co">#&gt; pat.karno        &quot;&lt;0.001&quot;  &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot;&lt;0.001&quot; </span></span>
+<span id="cb6-53"><a href="#cb6-53" tabindex="-1"></a><span class="co">#&gt; meal.cal         &quot; 0.139&quot;  &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot; 0.014&quot; </span></span>
+<span id="cb6-54"><a href="#cb6-54" tabindex="-1"></a><span class="co">#&gt; wt.loss          &quot; 0.009&quot;  &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot; 0.455&quot; </span></span>
+<span id="cb6-55"><a href="#cb6-55" tabindex="-1"></a><span class="co">#&gt; kk = Yes (%)     &quot;&lt;0.001&quot;  &quot;&quot;           &quot; 1.000&quot;  &quot;exact&quot;      &quot;&lt;0.001&quot; </span></span>
+<span id="cb6-56"><a href="#cb6-56" tabindex="-1"></a><span class="co">#&gt; kk1 = Yes (%)    &quot; 0.001&quot;  &quot;exact&quot;      &quot; 1.000&quot;  &quot;exact&quot;      &quot;&lt;0.001&quot; </span></span>
+<span id="cb6-57"><a href="#cb6-57" tabindex="-1"></a><span class="co">#&gt;                  test(1 vs 2) p(1 vs 3) test(1 vs 3) p(2 vs 3) test(2 vs 3)</span></span>
+<span id="cb6-58"><a href="#cb6-58" tabindex="-1"></a><span class="co">#&gt; n                &quot;&quot;           &quot;&quot;        &quot;&quot;           &quot;&quot;        &quot;&quot;          </span></span>
+<span id="cb6-59"><a href="#cb6-59" tabindex="-1"></a><span class="co">#&gt; inst             &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot; NA&quot;     &quot;&quot;          </span></span>
+<span id="cb6-60"><a href="#cb6-60" tabindex="-1"></a><span class="co">#&gt; time             &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot; NA&quot;     &quot;&quot;          </span></span>
+<span id="cb6-61"><a href="#cb6-61" tabindex="-1"></a><span class="co">#&gt; status           &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot; NA&quot;     &quot;&quot;          </span></span>
+<span id="cb6-62"><a href="#cb6-62" tabindex="-1"></a><span class="co">#&gt; age              &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot; NA&quot;     &quot;&quot;          </span></span>
+<span id="cb6-63"><a href="#cb6-63" tabindex="-1"></a><span class="co">#&gt; sex = Female (%) &quot;&quot;           &quot; 1.000&quot;  &quot;exact&quot;      &quot; 1.000&quot;  &quot;exact&quot;     </span></span>
+<span id="cb6-64"><a href="#cb6-64" tabindex="-1"></a><span class="co">#&gt; ph.ecog (%)      &quot;&quot;           &quot;&quot;        &quot;&quot;           &quot;&quot;        &quot;&quot;          </span></span>
+<span id="cb6-65"><a href="#cb6-65" tabindex="-1"></a><span class="co">#&gt;    0             &quot;&quot;           &quot;&quot;        &quot;&quot;           &quot;&quot;        &quot;&quot;          </span></span>
+<span id="cb6-66"><a href="#cb6-66" tabindex="-1"></a><span class="co">#&gt;    1             &quot;&quot;           &quot;&quot;        &quot;&quot;           &quot;&quot;        &quot;&quot;          </span></span>
+<span id="cb6-67"><a href="#cb6-67" tabindex="-1"></a><span class="co">#&gt;    2             &quot;&quot;           &quot;&quot;        &quot;&quot;           &quot;&quot;        &quot;&quot;          </span></span>
+<span id="cb6-68"><a href="#cb6-68" tabindex="-1"></a><span class="co">#&gt;    3             &quot;&quot;           &quot;&quot;        &quot;&quot;           &quot;&quot;        &quot;&quot;          </span></span>
+<span id="cb6-69"><a href="#cb6-69" tabindex="-1"></a><span class="co">#&gt; ph.karno         &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot; NA&quot;     &quot;&quot;          </span></span>
+<span id="cb6-70"><a href="#cb6-70" tabindex="-1"></a><span class="co">#&gt; pat.karno        &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot; NA&quot;     &quot;&quot;          </span></span>
+<span id="cb6-71"><a href="#cb6-71" tabindex="-1"></a><span class="co">#&gt; meal.cal         &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot; NA&quot;     &quot;&quot;          </span></span>
+<span id="cb6-72"><a href="#cb6-72" tabindex="-1"></a><span class="co">#&gt; wt.loss          &quot;&quot;           &quot; NA&quot;     &quot;&quot;           &quot; NA&quot;     &quot;&quot;          </span></span>
+<span id="cb6-73"><a href="#cb6-73" tabindex="-1"></a><span class="co">#&gt; kk = Yes (%)     &quot;&quot;           &quot; 1.000&quot;  &quot;exact&quot;      &quot; 0.490&quot;  &quot;exact&quot;     </span></span>
+<span id="cb6-74"><a href="#cb6-74" tabindex="-1"></a><span class="co">#&gt; kk1 = Yes (%)    &quot;exact&quot;      &quot; 1.000&quot;  &quot;exact&quot;      &quot; 1.000&quot;  &quot;exact&quot;     </span></span>
+<span id="cb6-75"><a href="#cb6-75" tabindex="-1"></a><span class="co">#&gt;                  sig </span></span>
+<span id="cb6-76"><a href="#cb6-76" tabindex="-1"></a><span class="co">#&gt; n                NA  </span></span>
+<span id="cb6-77"><a href="#cb6-77" tabindex="-1"></a><span class="co">#&gt; inst             NA  </span></span>
+<span id="cb6-78"><a href="#cb6-78" tabindex="-1"></a><span class="co">#&gt; time             NA  </span></span>
+<span id="cb6-79"><a href="#cb6-79" tabindex="-1"></a><span class="co">#&gt; status           NA  </span></span>
+<span id="cb6-80"><a href="#cb6-80" tabindex="-1"></a><span class="co">#&gt; age              NA  </span></span>
+<span id="cb6-81"><a href="#cb6-81" tabindex="-1"></a><span class="co">#&gt; sex = Female (%) &quot;&quot;  </span></span>
+<span id="cb6-82"><a href="#cb6-82" tabindex="-1"></a><span class="co">#&gt; ph.ecog (%)      NA  </span></span>
+<span id="cb6-83"><a href="#cb6-83" tabindex="-1"></a><span class="co">#&gt;    0             NA  </span></span>
+<span id="cb6-84"><a href="#cb6-84" tabindex="-1"></a><span class="co">#&gt;    1             NA  </span></span>
+<span id="cb6-85"><a href="#cb6-85" tabindex="-1"></a><span class="co">#&gt;    2             NA  </span></span>
+<span id="cb6-86"><a href="#cb6-86" tabindex="-1"></a><span class="co">#&gt;    3             NA  </span></span>
+<span id="cb6-87"><a href="#cb6-87" tabindex="-1"></a><span class="co">#&gt; ph.karno         NA  </span></span>
+<span id="cb6-88"><a href="#cb6-88" tabindex="-1"></a><span class="co">#&gt; pat.karno        NA  </span></span>
+<span id="cb6-89"><a href="#cb6-89" tabindex="-1"></a><span class="co">#&gt; meal.cal         NA  </span></span>
+<span id="cb6-90"><a href="#cb6-90" tabindex="-1"></a><span class="co">#&gt; wt.loss          NA  </span></span>
+<span id="cb6-91"><a href="#cb6-91" tabindex="-1"></a><span class="co">#&gt; kk = Yes (%)     &quot;**&quot;</span></span>
+<span id="cb6-92"><a href="#cb6-92" tabindex="-1"></a><span class="co">#&gt; kk1 = Yes (%)    &quot;**&quot;</span></span>
+<span id="cb6-93"><a href="#cb6-93" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-94"><a href="#cb6-94" tabindex="-1"></a><span class="co">#&gt; $caption</span></span>
+<span id="cb6-95"><a href="#cb6-95" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Stratified by ph.ecog&quot;</span></span></code></pre></div>
 </div>
 </div>
 <div id="introducing-pairwise-option-in-svycreatetableonejs" class="section level2">
@@ -647,183 +647,183 @@ continuous variables are t-test.</h3>
 <h3>The default value for the pairwise option is FALSE. By setting
 pairwise to TRUE, the table will display p-values for pairwise
 comparisons of stratified groups.</h3>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survey)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(nhanes)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>nhanes<span class="sc">$</span>SDMVPSU <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(nhanes<span class="sc">$</span>SDMVPSU)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>nhanes<span class="sc">$</span>race <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(nhanes<span class="sc">$</span>race)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>nhanes<span class="sc">$</span>RIAGENDR <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(nhanes<span class="sc">$</span>RIAGENDR)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>a.label <span class="ot">&lt;-</span> <span class="fu">mk.lev</span>(nhanes)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>a.label <span class="ot">&lt;-</span> a.label <span class="sc">%&gt;%</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">val_label =</span> <span class="fu">case_when</span>(</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    variable <span class="sc">==</span> <span class="st">&quot;race&quot;</span> <span class="sc">&amp;</span> level <span class="sc">==</span> <span class="st">&quot;1&quot;</span> <span class="sc">~</span> <span class="st">&quot;White&quot;</span>,</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    variable <span class="sc">==</span> <span class="st">&quot;race&quot;</span> <span class="sc">&amp;</span> level <span class="sc">==</span> <span class="st">&quot;2&quot;</span> <span class="sc">~</span> <span class="st">&quot;Black&quot;</span>,</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    variable <span class="sc">==</span> <span class="st">&quot;race&quot;</span> <span class="sc">&amp;</span> level <span class="sc">==</span> <span class="st">&quot;3&quot;</span> <span class="sc">~</span> <span class="st">&quot;Hispanic&quot;</span>,</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    variable <span class="sc">==</span> <span class="st">&quot;race&quot;</span> <span class="sc">&amp;</span> level <span class="sc">==</span> <span class="st">&quot;4&quot;</span> <span class="sc">~</span> <span class="st">&quot;Asian&quot;</span>,</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> val_label</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  ))</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>nhanesSvy <span class="ot">&lt;-</span> <span class="fu">svydesign</span>(<span class="at">ids =</span> <span class="sc">~</span>SDMVPSU, <span class="at">strata =</span> <span class="sc">~</span>SDMVSTRA, <span class="at">weights =</span> <span class="sc">~</span>WTMEC2YR, <span class="at">nest =</span> <span class="cn">TRUE</span>, <span class="at">data =</span> nhanes)</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="fu">svyCreateTableOneJS</span>(</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">vars =</span> <span class="fu">c</span>(<span class="st">&quot;HI_CHOL&quot;</span>, <span class="st">&quot;race&quot;</span>, <span class="st">&quot;agecat&quot;</span>, <span class="st">&quot;RIAGENDR&quot;</span>),</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">strata =</span> <span class="st">&quot;race&quot;</span>, <span class="at">data =</span> nhanesSvy, <span class="at">factorVars =</span> <span class="fu">c</span>(<span class="st">&quot;HI_CHOL&quot;</span>, <span class="st">&quot;race&quot;</span>, <span class="st">&quot;RIAGENDR&quot;</span>), <span class="at">labeldata =</span> a.label, <span class="at">Labels =</span> T, <span class="at">pairwise =</span> T</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $table</span></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              race       White             Black             Hispanic         </span></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; n            &quot;&quot;         &quot;2717.0&quot;          &quot;3743.0&quot;          &quot;1623.0&quot;         </span></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; HI_CHOL (%)  NA         &quot;2282.0 ( 89.9) &quot; &quot;3063.0 ( 87.8) &quot; &quot;1302.0 ( 92.1) &quot;</span></span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              NA         &quot; 250.0 ( 10.1) &quot; &quot; 387.0 ( 12.2) &quot; &quot; 104.0 (  7.9) &quot;</span></span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; race (%)     &quot;White&quot;    &quot;2717.0 (100.0) &quot; &quot;   0.0 (  0.0) &quot; &quot;   0.0 (  0.0) &quot;</span></span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;Black&quot;    &quot;   0.0 (  0.0) &quot; &quot;3743.0 (100.0) &quot; &quot;   0.0 (  0.0) &quot;</span></span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;Hispanic&quot; &quot;   0.0 (  0.0) &quot; &quot;   0.0 (  0.0) &quot; &quot;1623.0 (100.0) &quot;</span></span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;Asian&quot;    &quot;   0.0 (  0.0) &quot; &quot;   0.0 (  0.0) &quot; &quot;   0.0 (  0.0) &quot;</span></span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; agecat (%)   &quot;(0,19]&quot;   &quot;1001.0 ( 28.3) &quot; &quot; 833.0 ( 18.2) &quot; &quot; 528.0 ( 24.4) &quot;</span></span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;(19,39]&quot;  &quot; 636.0 ( 37.4) &quot; &quot; 891.0 ( 26.3) &quot; &quot; 363.0 ( 31.7) &quot;</span></span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;(39,59]&quot;  &quot; 611.0 ( 24.7) &quot; &quot; 913.0 ( 32.0) &quot; &quot; 386.0 ( 29.2) &quot;</span></span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;(59,Inf]&quot; &quot; 469.0 (  9.6) &quot; &quot;1106.0 ( 23.5) &quot; &quot; 346.0 ( 14.7) &quot;</span></span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; RIAGENDR (%) &quot;1&quot;        &quot;1339.0 ( 51.4) &quot; &quot;1863.0 ( 49.1) &quot; &quot; 798.0 ( 45.6) &quot;</span></span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;2&quot;        &quot;1378.0 ( 48.6) &quot; &quot;1880.0 ( 50.9) &quot; &quot; 825.0 ( 54.4) &quot;</span></span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              Asian            p        test p(White vs Black)</span></span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; n            &quot;508.0&quot;          &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; HI_CHOL (%)  &quot;412.0 ( 90.0) &quot; &quot; 0.059&quot; &quot;&quot;   &quot; 0.031&quot;         </span></span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot; 46.0 ( 10.0) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
-<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; race (%)     &quot;  0.0 (  0.0) &quot; &quot;    NA&quot; &quot;&quot;   &quot;&lt;0.001&quot;         </span></span>
-<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;  0.0 (  0.0) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
-<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;  0.0 (  0.0) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
-<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;508.0 (100.0) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
-<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; agecat (%)   &quot;170.0 ( 22.7) &quot; &quot;&lt;0.001&quot; &quot;&quot;   &quot;&lt;0.001&quot;         </span></span>
-<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;143.0 ( 36.0) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
-<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;111.0 ( 28.9) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
-<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot; 84.0 ( 12.4) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
-<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; RIAGENDR (%) &quot;247.0 ( 45.8) &quot; &quot; 0.042&quot; &quot;&quot;   &quot; 0.016&quot;         </span></span>
-<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;261.0 ( 54.2) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
-<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              p(White vs Hispanic) p(White vs Asian) p(Black vs Hispanic)</span></span>
-<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; n            &quot;&quot;                   &quot;&quot;                &quot;&quot;                  </span></span>
-<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; HI_CHOL (%)  &quot; 0.103&quot;             &quot; 0.947&quot;          &quot; 0.003&quot;            </span></span>
-<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                &quot;&quot;                  </span></span>
-<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; race (%)     &quot;&lt;0.001&quot;             &quot;&lt;0.001&quot;          &quot;&lt;0.001&quot;            </span></span>
-<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                &quot;&quot;                  </span></span>
-<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                &quot;&quot;                  </span></span>
-<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                &quot;&quot;                  </span></span>
-<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; agecat (%)   &quot; 0.002&quot;             &quot; 0.079&quot;          &quot;&lt;0.001&quot;            </span></span>
-<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                &quot;&quot;                  </span></span>
-<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                &quot;&quot;                  </span></span>
-<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                &quot;&quot;                  </span></span>
-<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; RIAGENDR (%) &quot; 0.001&quot;             &quot; 0.081&quot;          &quot; 0.008&quot;            </span></span>
-<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                &quot;&quot;                  </span></span>
-<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              p(Black vs Asian) p(Hispanic vs Asian) sig </span></span>
-<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; n            &quot;&quot;                &quot;&quot;                   NA  </span></span>
-<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; HI_CHOL (%)  &quot; 0.429&quot;          &quot; 0.341&quot;             &quot;&quot;  </span></span>
-<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   NA  </span></span>
-<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; race (%)     &quot;&lt;0.001&quot;          &quot;&lt;0.001&quot;             NA  </span></span>
-<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   NA  </span></span>
-<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   NA  </span></span>
-<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   NA  </span></span>
-<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; agecat (%)   &quot;&lt;0.001&quot;          &quot; 0.455&quot;             &quot;**&quot;</span></span>
-<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   NA  </span></span>
-<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   NA  </span></span>
-<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   NA  </span></span>
-<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; RIAGENDR (%) &quot; 0.262&quot;          &quot; 0.944&quot;             &quot;**&quot;</span></span>
-<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   NA  </span></span>
-<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $caption</span></span>
-<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Stratified by race- weighted data&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">library</span>(survey)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="fu">data</span>(nhanes)</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>nhanes<span class="sc">$</span>SDMVPSU <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(nhanes<span class="sc">$</span>SDMVPSU)</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>nhanes<span class="sc">$</span>race <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(nhanes<span class="sc">$</span>race)</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>nhanes<span class="sc">$</span>RIAGENDR <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(nhanes<span class="sc">$</span>RIAGENDR)</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>a.label <span class="ot">&lt;-</span> <span class="fu">mk.lev</span>(nhanes)</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>a.label <span class="ot">&lt;-</span> a.label <span class="sc">%&gt;%</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">val_label =</span> <span class="fu">case_when</span>(</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>    variable <span class="sc">==</span> <span class="st">&quot;race&quot;</span> <span class="sc">&amp;</span> level <span class="sc">==</span> <span class="st">&quot;1&quot;</span> <span class="sc">~</span> <span class="st">&quot;White&quot;</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>    variable <span class="sc">==</span> <span class="st">&quot;race&quot;</span> <span class="sc">&amp;</span> level <span class="sc">==</span> <span class="st">&quot;2&quot;</span> <span class="sc">~</span> <span class="st">&quot;Black&quot;</span>,</span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>    variable <span class="sc">==</span> <span class="st">&quot;race&quot;</span> <span class="sc">&amp;</span> level <span class="sc">==</span> <span class="st">&quot;3&quot;</span> <span class="sc">~</span> <span class="st">&quot;Hispanic&quot;</span>,</span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>    variable <span class="sc">==</span> <span class="st">&quot;race&quot;</span> <span class="sc">&amp;</span> level <span class="sc">==</span> <span class="st">&quot;4&quot;</span> <span class="sc">~</span> <span class="st">&quot;Asian&quot;</span>,</span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> val_label</span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>  ))</span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>nhanesSvy <span class="ot">&lt;-</span> <span class="fu">svydesign</span>(<span class="at">ids =</span> <span class="sc">~</span>SDMVPSU, <span class="at">strata =</span> <span class="sc">~</span>SDMVSTRA, <span class="at">weights =</span> <span class="sc">~</span>WTMEC2YR, <span class="at">nest =</span> <span class="cn">TRUE</span>, <span class="at">data =</span> nhanes)</span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="fu">svyCreateTableOneJS</span>(</span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a>  <span class="at">vars =</span> <span class="fu">c</span>(<span class="st">&quot;HI_CHOL&quot;</span>, <span class="st">&quot;race&quot;</span>, <span class="st">&quot;agecat&quot;</span>, <span class="st">&quot;RIAGENDR&quot;</span>),</span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a>  <span class="at">strata =</span> <span class="st">&quot;race&quot;</span>, <span class="at">data =</span> nhanesSvy, <span class="at">factorVars =</span> <span class="fu">c</span>(<span class="st">&quot;HI_CHOL&quot;</span>, <span class="st">&quot;race&quot;</span>, <span class="st">&quot;RIAGENDR&quot;</span>), <span class="at">labeldata =</span> a.label, <span class="at">Labels =</span> T, <span class="at">pairwise =</span> T</span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a>)</span>
+<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a><span class="co">#&gt; $table</span></span>
+<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a><span class="co">#&gt;              race       White             Black             Hispanic         </span></span>
+<span id="cb7-23"><a href="#cb7-23" tabindex="-1"></a><span class="co">#&gt; n            &quot;&quot;         &quot;2717.0&quot;          &quot;3743.0&quot;          &quot;1623.0&quot;         </span></span>
+<span id="cb7-24"><a href="#cb7-24" tabindex="-1"></a><span class="co">#&gt; HI_CHOL (%)  NA         &quot;2282.0 ( 89.9) &quot; &quot;3063.0 ( 87.8) &quot; &quot;1302.0 ( 92.1) &quot;</span></span>
+<span id="cb7-25"><a href="#cb7-25" tabindex="-1"></a><span class="co">#&gt;              NA         &quot; 250.0 ( 10.1) &quot; &quot; 387.0 ( 12.2) &quot; &quot; 104.0 (  7.9) &quot;</span></span>
+<span id="cb7-26"><a href="#cb7-26" tabindex="-1"></a><span class="co">#&gt; race (%)     &quot;White&quot;    &quot;2717.0 (100.0) &quot; &quot;   0.0 (  0.0) &quot; &quot;   0.0 (  0.0) &quot;</span></span>
+<span id="cb7-27"><a href="#cb7-27" tabindex="-1"></a><span class="co">#&gt;              &quot;Black&quot;    &quot;   0.0 (  0.0) &quot; &quot;3743.0 (100.0) &quot; &quot;   0.0 (  0.0) &quot;</span></span>
+<span id="cb7-28"><a href="#cb7-28" tabindex="-1"></a><span class="co">#&gt;              &quot;Hispanic&quot; &quot;   0.0 (  0.0) &quot; &quot;   0.0 (  0.0) &quot; &quot;1623.0 (100.0) &quot;</span></span>
+<span id="cb7-29"><a href="#cb7-29" tabindex="-1"></a><span class="co">#&gt;              &quot;Asian&quot;    &quot;   0.0 (  0.0) &quot; &quot;   0.0 (  0.0) &quot; &quot;   0.0 (  0.0) &quot;</span></span>
+<span id="cb7-30"><a href="#cb7-30" tabindex="-1"></a><span class="co">#&gt; agecat (%)   &quot;(0,19]&quot;   &quot;1001.0 ( 28.3) &quot; &quot; 833.0 ( 18.2) &quot; &quot; 528.0 ( 24.4) &quot;</span></span>
+<span id="cb7-31"><a href="#cb7-31" tabindex="-1"></a><span class="co">#&gt;              &quot;(19,39]&quot;  &quot; 636.0 ( 37.4) &quot; &quot; 891.0 ( 26.3) &quot; &quot; 363.0 ( 31.7) &quot;</span></span>
+<span id="cb7-32"><a href="#cb7-32" tabindex="-1"></a><span class="co">#&gt;              &quot;(39,59]&quot;  &quot; 611.0 ( 24.7) &quot; &quot; 913.0 ( 32.0) &quot; &quot; 386.0 ( 29.2) &quot;</span></span>
+<span id="cb7-33"><a href="#cb7-33" tabindex="-1"></a><span class="co">#&gt;              &quot;(59,Inf]&quot; &quot; 469.0 (  9.6) &quot; &quot;1106.0 ( 23.5) &quot; &quot; 346.0 ( 14.7) &quot;</span></span>
+<span id="cb7-34"><a href="#cb7-34" tabindex="-1"></a><span class="co">#&gt; RIAGENDR (%) &quot;1&quot;        &quot;1339.0 ( 51.4) &quot; &quot;1863.0 ( 49.1) &quot; &quot; 798.0 ( 45.6) &quot;</span></span>
+<span id="cb7-35"><a href="#cb7-35" tabindex="-1"></a><span class="co">#&gt;              &quot;2&quot;        &quot;1378.0 ( 48.6) &quot; &quot;1880.0 ( 50.9) &quot; &quot; 825.0 ( 54.4) &quot;</span></span>
+<span id="cb7-36"><a href="#cb7-36" tabindex="-1"></a><span class="co">#&gt;              Asian            p        test p(White vs Black)</span></span>
+<span id="cb7-37"><a href="#cb7-37" tabindex="-1"></a><span class="co">#&gt; n            &quot;508.0&quot;          &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
+<span id="cb7-38"><a href="#cb7-38" tabindex="-1"></a><span class="co">#&gt; HI_CHOL (%)  &quot;412.0 ( 90.0) &quot; &quot; 0.059&quot; &quot;&quot;   &quot; 0.031&quot;         </span></span>
+<span id="cb7-39"><a href="#cb7-39" tabindex="-1"></a><span class="co">#&gt;              &quot; 46.0 ( 10.0) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
+<span id="cb7-40"><a href="#cb7-40" tabindex="-1"></a><span class="co">#&gt; race (%)     &quot;  0.0 (  0.0) &quot; &quot;    NA&quot; &quot;&quot;   &quot;&lt;0.001&quot;         </span></span>
+<span id="cb7-41"><a href="#cb7-41" tabindex="-1"></a><span class="co">#&gt;              &quot;  0.0 (  0.0) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
+<span id="cb7-42"><a href="#cb7-42" tabindex="-1"></a><span class="co">#&gt;              &quot;  0.0 (  0.0) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
+<span id="cb7-43"><a href="#cb7-43" tabindex="-1"></a><span class="co">#&gt;              &quot;508.0 (100.0) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
+<span id="cb7-44"><a href="#cb7-44" tabindex="-1"></a><span class="co">#&gt; agecat (%)   &quot;170.0 ( 22.7) &quot; &quot;&lt;0.001&quot; &quot;&quot;   &quot;&lt;0.001&quot;         </span></span>
+<span id="cb7-45"><a href="#cb7-45" tabindex="-1"></a><span class="co">#&gt;              &quot;143.0 ( 36.0) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
+<span id="cb7-46"><a href="#cb7-46" tabindex="-1"></a><span class="co">#&gt;              &quot;111.0 ( 28.9) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
+<span id="cb7-47"><a href="#cb7-47" tabindex="-1"></a><span class="co">#&gt;              &quot; 84.0 ( 12.4) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
+<span id="cb7-48"><a href="#cb7-48" tabindex="-1"></a><span class="co">#&gt; RIAGENDR (%) &quot;247.0 ( 45.8) &quot; &quot; 0.042&quot; &quot;&quot;   &quot; 0.016&quot;         </span></span>
+<span id="cb7-49"><a href="#cb7-49" tabindex="-1"></a><span class="co">#&gt;              &quot;261.0 ( 54.2) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
+<span id="cb7-50"><a href="#cb7-50" tabindex="-1"></a><span class="co">#&gt;              p(White vs Hispanic) p(White vs Asian) p(Black vs Hispanic)</span></span>
+<span id="cb7-51"><a href="#cb7-51" tabindex="-1"></a><span class="co">#&gt; n            &quot;&quot;                   &quot;&quot;                &quot;&quot;                  </span></span>
+<span id="cb7-52"><a href="#cb7-52" tabindex="-1"></a><span class="co">#&gt; HI_CHOL (%)  &quot; 0.103&quot;             &quot; 0.947&quot;          &quot; 0.003&quot;            </span></span>
+<span id="cb7-53"><a href="#cb7-53" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                &quot;&quot;                  </span></span>
+<span id="cb7-54"><a href="#cb7-54" tabindex="-1"></a><span class="co">#&gt; race (%)     &quot;&lt;0.001&quot;             &quot;&lt;0.001&quot;          &quot;&lt;0.001&quot;            </span></span>
+<span id="cb7-55"><a href="#cb7-55" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                &quot;&quot;                  </span></span>
+<span id="cb7-56"><a href="#cb7-56" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                &quot;&quot;                  </span></span>
+<span id="cb7-57"><a href="#cb7-57" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                &quot;&quot;                  </span></span>
+<span id="cb7-58"><a href="#cb7-58" tabindex="-1"></a><span class="co">#&gt; agecat (%)   &quot; 0.002&quot;             &quot; 0.079&quot;          &quot;&lt;0.001&quot;            </span></span>
+<span id="cb7-59"><a href="#cb7-59" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                &quot;&quot;                  </span></span>
+<span id="cb7-60"><a href="#cb7-60" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                &quot;&quot;                  </span></span>
+<span id="cb7-61"><a href="#cb7-61" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                &quot;&quot;                  </span></span>
+<span id="cb7-62"><a href="#cb7-62" tabindex="-1"></a><span class="co">#&gt; RIAGENDR (%) &quot; 0.001&quot;             &quot; 0.081&quot;          &quot; 0.008&quot;            </span></span>
+<span id="cb7-63"><a href="#cb7-63" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                &quot;&quot;                  </span></span>
+<span id="cb7-64"><a href="#cb7-64" tabindex="-1"></a><span class="co">#&gt;              p(Black vs Asian) p(Hispanic vs Asian) sig </span></span>
+<span id="cb7-65"><a href="#cb7-65" tabindex="-1"></a><span class="co">#&gt; n            &quot;&quot;                &quot;&quot;                   NA  </span></span>
+<span id="cb7-66"><a href="#cb7-66" tabindex="-1"></a><span class="co">#&gt; HI_CHOL (%)  &quot; 0.429&quot;          &quot; 0.341&quot;             &quot;&quot;  </span></span>
+<span id="cb7-67"><a href="#cb7-67" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   NA  </span></span>
+<span id="cb7-68"><a href="#cb7-68" tabindex="-1"></a><span class="co">#&gt; race (%)     &quot;&lt;0.001&quot;          &quot;&lt;0.001&quot;             NA  </span></span>
+<span id="cb7-69"><a href="#cb7-69" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   NA  </span></span>
+<span id="cb7-70"><a href="#cb7-70" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   NA  </span></span>
+<span id="cb7-71"><a href="#cb7-71" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   NA  </span></span>
+<span id="cb7-72"><a href="#cb7-72" tabindex="-1"></a><span class="co">#&gt; agecat (%)   &quot;&lt;0.001&quot;          &quot; 0.455&quot;             &quot;**&quot;</span></span>
+<span id="cb7-73"><a href="#cb7-73" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   NA  </span></span>
+<span id="cb7-74"><a href="#cb7-74" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   NA  </span></span>
+<span id="cb7-75"><a href="#cb7-75" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   NA  </span></span>
+<span id="cb7-76"><a href="#cb7-76" tabindex="-1"></a><span class="co">#&gt; RIAGENDR (%) &quot; 0.262&quot;          &quot; 0.944&quot;             &quot;**&quot;</span></span>
+<span id="cb7-77"><a href="#cb7-77" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   NA  </span></span>
+<span id="cb7-78"><a href="#cb7-78" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb7-79"><a href="#cb7-79" tabindex="-1"></a><span class="co">#&gt; $caption</span></span>
+<span id="cb7-80"><a href="#cb7-80" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Stratified by race- weighted data&quot;</span></span></code></pre></div>
 </div>
 <div id="by-setting-pairwise.showtest-option-to-true-the-table-will-display-test-used-to-calculate-p-values-for-pairwise-comparisons-of-stratified-groups." class="section level3">
 <h3>By setting pairwise.showtest option to TRUE, the table will display
 test used to calculate p-values for pairwise comparisons of stratified
 groups.</h3>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">svyCreateTableOneJS</span>(</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">vars =</span> <span class="fu">c</span>(<span class="st">&quot;HI_CHOL&quot;</span>, <span class="st">&quot;race&quot;</span>, <span class="st">&quot;agecat&quot;</span>, <span class="st">&quot;RIAGENDR&quot;</span>),</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">strata =</span> <span class="st">&quot;race&quot;</span>, <span class="at">data =</span> nhanesSvy, <span class="at">factorVars =</span> <span class="fu">c</span>(<span class="st">&quot;HI_CHOL&quot;</span>, <span class="st">&quot;race&quot;</span>, <span class="st">&quot;RIAGENDR&quot;</span>), <span class="at">labeldata =</span> a.label, <span class="at">Labels =</span> T, <span class="at">pairwise =</span> T, <span class="at">pairwise.showtest =</span> T</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $table</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              race       White             Black             Hispanic         </span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; n            &quot;&quot;         &quot;2717.0&quot;          &quot;3743.0&quot;          &quot;1623.0&quot;         </span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; HI_CHOL (%)  NA         &quot;2282.0 ( 89.9) &quot; &quot;3063.0 ( 87.8) &quot; &quot;1302.0 ( 92.1) &quot;</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              NA         &quot; 250.0 ( 10.1) &quot; &quot; 387.0 ( 12.2) &quot; &quot; 104.0 (  7.9) &quot;</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; race (%)     &quot;White&quot;    &quot;2717.0 (100.0) &quot; &quot;   0.0 (  0.0) &quot; &quot;   0.0 (  0.0) &quot;</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;Black&quot;    &quot;   0.0 (  0.0) &quot; &quot;3743.0 (100.0) &quot; &quot;   0.0 (  0.0) &quot;</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;Hispanic&quot; &quot;   0.0 (  0.0) &quot; &quot;   0.0 (  0.0) &quot; &quot;1623.0 (100.0) &quot;</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;Asian&quot;    &quot;   0.0 (  0.0) &quot; &quot;   0.0 (  0.0) &quot; &quot;   0.0 (  0.0) &quot;</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; agecat (%)   &quot;(0,19]&quot;   &quot;1001.0 ( 28.3) &quot; &quot; 833.0 ( 18.2) &quot; &quot; 528.0 ( 24.4) &quot;</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;(19,39]&quot;  &quot; 636.0 ( 37.4) &quot; &quot; 891.0 ( 26.3) &quot; &quot; 363.0 ( 31.7) &quot;</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;(39,59]&quot;  &quot; 611.0 ( 24.7) &quot; &quot; 913.0 ( 32.0) &quot; &quot; 386.0 ( 29.2) &quot;</span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;(59,Inf]&quot; &quot; 469.0 (  9.6) &quot; &quot;1106.0 ( 23.5) &quot; &quot; 346.0 ( 14.7) &quot;</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; RIAGENDR (%) &quot;1&quot;        &quot;1339.0 ( 51.4) &quot; &quot;1863.0 ( 49.1) &quot; &quot; 798.0 ( 45.6) &quot;</span></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;2&quot;        &quot;1378.0 ( 48.6) &quot; &quot;1880.0 ( 50.9) &quot; &quot; 825.0 ( 54.4) &quot;</span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              Asian            p        test p(White vs Black)</span></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; n            &quot;508.0&quot;          &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; HI_CHOL (%)  &quot;412.0 ( 90.0) &quot; &quot; 0.059&quot; &quot;&quot;   &quot; 0.031&quot;         </span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot; 46.0 ( 10.0) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; race (%)     &quot;  0.0 (  0.0) &quot; &quot;    NA&quot; &quot;&quot;   &quot;&lt;0.001&quot;         </span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;  0.0 (  0.0) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;  0.0 (  0.0) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;508.0 (100.0) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; agecat (%)   &quot;170.0 ( 22.7) &quot; &quot;&lt;0.001&quot; &quot;&quot;   &quot;&lt;0.001&quot;         </span></span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;143.0 ( 36.0) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;111.0 ( 28.9) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot; 84.0 ( 12.4) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; RIAGENDR (%) &quot;247.0 ( 45.8) &quot; &quot; 0.042&quot; &quot;&quot;   &quot; 0.016&quot;         </span></span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;261.0 ( 54.2) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              test(White vs Black) p(White vs Hispanic) test(White vs Hispanic)</span></span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; n            &quot;&quot;                   &quot;&quot;                   &quot;&quot;                     </span></span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; HI_CHOL (%)  &quot;&quot;                   &quot; 0.103&quot;             &quot;&quot;                     </span></span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                   &quot;&quot;                     </span></span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; race (%)     &quot;&quot;                   &quot;&lt;0.001&quot;             &quot;&quot;                     </span></span>
-<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                   &quot;&quot;                     </span></span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                   &quot;&quot;                     </span></span>
-<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                   &quot;&quot;                     </span></span>
-<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; agecat (%)   &quot;&quot;                   &quot; 0.002&quot;             &quot;&quot;                     </span></span>
-<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                   &quot;&quot;                     </span></span>
-<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                   &quot;&quot;                     </span></span>
-<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                   &quot;&quot;                     </span></span>
-<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; RIAGENDR (%) &quot;&quot;                   &quot; 0.001&quot;             &quot;&quot;                     </span></span>
-<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                   &quot;&quot;                     </span></span>
-<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              p(White vs Asian) test(White vs Asian) p(Black vs Hispanic)</span></span>
-<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; n            &quot;&quot;                &quot;&quot;                   &quot;&quot;                  </span></span>
-<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; HI_CHOL (%)  &quot; 0.947&quot;          &quot;&quot;                   &quot; 0.003&quot;            </span></span>
-<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   &quot;&quot;                  </span></span>
-<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; race (%)     &quot;&lt;0.001&quot;          &quot;&quot;                   &quot;&lt;0.001&quot;            </span></span>
-<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   &quot;&quot;                  </span></span>
-<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   &quot;&quot;                  </span></span>
-<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   &quot;&quot;                  </span></span>
-<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; agecat (%)   &quot; 0.079&quot;          &quot;&quot;                   &quot;&lt;0.001&quot;            </span></span>
-<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   &quot;&quot;                  </span></span>
-<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   &quot;&quot;                  </span></span>
-<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   &quot;&quot;                  </span></span>
-<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; RIAGENDR (%) &quot; 0.081&quot;          &quot;&quot;                   &quot; 0.008&quot;            </span></span>
-<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   &quot;&quot;                  </span></span>
-<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              test(Black vs Hispanic) p(Black vs Asian) test(Black vs Asian)</span></span>
-<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; n            &quot;&quot;                      &quot;&quot;                &quot;&quot;                  </span></span>
-<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; HI_CHOL (%)  &quot;&quot;                      &quot; 0.429&quot;          &quot;&quot;                  </span></span>
-<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                      &quot;&quot;                &quot;&quot;                  </span></span>
-<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; race (%)     &quot;&quot;                      &quot;&lt;0.001&quot;          &quot;&quot;                  </span></span>
-<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                      &quot;&quot;                &quot;&quot;                  </span></span>
-<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                      &quot;&quot;                &quot;&quot;                  </span></span>
-<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                      &quot;&quot;                &quot;&quot;                  </span></span>
-<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; agecat (%)   &quot;&quot;                      &quot;&lt;0.001&quot;          &quot;&quot;                  </span></span>
-<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                      &quot;&quot;                &quot;&quot;                  </span></span>
-<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                      &quot;&quot;                &quot;&quot;                  </span></span>
-<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                      &quot;&quot;                &quot;&quot;                  </span></span>
-<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; RIAGENDR (%) &quot;&quot;                      &quot; 0.262&quot;          &quot;&quot;                  </span></span>
-<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                      &quot;&quot;                &quot;&quot;                  </span></span>
-<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              p(Hispanic vs Asian) test(Hispanic vs Asian) sig </span></span>
-<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; n            &quot;&quot;                   &quot;&quot;                      NA  </span></span>
-<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; HI_CHOL (%)  &quot; 0.341&quot;             &quot;&quot;                      &quot;&quot;  </span></span>
-<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                      NA  </span></span>
-<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; race (%)     &quot;&lt;0.001&quot;             &quot;&quot;                      NA  </span></span>
-<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                      NA  </span></span>
-<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                      NA  </span></span>
-<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                      NA  </span></span>
-<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; agecat (%)   &quot; 0.455&quot;             &quot;&quot;                      &quot;**&quot;</span></span>
-<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                      NA  </span></span>
-<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                      NA  </span></span>
-<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                      NA  </span></span>
-<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; RIAGENDR (%) &quot; 0.944&quot;             &quot;&quot;                      &quot;**&quot;</span></span>
-<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                      NA  </span></span>
-<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $caption</span></span>
-<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Stratified by race- weighted data&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">svyCreateTableOneJS</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="at">vars =</span> <span class="fu">c</span>(<span class="st">&quot;HI_CHOL&quot;</span>, <span class="st">&quot;race&quot;</span>, <span class="st">&quot;agecat&quot;</span>, <span class="st">&quot;RIAGENDR&quot;</span>),</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  <span class="at">strata =</span> <span class="st">&quot;race&quot;</span>, <span class="at">data =</span> nhanesSvy, <span class="at">factorVars =</span> <span class="fu">c</span>(<span class="st">&quot;HI_CHOL&quot;</span>, <span class="st">&quot;race&quot;</span>, <span class="st">&quot;RIAGENDR&quot;</span>), <span class="at">labeldata =</span> a.label, <span class="at">Labels =</span> T, <span class="at">pairwise =</span> T, <span class="at">pairwise.showtest =</span> T</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>)</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co">#&gt; $table</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#&gt;              race       White             Black             Hispanic         </span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">#&gt; n            &quot;&quot;         &quot;2717.0&quot;          &quot;3743.0&quot;          &quot;1623.0&quot;         </span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co">#&gt; HI_CHOL (%)  NA         &quot;2282.0 ( 89.9) &quot; &quot;3063.0 ( 87.8) &quot; &quot;1302.0 ( 92.1) &quot;</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co">#&gt;              NA         &quot; 250.0 ( 10.1) &quot; &quot; 387.0 ( 12.2) &quot; &quot; 104.0 (  7.9) &quot;</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co">#&gt; race (%)     &quot;White&quot;    &quot;2717.0 (100.0) &quot; &quot;   0.0 (  0.0) &quot; &quot;   0.0 (  0.0) &quot;</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="co">#&gt;              &quot;Black&quot;    &quot;   0.0 (  0.0) &quot; &quot;3743.0 (100.0) &quot; &quot;   0.0 (  0.0) &quot;</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="co">#&gt;              &quot;Hispanic&quot; &quot;   0.0 (  0.0) &quot; &quot;   0.0 (  0.0) &quot; &quot;1623.0 (100.0) &quot;</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a><span class="co">#&gt;              &quot;Asian&quot;    &quot;   0.0 (  0.0) &quot; &quot;   0.0 (  0.0) &quot; &quot;   0.0 (  0.0) &quot;</span></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a><span class="co">#&gt; agecat (%)   &quot;(0,19]&quot;   &quot;1001.0 ( 28.3) &quot; &quot; 833.0 ( 18.2) &quot; &quot; 528.0 ( 24.4) &quot;</span></span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a><span class="co">#&gt;              &quot;(19,39]&quot;  &quot; 636.0 ( 37.4) &quot; &quot; 891.0 ( 26.3) &quot; &quot; 363.0 ( 31.7) &quot;</span></span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a><span class="co">#&gt;              &quot;(39,59]&quot;  &quot; 611.0 ( 24.7) &quot; &quot; 913.0 ( 32.0) &quot; &quot; 386.0 ( 29.2) &quot;</span></span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a><span class="co">#&gt;              &quot;(59,Inf]&quot; &quot; 469.0 (  9.6) &quot; &quot;1106.0 ( 23.5) &quot; &quot; 346.0 ( 14.7) &quot;</span></span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a><span class="co">#&gt; RIAGENDR (%) &quot;1&quot;        &quot;1339.0 ( 51.4) &quot; &quot;1863.0 ( 49.1) &quot; &quot; 798.0 ( 45.6) &quot;</span></span>
+<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a><span class="co">#&gt;              &quot;2&quot;        &quot;1378.0 ( 48.6) &quot; &quot;1880.0 ( 50.9) &quot; &quot; 825.0 ( 54.4) &quot;</span></span>
+<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a><span class="co">#&gt;              Asian            p        test p(White vs Black)</span></span>
+<span id="cb8-21"><a href="#cb8-21" tabindex="-1"></a><span class="co">#&gt; n            &quot;508.0&quot;          &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
+<span id="cb8-22"><a href="#cb8-22" tabindex="-1"></a><span class="co">#&gt; HI_CHOL (%)  &quot;412.0 ( 90.0) &quot; &quot; 0.059&quot; &quot;&quot;   &quot; 0.031&quot;         </span></span>
+<span id="cb8-23"><a href="#cb8-23" tabindex="-1"></a><span class="co">#&gt;              &quot; 46.0 ( 10.0) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
+<span id="cb8-24"><a href="#cb8-24" tabindex="-1"></a><span class="co">#&gt; race (%)     &quot;  0.0 (  0.0) &quot; &quot;    NA&quot; &quot;&quot;   &quot;&lt;0.001&quot;         </span></span>
+<span id="cb8-25"><a href="#cb8-25" tabindex="-1"></a><span class="co">#&gt;              &quot;  0.0 (  0.0) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
+<span id="cb8-26"><a href="#cb8-26" tabindex="-1"></a><span class="co">#&gt;              &quot;  0.0 (  0.0) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
+<span id="cb8-27"><a href="#cb8-27" tabindex="-1"></a><span class="co">#&gt;              &quot;508.0 (100.0) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
+<span id="cb8-28"><a href="#cb8-28" tabindex="-1"></a><span class="co">#&gt; agecat (%)   &quot;170.0 ( 22.7) &quot; &quot;&lt;0.001&quot; &quot;&quot;   &quot;&lt;0.001&quot;         </span></span>
+<span id="cb8-29"><a href="#cb8-29" tabindex="-1"></a><span class="co">#&gt;              &quot;143.0 ( 36.0) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
+<span id="cb8-30"><a href="#cb8-30" tabindex="-1"></a><span class="co">#&gt;              &quot;111.0 ( 28.9) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
+<span id="cb8-31"><a href="#cb8-31" tabindex="-1"></a><span class="co">#&gt;              &quot; 84.0 ( 12.4) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
+<span id="cb8-32"><a href="#cb8-32" tabindex="-1"></a><span class="co">#&gt; RIAGENDR (%) &quot;247.0 ( 45.8) &quot; &quot; 0.042&quot; &quot;&quot;   &quot; 0.016&quot;         </span></span>
+<span id="cb8-33"><a href="#cb8-33" tabindex="-1"></a><span class="co">#&gt;              &quot;261.0 ( 54.2) &quot; &quot;&quot;       &quot;&quot;   &quot;&quot;               </span></span>
+<span id="cb8-34"><a href="#cb8-34" tabindex="-1"></a><span class="co">#&gt;              test(White vs Black) p(White vs Hispanic) test(White vs Hispanic)</span></span>
+<span id="cb8-35"><a href="#cb8-35" tabindex="-1"></a><span class="co">#&gt; n            &quot;&quot;                   &quot;&quot;                   &quot;&quot;                     </span></span>
+<span id="cb8-36"><a href="#cb8-36" tabindex="-1"></a><span class="co">#&gt; HI_CHOL (%)  &quot;&quot;                   &quot; 0.103&quot;             &quot;&quot;                     </span></span>
+<span id="cb8-37"><a href="#cb8-37" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                   &quot;&quot;                     </span></span>
+<span id="cb8-38"><a href="#cb8-38" tabindex="-1"></a><span class="co">#&gt; race (%)     &quot;&quot;                   &quot;&lt;0.001&quot;             &quot;&quot;                     </span></span>
+<span id="cb8-39"><a href="#cb8-39" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                   &quot;&quot;                     </span></span>
+<span id="cb8-40"><a href="#cb8-40" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                   &quot;&quot;                     </span></span>
+<span id="cb8-41"><a href="#cb8-41" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                   &quot;&quot;                     </span></span>
+<span id="cb8-42"><a href="#cb8-42" tabindex="-1"></a><span class="co">#&gt; agecat (%)   &quot;&quot;                   &quot; 0.002&quot;             &quot;&quot;                     </span></span>
+<span id="cb8-43"><a href="#cb8-43" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                   &quot;&quot;                     </span></span>
+<span id="cb8-44"><a href="#cb8-44" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                   &quot;&quot;                     </span></span>
+<span id="cb8-45"><a href="#cb8-45" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                   &quot;&quot;                     </span></span>
+<span id="cb8-46"><a href="#cb8-46" tabindex="-1"></a><span class="co">#&gt; RIAGENDR (%) &quot;&quot;                   &quot; 0.001&quot;             &quot;&quot;                     </span></span>
+<span id="cb8-47"><a href="#cb8-47" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                   &quot;&quot;                     </span></span>
+<span id="cb8-48"><a href="#cb8-48" tabindex="-1"></a><span class="co">#&gt;              p(White vs Asian) test(White vs Asian) p(Black vs Hispanic)</span></span>
+<span id="cb8-49"><a href="#cb8-49" tabindex="-1"></a><span class="co">#&gt; n            &quot;&quot;                &quot;&quot;                   &quot;&quot;                  </span></span>
+<span id="cb8-50"><a href="#cb8-50" tabindex="-1"></a><span class="co">#&gt; HI_CHOL (%)  &quot; 0.947&quot;          &quot;&quot;                   &quot; 0.003&quot;            </span></span>
+<span id="cb8-51"><a href="#cb8-51" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   &quot;&quot;                  </span></span>
+<span id="cb8-52"><a href="#cb8-52" tabindex="-1"></a><span class="co">#&gt; race (%)     &quot;&lt;0.001&quot;          &quot;&quot;                   &quot;&lt;0.001&quot;            </span></span>
+<span id="cb8-53"><a href="#cb8-53" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   &quot;&quot;                  </span></span>
+<span id="cb8-54"><a href="#cb8-54" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   &quot;&quot;                  </span></span>
+<span id="cb8-55"><a href="#cb8-55" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   &quot;&quot;                  </span></span>
+<span id="cb8-56"><a href="#cb8-56" tabindex="-1"></a><span class="co">#&gt; agecat (%)   &quot; 0.079&quot;          &quot;&quot;                   &quot;&lt;0.001&quot;            </span></span>
+<span id="cb8-57"><a href="#cb8-57" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   &quot;&quot;                  </span></span>
+<span id="cb8-58"><a href="#cb8-58" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   &quot;&quot;                  </span></span>
+<span id="cb8-59"><a href="#cb8-59" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   &quot;&quot;                  </span></span>
+<span id="cb8-60"><a href="#cb8-60" tabindex="-1"></a><span class="co">#&gt; RIAGENDR (%) &quot; 0.081&quot;          &quot;&quot;                   &quot; 0.008&quot;            </span></span>
+<span id="cb8-61"><a href="#cb8-61" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                &quot;&quot;                   &quot;&quot;                  </span></span>
+<span id="cb8-62"><a href="#cb8-62" tabindex="-1"></a><span class="co">#&gt;              test(Black vs Hispanic) p(Black vs Asian) test(Black vs Asian)</span></span>
+<span id="cb8-63"><a href="#cb8-63" tabindex="-1"></a><span class="co">#&gt; n            &quot;&quot;                      &quot;&quot;                &quot;&quot;                  </span></span>
+<span id="cb8-64"><a href="#cb8-64" tabindex="-1"></a><span class="co">#&gt; HI_CHOL (%)  &quot;&quot;                      &quot; 0.429&quot;          &quot;&quot;                  </span></span>
+<span id="cb8-65"><a href="#cb8-65" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                      &quot;&quot;                &quot;&quot;                  </span></span>
+<span id="cb8-66"><a href="#cb8-66" tabindex="-1"></a><span class="co">#&gt; race (%)     &quot;&quot;                      &quot;&lt;0.001&quot;          &quot;&quot;                  </span></span>
+<span id="cb8-67"><a href="#cb8-67" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                      &quot;&quot;                &quot;&quot;                  </span></span>
+<span id="cb8-68"><a href="#cb8-68" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                      &quot;&quot;                &quot;&quot;                  </span></span>
+<span id="cb8-69"><a href="#cb8-69" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                      &quot;&quot;                &quot;&quot;                  </span></span>
+<span id="cb8-70"><a href="#cb8-70" tabindex="-1"></a><span class="co">#&gt; agecat (%)   &quot;&quot;                      &quot;&lt;0.001&quot;          &quot;&quot;                  </span></span>
+<span id="cb8-71"><a href="#cb8-71" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                      &quot;&quot;                &quot;&quot;                  </span></span>
+<span id="cb8-72"><a href="#cb8-72" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                      &quot;&quot;                &quot;&quot;                  </span></span>
+<span id="cb8-73"><a href="#cb8-73" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                      &quot;&quot;                &quot;&quot;                  </span></span>
+<span id="cb8-74"><a href="#cb8-74" tabindex="-1"></a><span class="co">#&gt; RIAGENDR (%) &quot;&quot;                      &quot; 0.262&quot;          &quot;&quot;                  </span></span>
+<span id="cb8-75"><a href="#cb8-75" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                      &quot;&quot;                &quot;&quot;                  </span></span>
+<span id="cb8-76"><a href="#cb8-76" tabindex="-1"></a><span class="co">#&gt;              p(Hispanic vs Asian) test(Hispanic vs Asian) sig </span></span>
+<span id="cb8-77"><a href="#cb8-77" tabindex="-1"></a><span class="co">#&gt; n            &quot;&quot;                   &quot;&quot;                      NA  </span></span>
+<span id="cb8-78"><a href="#cb8-78" tabindex="-1"></a><span class="co">#&gt; HI_CHOL (%)  &quot; 0.341&quot;             &quot;&quot;                      &quot;&quot;  </span></span>
+<span id="cb8-79"><a href="#cb8-79" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                      NA  </span></span>
+<span id="cb8-80"><a href="#cb8-80" tabindex="-1"></a><span class="co">#&gt; race (%)     &quot;&lt;0.001&quot;             &quot;&quot;                      NA  </span></span>
+<span id="cb8-81"><a href="#cb8-81" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                      NA  </span></span>
+<span id="cb8-82"><a href="#cb8-82" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                      NA  </span></span>
+<span id="cb8-83"><a href="#cb8-83" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                      NA  </span></span>
+<span id="cb8-84"><a href="#cb8-84" tabindex="-1"></a><span class="co">#&gt; agecat (%)   &quot; 0.455&quot;             &quot;&quot;                      &quot;**&quot;</span></span>
+<span id="cb8-85"><a href="#cb8-85" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                      NA  </span></span>
+<span id="cb8-86"><a href="#cb8-86" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                      NA  </span></span>
+<span id="cb8-87"><a href="#cb8-87" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                      NA  </span></span>
+<span id="cb8-88"><a href="#cb8-88" tabindex="-1"></a><span class="co">#&gt; RIAGENDR (%) &quot; 0.944&quot;             &quot;&quot;                      &quot;**&quot;</span></span>
+<span id="cb8-89"><a href="#cb8-89" tabindex="-1"></a><span class="co">#&gt;              &quot;&quot;                   &quot;&quot;                      NA  </span></span>
+<span id="cb8-90"><a href="#cb8-90" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-91"><a href="#cb8-91" tabindex="-1"></a><span class="co">#&gt; $caption</span></span>
+<span id="cb8-92"><a href="#cb8-92" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Stratified by race- weighted data&quot;</span></span></code></pre></div>
 </div>
 </div>
 </div>
