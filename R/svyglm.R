@@ -77,7 +77,7 @@ svyregress.display <- function(svyglm.obj, decimal = 2, pcut.univariate = NULL) 
       
       if(is.null(pcut.univariate)){
         # mul <- summary(model)$coefficients[-1, ]
-        mul <- cbind(coefNA(model)[-1, ], stats::confint(model)[-1, ])
+        mul <- cbind(coefNA(model)[-1, , drop = FALSE], stats::confint(model)[-1, , drop = FALSE])
         mul.summ <- paste(round(mul[, 1], decimal), " (", round(mul[, 5], decimal), ",", round(mul[, 6], decimal), ")", sep = "")
         mul.res <- t(rbind(mul.summ, ifelse(mul[, 4] <= 0.001, "< 0.001", as.character(round(mul[, 4], decimal + 1)))))
         colnames(mul.res) <- c(paste("adj. coeff.(", 100 - 100 * 0.05, "%CI)", sep = ""), "adj. P value")
@@ -117,7 +117,7 @@ svyregress.display <- function(svyglm.obj, decimal = 2, pcut.univariate = NULL) 
         }else{
           selected_formula <- as.formula(paste(y, "~", paste(significant_vars, collapse = " + ")))
           selected_model <- survey::svyglm(selected_formula, design = design.model ) 
-          mul <- cbind(coefNA(selected_model)[-1, ], stats::confint(selected_model)[-1, ])
+          mul <- cbind(coefNA(selected_model)[-1, , drop = FALSE], stats::confint(selected_model)[-1, , drop = FALSE])
           mul.summ <- paste(round(mul[, 1], decimal), " (", round(mul[, 5], decimal), ",", round(mul[, 6], decimal), ")", sep = "")
           mul.res1 <- t(rbind(mul.summ, ifelse(mul[, 4] <= 0.001, "< 0.001", as.character(round(mul[, 4], decimal + 1)))))
           colnames(mul.res1) <- c(paste("adj. coeff.(", 100 - 100 * 0.05, "%CI)", sep = ""), "adj. P value")
@@ -145,7 +145,7 @@ svyregress.display <- function(svyglm.obj, decimal = 2, pcut.univariate = NULL) 
       rownames(uni.res) <- rownames(uni)
       if(is.null(pcut.univariate)){
         # mul <- summary(model)$coefficients[-1, ]
-        mul <- cbind(coefNA(model)[-1, ], stats::confint(model)[-1, ])
+        mul <- cbind(coefNA(model)[-1, , drop = FALSE], stats::confint(model)[-1, , drop = FALSE])
         mul.summ <- paste(round(exp(mul[, 1]), decimal), " (", round(exp(mul[, 5]), decimal), ",", round(exp(mul[, 6]), decimal), ")", sep = "")
         mul.res <- t(rbind(mul.summ, ifelse(mul[, 4] <= 0.001, "< 0.001", as.character(round(mul[, 4], decimal + 1)))))
         colnames(mul.res) <- c(paste("adj. OR.(", 100 - 100 * 0.05, "%CI)", sep = ""), "adj. P value")
@@ -184,7 +184,7 @@ svyregress.display <- function(svyglm.obj, decimal = 2, pcut.univariate = NULL) 
         }else{
           selected_formula <- as.formula(paste(y, "~", paste(significant_vars, collapse = " + ")))
           selected_model <- survey::svyglm(selected_formula, design = design.model ) 
-          mul <- cbind(coefNA(selected_model)[-1, ], stats::confint(selected_model)[-1, ])
+          mul <- cbind(coefNA(selected_model)[-1, , drop = FALSE], stats::confint(selected_model)[-1, , drop = FALSE])
           mul.summ <- paste(round(exp(mul[, 1]), decimal), " (", round(exp(mul[, 5]), decimal), ",", round(exp(mul[, 6]), decimal), ")", sep = "")
           mul.res1 <- t(rbind(mul.summ, ifelse(mul[, 4] <= 0.001, "< 0.001", as.character(round(mul[, 4], decimal + 1)))))
           colnames(mul.res1) <- c(paste("adj. coeff.(", 100 - 100 * 0.05, "%CI)", sep = ""), "adj. P value")

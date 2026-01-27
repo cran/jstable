@@ -158,7 +158,7 @@ svycox.display <- function(svycoxph.obj, decimal = 2, pcut.univariate = NULL) {
 
     uni.res <- uni.res[rownames(uni.res) %in% rownames(mul.res), ] ## set
 
-    fix.all <- cbind(coxExp(uni.res, dec = decimal), coxExp(mul.res[rownames(uni.res), names(uni.res)], dec = decimal))
+    fix.all <- cbind(coxExp(uni.res, dec = decimal), coxExp(mul.res[rownames(uni.res), names(uni.res), drop = FALSE], dec = decimal))
     colnames(fix.all) <- c("crude HR(95%CI)", "crude P value", "adj. HR(95%CI)", "adj. P value")
     rownames(fix.all) <- rownames(uni.res)
   }
@@ -171,7 +171,7 @@ svycox.display <- function(svycoxph.obj, decimal = 2, pcut.univariate = NULL) {
       a <- unlist(strsplit(xf[x], ":"))[1]
       b <- unlist(strsplit(xf[x], ":"))[2]
 
-      fix.all[grepl(a, rownames(fix.all)) & grepl(b, rownames(fix.all)), ]
+      fix.all[grepl(a, rownames(fix.all)) & grepl(b, rownames(fix.all)), drop = FALSE]
     } else {
       fix.all[rownames(fix.all) %in% rn.uni[[x]], ]
     }
